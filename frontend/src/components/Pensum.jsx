@@ -14,7 +14,6 @@ const dummyCourses = Array.from({ length: 41 }, (_, i) => ({
 export default function Pensum() {
   const [columns, setColumns] = useState(6);
 
-  // detectar columnas según pantalla
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth < 640) setColumns(2);
@@ -28,13 +27,12 @@ export default function Pensum() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const visible = columns * 6; // siempre 6 filas
-  const topHalf = dummyCourses.slice(0, columns * 3); // filas normales
-  const bottomHalf = dummyCourses.slice(columns * 3, visible); // filas a opacar
+  const visible = columns * 6;
+  const topHalf = dummyCourses.slice(0, columns * 3);
+  const bottomHalf = dummyCourses.slice(columns * 3, visible);
 
   return (
     <div className="min-h-screen flex flex-col items-center">
-      {/* Grid con botón flotante */}
       <div className="relative w-full">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
           {topHalf.map((c) => (
@@ -42,13 +40,12 @@ export default function Pensum() {
           ))}
 
           {bottomHalf.map((c, idx) => {
-            // idx 0 = fila 4, idx 1 = fila 5, idx 2 = fila 6 (en columnas*3 bloques)
             const rowIndex = Math.floor(idx / columns);
             let opacity = 1;
 
-            if (rowIndex === 0) opacity = 0.7; // fila 4
-            else if (rowIndex === 1) opacity = 0.4; // fila 5
-            else if (rowIndex === 2) opacity = 0.15; // fila 6
+            if (rowIndex === 0) opacity = 0.7;
+            else if (rowIndex === 1) opacity = 0.4;
+            else if (rowIndex === 2) opacity = 0.15;
 
             return (
               <div key={c.code} style={{ opacity }}>
