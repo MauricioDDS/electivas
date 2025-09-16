@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import CourseList from "./components/CourseList";
+import CourseDetail from "./components/CourseDetail";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [filter, setFilter] = useState("todas");
+
+  useEffect(() => {
+    let url = "http://localhost:8000/courses";
+    if (filter !== "todas") {
+      url += `?tipo=${filter}`;
+    }
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setCourses(data))
+      .catch((err) => console.error(err));
+  }, [filter]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Pensum Universitario</h1>
+
+      <div className="mb-4">
+        <label className="mr-2 font-medium">Filtrar por tipo:</label>
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="border p-2 rounded"
+        >
+          <option value="todas">Todas</option>
+          <option value="obligatoria">Obligatorias</option>
+          <option value="electiva">Electivas</option>
+        </select>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+      <CourseList courses={courses} onSelect={setSelectedCourse} />
+
+      {selectedCourse && (
+        <CourseDetail
+          course={selectedCourse}
+          onClose={() => setSelectedCourse(null)}
+        />
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;

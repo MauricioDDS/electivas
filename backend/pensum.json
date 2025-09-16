@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "codigo": "1155101",
+    "nombre": "Cálculo Diferencial",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 2,
+    "codigo": "1155102",
+    "nombre": "Matemáticas Discretas",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 3,
+    "codigo": "1155104",
+    "nombre": "Programación",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 4,
+    "codigo": "1155105",
+    "nombre": "Introducción a la Ingeniería de Sistemas",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 5,
+    "codigo": "1155106",
+    "nombre": "Comunicación I",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 6,
+    "codigo": "1155108",
+    "nombre": "Introducción a la Vida Universitaria",
+    "tipo": "obligatoria",
+    "creditos": 1,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 7,
+    "codigo": "1155201",
+    "nombre": "Cálculo Integral",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "prerequisitos": ["1155101"],
+    "semestre": 2
+  },
+  {
+    "id": 8,
+    "codigo": "1155202",
+    "nombre": "Álgebra Lineal",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "prerequisitos": [],
+    "semestre": 2
+  },
+  {
+    "id": 9,
+    "codigo": "1155203",
+    "nombre": "Física Mecánica",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "prerequisitos": ["1155101"],
+    "semestre": 2
+  },
+  {
+    "id": 10,
+    "codigo": "1155204",
+    "nombre": "Programación Orientada a Objetos I",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "prerequisitos": ["1155104"],
+    "semestre": 2
+  },
+  {
+    "id": 11,
+    "codigo": "1155206",
+    "nombre": "Comunicación II",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "prerequisitos": ["1155106"],
+    "semestre": 2
+  },
+  {
+    "id": 12,
+    "codigo": "1155109",
+    "nombre": "Seminario Integrador I",
+    "tipo": "obligatoria",
+    "creditos": 1,
+    "prerequisitos": ["1155104"],
+    "semestre": 2
+  }
+]
