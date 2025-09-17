@@ -16,18 +16,30 @@ export function LoginForm({ className, ...props }) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const AUTH_URL = import.meta.env.VITE_AUTH_URL;
+  const AUTH_URL = import.meta.env.VITE_AUT_URL;
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const res = await fetch(`${AUTH_URL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+    async function handleSubmit(e) {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    // 👇 ponlo aquí
+    console.log("AUTH_URL =", AUTH_URL);
+
+    const res = await fetch(`${AUTH_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        username: email,
+      }),
+    });
+
 
       if (res.ok) {
         const data = await res.json();
@@ -36,7 +48,8 @@ export function LoginForm({ className, ...props }) {
 
         window.location.href = "/";
       } else {
-        alert("Login failed");
+        const err = await res.json();
+        alert(`Login failed: ${err.detail || "Unknown error"}`);
       }
     } catch (err) {
       console.error("Login error:", err);
