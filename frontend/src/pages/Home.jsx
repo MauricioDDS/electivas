@@ -9,8 +9,10 @@ export default function Home() {
   const [courses, setCourses] = useState([]);
 
   // Variable de entorno según tu setup
-  const COURSES_URL =
-    process.env.REACT_APP_COURSES_URL || import.meta.env.VITE_COURSES_URL;
+  const COURSES_URL = import.meta.env.VITE_COURSES_URL;
+  console.log("COURSES_URL =", COURSES_URL);
+
+  console.log("COURSES_URL =", COURSES_URL);
 
   useEffect(() => {
     fetch(`${COURSES_URL}/courses`)

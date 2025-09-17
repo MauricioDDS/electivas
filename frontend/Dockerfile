@@ -5,7 +5,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
+# 👇 Asegúrate de copiar el .env ANTES del build
 COPY . .
+
 RUN npm run build
 
 FROM nginx:alpine

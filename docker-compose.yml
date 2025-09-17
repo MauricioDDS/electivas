@@ -1,18 +1,16 @@
+version: "3.9"
+
 services:
   courses-ms:
-    build: ./backend/courses-ms
-    container_name: courses-ms
+    build:
+      context: ./backend
     ports:
-      - "8001:8000"  # expone 8000 del contenedor como 8001 en host
-    restart: always
+      - "8001:8000"
 
   frontend:
-    build: ./frontend
-    container_name: electivas-frontend
+    build:
+      context: ./frontend
     ports:
       - "3000:80"
     depends_on:
       - courses-ms
-    environment:
-      REACT_APP_COURSES_URL: "http://courses-ms:8000"  # importante para fetch
-    restart: always

@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import CourseCard from "./CourseCard";
 
-export default function Pensum({ onVerMas, COURSES_URL }) {
+export default function Pensum({ onVerMas }) {
   const rows = 4;
   const colsDefault = 6;
   const [columns, setColumns] = useState(colsDefault);
   const [courses, setCourses] = useState([]);
+
+  // ✅ Grab directly from Vite env
+  const COURSES_URL = import.meta.env.VITE_COURSES_URL;
+  console.log("Pensum COURSES_URL =", COURSES_URL);
+  console.log("Fetching courses from:", COURSES_URL);
 
   useEffect(() => {
     fetch(`${COURSES_URL}/courses`)
@@ -14,6 +19,7 @@ export default function Pensum({ onVerMas, COURSES_URL }) {
       .catch((err) => console.error("Error fetching courses:", err));
   }, [COURSES_URL]);
 
+  
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth < 640) setColumns(2);

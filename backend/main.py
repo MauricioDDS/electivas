@@ -12,14 +12,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-with open("courses.json", encoding="utf-8") as f:
+with open("courses.json", "r", encoding="utf-8-sig") as f:
     courses = json.load(f)
-
+    
 @app.get("/courses")
 def get_courses(tipo: str = None):
+    if isinstance(courses, dict):
+        courses_list = [courses]
+    else:
+        courses_list = courses
+
     if tipo:
-        return [c for c in courses if c["tipo"].lower() == tipo.lower()]
-    return courses
+        return [c for c in courses_list if c["tipo"].lower() == tipo.lower()]
+    return courses_list
 
 @app.get("/course/{course_id}")
 def get_course(course_id: int):
