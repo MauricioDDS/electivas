@@ -12,7 +12,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-with open("pensum.json", encoding="utf-8") as f:
+with open("courses.json", encoding="utf-8") as f:
     courses = json.load(f)
 
 @app.get("/courses")

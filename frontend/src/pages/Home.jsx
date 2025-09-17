@@ -1,10 +1,23 @@
-import { useState } from "react"
-import Pensum from "../components/Pensum"
-import CourseSelectModal from "../components/CourseSelectModal"
+import { useState, useEffect } from "react";
+import Pensum from "../components/Pensum";
+import CourseSelectModal from "../components/CourseSelectModal";
+import CourseCard from "../components/CourseCard";
 
 export default function Home() {
-  const [modalOpen, setModalOpen] = useState(false)
-  const [cursadas, setCursadas] = useState([])
+  const [modalOpen, setModalOpen] = useState(false);
+  const [cursadas, setCursadas] = useState([]);
+  const [courses, setCourses] = useState([]);
+
+  // Variable de entorno según tu setup
+  const COURSES_URL =
+    process.env.REACT_APP_COURSES_URL || import.meta.env.VITE_COURSES_URL;
+
+  useEffect(() => {
+    fetch(`${COURSES_URL}/courses`)
+      .then((res) => res.json())
+      .then((data) => setCourses(data))
+      .catch((err) => console.error("Error fetching courses:", err));
+  }, [COURSES_URL]);
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground items-center">
@@ -12,25 +25,84 @@ export default function Home() {
         <h1 className="text-lg font-bold text-white">Horario Óptimo</h1>
         <span className="text-sm text-gray-400">"username"</span>
       </header>
-      <div className="mb-4 flex align-middle items-center">
-        <p className="m-2 text-lg sm:text-xl text-gray-300 leading-relaxed">
-          Explora todas tus materias obligatorias y electivas, organiza tus
-          semestres y construye el mejor camino académico de manera sencilla y
-          rápida.
-        </p>
-      </div>
- 
-      <Pensum onVerMas={() => setModalOpen(true)} />
+
+      {cursadas.length <= 0 && (
+        <div className="mb-4 flex items-center">
+          <p className="m-2 text-lg sm:text-xl text-gray-300 leading-relaxed">
+            Explora todas tus materias obligatorias y electivas, organiza tus
+            semestres y construye el mejor camino académico de manera sencilla y
+            rápida.
+          </p>
+        </div>
+      )}
+
+      {cursadas.length > 0 && (
+        <section className="w-full px-6 mt-12 mb-10">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-center text-3xl font-extrabold text-balance mb-5">
+              Materias Cursadas
+            </h2>
+            <div className="flex flex-wrap justify-center gap-4">
+              {cursadas.map((course) => (
+                <CourseCard
+                  key={course.codigo}
+                  code={course.codigo}
+                  name={course.nombre}
+                  hours={course.hours}
+                  credits={course.creditos}
+                  type={course.tipo}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {cursadas.length > 0 && (
+        <section className="w-full px-6 mb-10">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-center text-3xl font-extrabold text-balance mb-5">
+              Materias Recomendadas
+            </h2>
+            <div className="flex flex-wrap justify-center gap-4">
+              {courses
+                .filter(
+                  (course) =>
+                    !cursadas.some((c) => c.codigo === course.codigo) &&
+                    course.prerequisitos.some((pre) =>
+                      cursadas.some((c) => c.codigo === pre)
+                    )
+                )
+                .map((course) => (
+                  <CourseCard
+                    key={course.codigo}
+                    code={course.codigo}
+                    name={course.nombre}
+                    hours={course.hours}
+                    credits={course.creditos}
+                    type={course.tipo}
+                  />
+                ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <h2 className="text-center text-3xl font-extrabold text-balance mb-5">
+        Todas las Materias
+      </h2>
+      <Pensum onVerMas={() => setModalOpen(true)} COURSES_URL={COURSES_URL} />
 
       {modalOpen && (
         <CourseSelectModal
           onClose={() => setModalOpen(false)}
           onConfirm={(seleccionadas) => {
-            setCursadas(seleccionadas)
-            setModalOpen(false)
+            setCursadas(seleccionadas);
+            setModalOpen(false);
           }}
+          COURSES_URL={COURSES_URL}
         />
       )}
     </div>
-  )
+  );
 }

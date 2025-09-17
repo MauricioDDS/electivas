@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import CourseCard from "./CourseCard";
-import courses from "../../../backend/courses.json";
 
-export default function Pensum({ onVerMas }) {
+export default function Pensum({ onVerMas, COURSES_URL }) {
   const rows = 4;
   const colsDefault = 6;
   const [columns, setColumns] = useState(colsDefault);
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    fetch(`${COURSES_URL}/courses`)
+      .then((res) => res.json())
+      .then((data) => setCourses(data))
+      .catch((err) => console.error("Error fetching courses:", err));
+  }, [COURSES_URL]);
 
   useEffect(() => {
     function handleResize() {
@@ -14,7 +21,6 @@ export default function Pensum({ onVerMas }) {
       else if (window.innerWidth < 1024) setColumns(4);
       else setColumns(6);
     }
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -33,7 +39,8 @@ export default function Pensum({ onVerMas }) {
       <div className="relative w-full max-w-7xl px-6">
         <div
           className="grid gap-3"
-          style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
+          style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+        >
           {topHalf.map((c) => (
             <CourseCard
               key={c.codigo}
@@ -66,7 +73,8 @@ export default function Pensum({ onVerMas }) {
         <div className="absolute left-1/2 -translate-x-1/2 bottom-8 z-30">
           <button
             onClick={onVerMas}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-orange-600 text-white text-sm font-medium shadow-lg hover:bg-orange-700 transition">
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-orange-600 text-white text-sm font-medium shadow-lg hover:bg-orange-700 transition"
+          >
             <span className="text-base leading-none">+</span> Ver más
           </button>
         </div>
