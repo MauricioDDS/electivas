@@ -18,16 +18,11 @@ export function LoginForm({ className, ...props }) {
 
   const AUTH_URL = import.meta.env.VITE_AUT_URL;
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-
     async function handleSubmit(e) {
   e.preventDefault();
   setLoading(true);
 
   try {
-    // 👇 ponlo aquí
     console.log("AUTH_URL =", AUTH_URL);
 
     const res = await fetch(`${AUTH_URL}/login`, {
@@ -37,6 +32,7 @@ export function LoginForm({ className, ...props }) {
       },
       body: new URLSearchParams({
         username: email,
+        password,
       }),
     });
 
@@ -101,4 +97,5 @@ export function LoginForm({ className, ...props }) {
       </Card>
     </div>
   );
+
 }
