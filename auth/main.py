@@ -25,7 +25,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 origins = [
     "http://localhost:3000",           # frontend local
-    "https://<tu-frontend>.railway.app"  # frontend en producción
+    "https://electivas-jade.vercel.app"  # frontend en producción
 ]
 
 app.add_middleware(
