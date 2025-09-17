@@ -1,11 +1,31 @@
-version: "3.9"
-
 services:
   courses-ms:
     build:
       context: ./backend
     ports:
       - "8001:8000"
+
+  auth-ms:
+    build:
+      context: ./auth
+    ports:
+      - "8002:8000"
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://auth_user:auth_pass@auth-db:5432/auth_db
+    depends_on:
+      - auth-db
+
+  auth-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_pass
+      POSTGRES_DB: auth_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
 
   frontend:
     build:
@@ -14,3 +34,7 @@ services:
       - "3000:80"
     depends_on:
       - courses-ms
+      - auth-ms
+
+volumes:
+  auth_db_data:
