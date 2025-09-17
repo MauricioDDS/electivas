@@ -1,12 +1,12 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware;
+from fastapi.middleware.cors import CORSMiddleware
 import json
 
 app = FastAPI(title="Sistema de Pensum Universitario")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins =["*"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -14,7 +14,7 @@ app.add_middleware(
 
 with open("courses.json", "r", encoding="utf-8-sig") as f:
     courses = json.load(f)
-    
+
 @app.get("/courses")
 def get_courses(tipo: str = None):
     if isinstance(courses, dict):
@@ -32,3 +32,7 @@ def get_course(course_id: int):
         if c["id"] == course_id:
             return c
     raise HTTPException(status_code=404, detail="Materia no encontrada")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)
