@@ -1,18 +1,11 @@
-import CourseCard from "./CourseCard";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { IconPlus } from "@tabler/icons-react";
+import CourseCard from "./CourseCard";
+import courses from "../../../backend/courses.json";
 
-const dummyCourses = Array.from({ length: 41 }, (_, i) => ({
-  code: `MAT${i + 1}`,
-  name: `Materia ${i + 1}`,
-  hours: Math.floor(Math.random() * 4) + 2,
-  credits: Math.floor(Math.random() * 3) + 2,
-  type: i % 7 === 0 ? "electiva" : "obligatoria",
-}));
-
-export default function Pensum() {
-  const [columns, setColumns] = useState(6);
+export default function Pensum({ onVerMas }) {
+  const rows = 4;
+  const colsDefault = 6;
+  const [columns, setColumns] = useState(colsDefault);
 
   useEffect(() => {
     function handleResize() {
@@ -27,40 +20,55 @@ export default function Pensum() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const visible = columns * 6;
-  const topHalf = dummyCourses.slice(0, columns * 3);
-  const bottomHalf = dummyCourses.slice(columns * 3, visible);
+  const visible = colsDefault * rows;
+  const topCount = colsDefault * 2;
+  const topHalf = courses.slice(0, Math.min(topCount, courses.length));
+  const bottomHalf = courses.slice(
+    Math.min(topCount, courses.length),
+    Math.min(visible, courses.length)
+  );
 
   return (
     <div className="min-h-screen flex flex-col items-center">
-      <div className="relative w-full">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+      <div className="relative w-full max-w-7xl px-6">
+        <div
+          className="grid gap-3"
+          style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
           {topHalf.map((c) => (
-            <CourseCard key={c.code} {...c} />
+            <CourseCard
+              key={c.codigo}
+              code={c.codigo}
+              name={c.nombre}
+              hours={c.hours}
+              credits={c.creditos}
+              type={c.tipo}
+            />
           ))}
 
           {bottomHalf.map((c, idx) => {
-            const rowIndex = Math.floor(idx / columns);
-            let opacity = 1;
-
-            if (rowIndex === 0) opacity = 0.7;
-            else if (rowIndex === 1) opacity = 0.4;
-            else if (rowIndex === 2) opacity = 0.15;
-
+            const filaIndex = Math.floor(idx / colsDefault);
+            const opacity =
+              filaIndex === 0 ? 0.65 : filaIndex === 1 ? 0.35 : 0.18;
             return (
-              <div key={c.code} style={{ opacity }}>
-                <CourseCard {...c} />
+              <div key={c.codigo} style={{ opacity }}>
+                <CourseCard
+                  code={c.codigo}
+                  name={c.nombre}
+                  hours={c.hours}
+                  credits={c.creditos}
+                  type={c.tipo}
+                />
               </div>
             );
           })}
         </div>
 
-        <div className="absolute inset-x-0 bottom-6 flex justify-center">
-          <Button
-            size="sm">
-            VER MÁS
-            <IconPlus/>
-          </Button>
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-8 z-30">
+          <button
+            onClick={onVerMas}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-orange-600 text-white text-sm font-medium shadow-lg hover:bg-orange-700 transition">
+            <span className="text-base leading-none">+</span> Ver más
+          </button>
         </div>
       </div>
     </div>

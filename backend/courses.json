@@ -1,0 +1,1196 @@
+[
+  {
+    "id": 1,
+    "codigo": "1155101",
+    "nombre": "Cálculo Diferencial",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "hours": 4,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 2,
+    "codigo": "1155102",
+    "nombre": "Matemáticas Discretas",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 3,
+    "codigo": "1155104",
+    "nombre": "Fundamentos de Programación",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 4,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 4,
+    "codigo": "1155105",
+    "nombre": "Introducción a la Ingeniería de Sistemas",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 5,
+    "codigo": "1155106",
+    "nombre": "Comunicación I",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 6,
+    "codigo": "1155108",
+    "nombre": "Introducción a la Vida Universitaria",
+    "tipo": "obligatoria",
+    "creditos": 1,
+    "hours": 1,
+    "prerequisitos": [],
+    "semestre": 1
+  },
+  {
+    "id": 7,
+    "codigo": "1155201",
+    "nombre": "Cálculo Integral",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "hours": 4,
+    "prerequisitos": [
+      "1155101"
+    ],
+    "semestre": 2
+  },
+  {
+    "id": 8,
+    "codigo": "1155202",
+    "nombre": "Álgebra Lineal",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155101"
+    ],
+    "semestre": 2
+  },
+  {
+    "id": 9,
+    "codigo": "1155203",
+    "nombre": "Física Mecánica",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "hours": 4,
+    "prerequisitos": [
+      "1155101"
+    ],
+    "semestre": 2
+  },
+  {
+    "id": 10,
+    "codigo": "1155204",
+    "nombre": "Programación Orientada a Objetos",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 4,
+    "prerequisitos": [
+      "1155104"
+    ],
+    "semestre": 2
+  },
+  {
+    "id": 11,
+    "codigo": "1155206",
+    "nombre": "Comunicación II",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "1155106"
+    ],
+    "semestre": 2
+  },
+  {
+    "id": 12,
+    "codigo": "1155209",
+    "nombre": "Seminario Integrador I",
+    "tipo": "obligatoria",
+    "creditos": 1,
+    "hours": 1,
+    "prerequisitos": [
+      "1155104"
+    ],
+    "semestre": 2
+  },
+  {
+    "id": 13,
+    "codigo": "1155301",
+    "nombre": "Cálculo Vectorial",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "hours": 4,
+    "prerequisitos": [
+      "1155201"
+    ],
+    "semestre": 3
+  },
+  {
+    "id": 14,
+    "codigo": "1155303",
+    "nombre": "Física Electromagnética",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "hours": 4,
+    "prerequisitos": [
+      "1155203"
+    ],
+    "semestre": 3
+  },
+  {
+    "id": 15,
+    "codigo": "1155304",
+    "nombre": "Estructuras de Datos",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 4,
+    "prerequisitos": [
+      "1155204"
+    ],
+    "semestre": 3
+  },
+  {
+    "id": 16,
+    "codigo": "1155305",
+    "nombre": "Programación Orientada a Objetos II",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 4,
+    "prerequisitos": [
+      "1155204"
+    ],
+    "semestre": 3
+  },
+  {
+    "id": 17,
+    "codigo": "1155306",
+    "nombre": "Seminario de Investigación I",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "1155209"
+    ],
+    "semestre": 3
+  },
+  {
+    "id": 18,
+    "codigo": "1155401",
+    "nombre": "Ecuaciones Diferenciales",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "hours": 4,
+    "prerequisitos": [
+      "1155301"
+    ],
+    "semestre": 4
+  },
+  {
+    "id": 19,
+    "codigo": "1155402",
+    "nombre": "Probabilidad y Estadística",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 4,
+    "prerequisitos": [
+      "1155102"
+    ],
+    "semestre": 4
+  },
+  {
+    "id": 20,
+    "codigo": "1155403",
+    "nombre": "Ondas y particulas",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155303"
+    ],
+    "semestre": 4
+  },
+  {
+    "id": 21,
+    "codigo": "1155404",
+    "nombre": "Analisis de algoritmos",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155304"
+    ],
+    "semestre": 4
+  },
+  {
+    "id": 22,
+    "codigo": "1155405",
+    "nombre": "Teoría de la Computación",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155304"
+    ],
+    "semestre": 4
+  },
+  {
+    "id": 23,
+    "codigo": "1155406",
+    "nombre": "Descubriendo negocios basados en TIC",
+    "tipo": "electiva",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "Cre:58"
+    ],
+    "semestre": 4
+  },
+  {
+    "id": 24,
+    "codigo": "1155501",
+    "nombre": "Analisis numerico",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155401"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 25,
+    "codigo": "1155502",
+    "nombre": "Investigación de Operaciones",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155402"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 26,
+    "codigo": "1155503",
+    "nombre": "Electronica",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 4,
+    "prerequisitos": [
+      "1155403"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 27,
+    "codigo": "1155504",
+    "nombre": "Arquitectura de computadores",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155304"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 28,
+    "codigo": "1155506",
+    "nombre": "Seminario de Investigación II",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "1155306"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 29,
+    "codigo": "1155511",
+    "nombre": "Problemas sociales de frontera",
+    "tipo": "electiva",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "Cre:5"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 30,
+    "codigo": "1155513",
+    "nombre": "Psicologia",
+    "tipo": "electiva",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "Cre:5"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 31,
+    "codigo": "1155515",
+    "nombre": "Psicologia industrial",
+    "tipo": "electiva",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "Cre:5"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 32,
+    "codigo": "1155516",
+    "nombre": "Catedra de paz",
+    "tipo": "electiva",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "Cre:5"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 33,
+    "codigo": "1155521",
+    "nombre": "Nuevas tecnologías y sociedad",
+    "tipo": "electiva",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "1155105"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 34,
+    "codigo": "1155522",
+    "nombre": "Relaciones humanas",
+    "tipo": "electiva",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "Cre:60"
+    ],
+    "semestre": 5
+  },
+  {
+    "id": 35,
+    "codigo": "1150615",
+    "nombre": "Habilidades escenciales para el ingeniero de sistemas",
+    "tipo": "electiva",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [],
+    "semestre": 6
+  },
+  {
+    "id": 36,
+    "codigo": "1155604",
+    "nombre": "Sistemas operativos",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155504"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 37,
+    "codigo": "1155605",
+    "nombre": "Bases de datos",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 4,
+    "prerequisitos": [
+      "1155305"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 38,
+    "codigo": "1155606",
+    "nombre": "Programacion web",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 4,
+    "prerequisitos": [
+      "1155305-1155304"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 39,
+    "codigo": "1155607",
+    "nombre": "Constitucion y civismo",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "Cre:20"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 40,
+    "codigo": "1155608",
+    "nombre": "Planeacion estrategica de sistemas de inf",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "Cre:48"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 41,
+    "codigo": "1155609",
+    "nombre": "Seminario Integrador II",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "1155209-1155304"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 42,
+    "codigo": "1155611",
+    "nombre": "Proyecto social en ing de sistemas",
+    "tipo": "electiva",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "Cre:40"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 43,
+    "codigo": "1155612",
+    "nombre": "Crecimiento de negocios",
+    "tipo": "electiva",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "Cre:80"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 44,
+    "codigo": "1155613",
+    "nombre": "Analisis de datos en Python",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155305"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 45,
+    "codigo": "1155614",
+    "nombre": "Deuda tecninca en el desarrollo de software",
+    "tipo": "electiva",
+    "creditos": 0,
+    "hours": 0,
+    "prerequisitos": [
+      "1155305"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 46,
+    "codigo": "",
+    "nombre": "easter egg",
+    "tipo": "electiva",
+    "creditos": 0,
+    "hours": 0,
+    "prerequisitos": [
+      ""
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 47,
+    "codigo": "1155615",
+    "nombre": "Multimedia y realidad mixta",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155504"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 48,
+    "codigo": "1155616",
+    "nombre": "Aplicaciones practicas de teorias de grafos",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155404"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 49,
+    "codigo": "1155811",
+    "nombre": "Laboratorio de programacion",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155204 Cre:40"
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 50,
+    "codigo": "1156807",
+    "nombre": "Compiladores",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      ""
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 51,
+    "codigo": "1156808",
+    "nombre": "Las tic y educacion ambiental",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      ""
+    ],
+    "semestre": 6
+  },
+  {
+    "id": 52,
+    "codigo": "1155523",
+    "nombre": "Analitica de datos en modelos cognitivos",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155605"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 53,
+    "codigo": "1155704",
+    "nombre": "Teoria general de las comunicaciones",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155604"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 54,
+    "codigo": "1155705",
+    "nombre": "Analisis y diseño de sistemas",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "hours": 5,
+    "prerequisitos": [
+      "1155605"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 55,
+    "codigo": "1155706",
+    "nombre": "Seminario de investigacion III",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "1155506"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 56,
+    "codigo": "1155707",
+    "nombre": "Etica profesional",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "Cre:90"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 57,
+    "codigo": "1155708",
+    "nombre": "Administracion de proyecto informaticos",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155608"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 58,
+    "codigo": "1155709",
+    "nombre": "Tecnicas gerenciales y de negociación",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155608"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 59,
+    "codigo": "1155712",
+    "nombre": "Economía y finanzas",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155608"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 60,
+    "codigo": "1155713",
+    "nombre": "Bases de datos avanzadas",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155605"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 61,
+    "codigo": "1155714",
+    "nombre": "Transformación digital de las organizaciones",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155608"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 62,
+    "codigo": "1155715",
+    "nombre": "Soluciones tecnológicas en el contexto social",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155611"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 63,
+    "codigo": "1155716",
+    "nombre": "Analítica de datos",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155605"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 64,
+    "codigo": "1155717",
+    "nombre": "Hacking defensivo y ciberseguridad",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155604"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 65,
+    "codigo": "1156701",
+    "nombre": "Patrones de diseño",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155605"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 66,
+    "codigo": "1156702",
+    "nombre": "Gestión de bases de datos",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155605"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 67,
+    "codigo": "1156703",
+    "nombre": "Inteligencia artificial",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155304"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 68,
+    "codigo": "1156704",
+    "nombre": "Teoría de grafos",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155404"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 69,
+    "codigo": "1157007",
+    "nombre": "Desarrollo de aplicaciones basadas en microservicios",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155606-1155605"
+    ],
+    "semestre": 7
+  },
+  {
+    "id": 70,
+    "codigo": "1155804",
+    "nombre": "Redes de computadores",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155704"
+    ],
+    "semestre": 8
+  },
+  {
+    "id":71,
+    "codigo": "1155805",
+    "nombre": "Ingeniería de software",
+    "tipo": "obligatoria",
+    "creditos": 4,
+    "hours": 4,
+    "prerequisitos": [
+      "1155705"
+    ],
+    "semestre": 8
+  },
+  {
+    "id": 72,
+    "codigo": "1155808",
+    "nombre": "Formulación y evaluación de proyectos de sistemas",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155708"
+    ],
+    "semestre": 8
+  },
+  {
+    "id": 73,
+    "codigo": "1155809",
+    "nombre": "Seminario integrador III",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "1155705-1155609"
+    ],
+    "semestre": 8
+  },
+  {
+    "id": 74,
+    "codigo": "1155810",
+    "nombre": "Adquisiciones en la gestión de proyectos",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155708"
+    ],
+    "semestre": 8
+  },
+  {
+    "id": 75,
+    "codigo": "1156801",
+    "nombre": "Sistemas de información geografica",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155705"
+    ],
+    "semestre": 8
+  },
+  {
+    "id": 76,
+    "codigo": "1156802",
+    "nombre": "Informática educativa",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155705"
+    ],
+    "semestre": 8
+  },
+  {
+    "id": 77,
+    "codigo": "1156803",
+    "nombre": "Redes inalámbricas",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155704"
+    ],
+    "semestre": 8
+  },
+  {
+    "id": 78,
+    "codigo": "1156804",
+    "nombre": "Administración de so de red",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155604"
+    ],
+    "semestre": 8
+  },
+  {
+    "id": 79,
+    "codigo": "1156805",
+    "nombre": "Gerencia y tecnología",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155608"
+    ],
+    "semestre": 8
+  },
+  {
+    "id": 80,
+    "codigo": "1151060",
+    "nombre": "Deuda técnica en el desarrollo de software",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155805"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 81,
+    "codigo": "1155905",
+    "nombre": "Arquitectura de software",
+    "tipo": "obligatoria",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155805"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 82,
+    "codigo": "1155906",
+    "nombre": "Estrategias para la empleabilidad en sistemas",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155805"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 83,
+    "codigo": "1155908",
+    "nombre": "Gestión de TICs",
+    "tipo": "obligatoria",
+    "creditos": 2,
+    "hours": 2,
+    "prerequisitos": [
+      "1155808"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 84,
+    "codigo": "1155909",
+    "nombre": "Práctica en ingeniería de sistemas",
+    "tipo": "obligatoria",
+    "creditos": 6,
+    "hours": 4,
+    "prerequisitos": [
+      "Cre:130"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 85,
+    "codigo": "1155910",
+    "nombre": "Emprendimiento digital y transformacion tecnologica",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155808-1155705"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 86,
+    "codigo": "1156901",
+    "nombre": "Desarrollo de aplicaciones distribuidas",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155704-1155705"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 87,
+    "codigo": "1156902",
+    "nombre": "Seguridad informática",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155704"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 88,
+    "codigo": "1156903",
+    "nombre": "Proyecto académico opcional",
+    "tipo": "electiva",
+    "creditos": 15,
+    "hours": 6,
+    "prerequisitos": [
+      "Cre:150"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 89,
+    "codigo": "1156904",
+    "nombre": "Herramientas TIC para la gestion de proyectos",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155806"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 90,
+    "codigo": "1156906",
+    "nombre": "Auditoría de sistemas",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155805"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 91,
+    "codigo": "1156907",
+    "nombre": "Arquitectura dirigida para ontologias",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155805"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 92,
+    "codigo": "1159608",
+    "nombre": "Metodologías ágiles para desarrollo de software",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155805"
+    ],
+    "semestre": 9
+  },
+  {
+    "id": 93,
+    "codigo": "1151058",
+    "nombre": "Proyecto académico",
+    "tipo": "obligatoria",
+    "creditos": 15,
+    "hours": 6,
+    "prerequisitos": [
+      "Cre:150"
+    ],
+    "semestre": 10
+  },
+  {
+    "id": 94,
+    "codigo": "1156001",
+    "nombre": "Proyecto de grado",
+    "tipo": "obligatoria",
+    "creditos": 8,
+    "hours": 0,
+    "prerequisitos": [
+      "Cre:100"
+    ],
+    "semestre": 10
+  },
+  {
+    "id": 95,
+    "codigo": "1156910",
+    "nombre": "Redes neuronales",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [],
+    "semestre": 10
+  },
+  {
+    "id": 96,
+    "codigo": "1157001",
+    "nombre": "Sistemas de información avanzada",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155705"
+    ],
+    "semestre": 10
+  },
+  {
+    "id": 97,
+    "codigo": "1157002",
+    "nombre": "Redes convergentes",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155804"
+    ],
+    "semestre": 10
+  },
+  {
+    "id": 98,
+    "codigo": "1157003",
+    "nombre": "Informática jurídica",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": ["1155705"],
+    "semestre": 10
+  },
+  {
+    "id": 99,
+    "codigo": "1157004",
+    "nombre": "Computación en la nube",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155604"
+    ],
+    "semestre": 10
+  },
+  {
+    "id": 100,
+    "codigo": "1157005",
+    "nombre": "Minería de datos",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155606-1155605"
+    ],
+    "semestre": 10
+  },
+  {
+    "id": 101,
+    "codigo": "1157006",
+    "nombre": "Sistemas distribuidos",
+    "tipo": "electiva",
+    "creditos": 3,
+    "hours": 3,
+    "prerequisitos": [
+      "1155604"
+    ],
+    "semestre": 10
+  }
+]
