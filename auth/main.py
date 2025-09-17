@@ -24,8 +24,8 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 origins = [
-    "http://localhost:3000",           # frontend local
-    "https://electivas-jade.vercel.app"  # frontend en producción
+    "http://localhost:3000",
+    "https://electivas-jade.vercel.app"
 ]
 
 app.add_middleware(
