@@ -6,6 +6,7 @@ from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from passlib.context import CryptContext
+from fastapi.middleware.cors import CORSMiddleware
 import time
 import os
 
@@ -20,6 +21,20 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 # Configuración DB con retry
 DATABASE_URL = os.getenv("DATABASE_URL")
+
+
+origins = [
+    "http://localhost:3000",           # frontend local
+    "https://<tu-frontend>.railway.app"  # frontend en producción
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 engine = None
 for i in range(10):  # hasta 10 intentos

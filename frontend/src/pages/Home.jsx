@@ -8,15 +8,26 @@ export default function Home() {
   const [cursadas, setCursadas] = useState([]);
   const [courses, setCourses] = useState([]);
 
-  // Variable de entorno según tu setup
   const COURSES_URL = import.meta.env.VITE_COURSES_URL;
   console.log("COURSES_URL =", COURSES_URL);
 
   console.log("COURSES_URL =", COURSES_URL);
 
   useEffect(() => {
-    fetch(`${COURSES_URL}/courses`)
-      .then((res) => res.json())
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+    fetch(`${COURSES_URL}/courses`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorized");
+        return res.json();
+      })
       .then((data) => setCourses(data))
       .catch((err) => console.error("Error fetching courses:", err));
   }, [COURSES_URL]);
@@ -25,7 +36,9 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-background text-foreground items-center">
       <header className="w-full bg-black/40 border-b px-6 py-4 flex justify-between items-center">
         <h1 className="text-lg font-bold text-white">Horario Óptimo</h1>
-        <span className="text-sm text-gray-400">"username"</span>
+        <span className="text-sm text-gray-400">
+          {localStorage.getItem("email") || "Invitado"}
+        </span>
       </header>
 
       {cursadas.length <= 0 && (
