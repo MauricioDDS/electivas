@@ -9,9 +9,6 @@ export default function Home() {
   const [courses, setCourses] = useState([]);
 
   const COURSES_URL = import.meta.env.VITE_COURSES_URL;
-  console.log("COURSES_URL =", COURSES_URL);
-
-  console.log("COURSES_URL =", COURSES_URL);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
