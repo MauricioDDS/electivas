@@ -1,13 +1,13 @@
 services:
   courses-ms:
     build:
-      context: ./backend
+      context: ./course-service
     ports:
       - "8001:8000"
 
   auth-ms:
     build:
-      context: ./auth
+      context: ./auth-service
     ports:
       - "8002:8000"
     environment:
