@@ -3,23 +3,21 @@ import Pensum from "../components/Pensum";
 import CourseSelectModal from "../components/CourseSelectModal";
 import CourseCard from "../components/CourseCard";
 
+import { useAuth } from "@/hooks/useAuth";
+
 export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
   const [cursadas, setCursadas] = useState([]);
   const [courses, setCourses] = useState([]);
 
+  const { token, user, logout } = useAuth();
   const COURSES_URL = import.meta.env.VITE_COURSES_URL;
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      window.location.href = "/login";
-      return;
-    }
+    if (!token) return;
+
     fetch(`${COURSES_URL}/courses`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
         if (!res.ok) throw new Error("Unauthorized");
@@ -27,15 +25,29 @@ export default function Home() {
       })
       .then((data) => setCourses(data))
       .catch((err) => console.error("Error fetching courses:", err));
-  }, [COURSES_URL]);
+  }, [token, COURSES_URL]);
+
+  if (!token) {
+    window.location.href = "/signup";
+    return null;
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground items-center">
       <header className="w-full bg-black/40 border-b px-6 py-4 flex justify-between items-center">
         <h1 className="text-lg font-bold text-white">Horario Óptimo</h1>
-        <span className="text-sm text-gray-400">
-          {localStorage.getItem("email") || "Invitado"}
-        </span>
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-gray-400">
+            {user?.email || user?.username || "Invitado"}
+          </span>
+          {token && (
+            <button
+              onClick={logout}
+              className="px-3 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700">
+              Logout
+            </button>
+          )}
+        </div>
       </header>
 
       {cursadas.length <= 0 && (
