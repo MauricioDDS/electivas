@@ -3,17 +3,26 @@ services:
     build:
       context: ./course-service
     ports:
-      - "8001:8000"
+      - "8017:8000"
 
+  
   auth-ms:
     build:
       context: ./auth-service
-    ports:
-      - "8002:8000"
+    command: gunicorn auth_service.wsgi:application --bind 0.0.0.0:8000
     environment:
-      - DATABASE_URL=postgresql+psycopg2://auth_user:auth_pass@auth-db:5432/auth_db
+      DJANGO_SETTINGS_MODULE: auth_service.settings
+      DB_NAME: auth_db
+      DB_USER: auth_user
+      DB_PASSWORD: auth_pass
+      DB_HOST: auth-db
+      DB_PORT: "5432"
+      ALLOWED_HOSTS: "*"
     depends_on:
       - auth-db
+    ports:
+      - "8018:8000"
+  
 
   auth-db:
     image: postgres:15
@@ -30,6 +39,7 @@ services:
   frontend:
     build:
       context: ./frontend
+    # para dev con Vite usa 5173:5173 y cambia el Dockerfile/command
     ports:
       - "3000:80"
     depends_on:
