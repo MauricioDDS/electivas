@@ -13,10 +13,10 @@ COPY . .
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
-ENV DJANGO_SETTINGS_MODULE=auth_service.settings
+ENV DJANGO_SETTINGS_MODULE=course_service.settings
 
 # Expose port
 EXPOSE 8000
 
 # Run migrations before starting Gunicorn
-CMD ["sh", "-c", "python manage.py migrate && gunicorn auth_service.wsgi:application --bind 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn course_service.wsgi:application --bind 0.0.0.0:8000"]

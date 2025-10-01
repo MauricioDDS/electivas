@@ -1,20 +1,22 @@
+# Base image
 FROM python:3.11-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
-
+# Set work directory
 WORKDIR /app
 
-# Dependencias del sistema para Postgres
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential libpq-dev && \
-    rm -rf /var/lib/apt/lists/*
-
+# Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy project files
 COPY . .
 
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=auth_service.settings
+
+# Expose port
 EXPOSE 8000
 
-# Ejecutaremos el comando desde docker-compose (gunicorn)
+# Run migrations before starting Gunicorn
+CMD ["sh", "-c", "python manage.py migrate && gunicorn auth_service.wsgi:application --bind 0.0.0.0:8000"]
