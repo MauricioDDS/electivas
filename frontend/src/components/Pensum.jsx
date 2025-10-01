@@ -7,7 +7,6 @@ export default function Pensum({ onVerMas }) {
   const [columns, setColumns] = useState(colsDefault);
   const [courses, setCourses] = useState([]);
 
-  // ✅ Grab directly from Vite env
   const COURSES_URL = import.meta.env.VITE_COURSES_URL;
   console.log("Pensum COURSES_URL =", COURSES_URL);
   console.log("Fetching courses from:", COURSES_URL);

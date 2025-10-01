@@ -60,10 +60,8 @@ export function LoginForm({ className, ...props }) {
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Inicia Sesón a tu cuenta</CardTitle>
-          <CardDescription>
-            Introduce tu Email y Contraseña para continuar
-          </CardDescription>
+          <CardTitle>Inicia Sesón a tú cuenta</CardTitle>
+          <CardDescription>para ver tú horario ideal</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -73,7 +71,7 @@ export function LoginForm({ className, ...props }) {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="pepe@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -85,6 +83,7 @@ export function LoginForm({ className, ...props }) {
                   id="password"
                   type="password"
                   value={password}
+                  placeholder="*********"
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />

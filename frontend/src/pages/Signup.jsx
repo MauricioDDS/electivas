@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Header from "@/components/Header";
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -53,12 +54,14 @@ export default function Signup() {
   }
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <div className="min-h-screen flex flex-col bg-background text-foreground items-center">
+      <Header/>
+      <div className="flex flex-col min-h-svh w-full items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
         <Card>
           <CardHeader>
-            <CardTitle>Crear cuenta</CardTitle>
-            <CardDescription>Regístrate para continuar</CardDescription>
+            <CardTitle>Crea una cuenta</CardTitle>
+            <CardDescription>para ver tú horario ideal</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -67,6 +70,7 @@ export default function Signup() {
                 <Input
                   id="username"
                   value={form.username}
+                  placeholder="pepe115"
                   onChange={(e) =>
                     setForm({ ...form, username: e.target.value })
                   }
@@ -80,6 +84,7 @@ export default function Signup() {
                   id="email"
                   type="email"
                   value={form.email}
+                  placeholder="pepe@email.com"
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   required
                 />
@@ -91,6 +96,7 @@ export default function Signup() {
                   id="password"
                   type="password"
                   value={form.password}
+                  placeholder="*********"
                   onChange={(e) =>
                     setForm({ ...form, password: e.target.value })
                   }
@@ -112,6 +118,7 @@ export default function Signup() {
           </CardContent>
         </Card>
       </div>
+    </div>
     </div>
   );
 }

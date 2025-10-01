@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Pensum from "../components/Pensum";
 import CourseSelectModal from "../components/CourseSelectModal";
 import CourseCard from "../components/CourseCard";
+import Header from "@/components/Header";
 
 import { useAuth } from "@/hooks/useAuth";
 
@@ -34,21 +35,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground items-center">
-      <header className="w-full bg-black/40 border-b px-6 py-4 flex justify-between items-center">
-        <h1 className="text-lg font-bold text-white">Horario Óptimo</h1>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-400">
-            {user?.email || user?.username || "Invitado"}
-          </span>
-          {token && (
-            <button
-              onClick={logout}
-              className="px-3 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700">
-              Logout
-            </button>
-          )}
-        </div>
-      </header>
+      <Header />
 
       {cursadas.length <= 0 && (
         <div className="mb-4 flex items-center">
