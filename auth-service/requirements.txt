@@ -1,7 +1,9 @@
-fastapi
-uvicorn
-sqlalchemy
-psycopg2-binary
-passlib[bcrypt]
-python-jose
-python-multipart
+asgiref==3.9.2
+Django==5.2.6
+django-cors-headers==4.9.0
+djangorestframework==3.16.1
+djangorestframework_simplejwt==5.5.1
+PyJWT==2.10.1
+sqlparse==0.5.3
+gunicorn==22.0.0
+psycopg2-binary==2.9.9
