@@ -62,8 +62,8 @@ export default function Signup() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <div>
-                <Label htmlFor="username">Username</Label>
+              <div className="grid gap-3">
+                <Label htmlFor="username">Nombre de Usuario</Label>
                 <Input
                   id="username"
                   value={form.username}
@@ -73,7 +73,8 @@ export default function Signup() {
                   required
                 />
               </div>
-              <div>
+
+              <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -83,8 +84,9 @@ export default function Signup() {
                   required
                 />
               </div>
-              <div>
-                <Label htmlFor="password">Password</Label>
+
+              <div className="grid gap-3">
+                <Label htmlFor="password">Contrseña</Label>
                 <Input
                   id="password"
                   type="password"
@@ -95,20 +97,24 @@ export default function Signup() {
                   required
                 />
               </div>
-              <div>
+
+              <div className="grid gap-3">
                 <Label htmlFor="role">Rol</Label>
                 <select
                   id="role"
                   value={form.role}
                   onChange={(e) => setForm({ ...form, role: e.target.value })}
-                  className="border rounded p-2 w-full text-white bg-gray-800">
+                  className="border rounded p-2 w-full text-white"
+                  style={{ backgroundColor: "#18181B" }}>
                   <option value="ESTUDIANTE">Estudiante</option>
                   <option value="DOCENTE">Docente</option>
                 </select>
               </div>
+
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? "Registrando..." : "Sign up"}
               </Button>
+
               <div className="text-sm text-center mt-4">
                 ¿Ya tienes cuenta?{" "}
                 <a href="/login" className="text-blue-400 hover:underline">
