@@ -101,7 +101,7 @@ export default function Signup() {
                   id="role"
                   value={form.role}
                   onChange={(e) => setForm({ ...form, role: e.target.value })}
-                  className="border rounded p-2 w-full">
+                  className="border rounded p-2 w-full text-white bg-gray-800">
                   <option value="ESTUDIANTE">Estudiante</option>
                   <option value="DOCENTE">Docente</option>
                 </select>
