@@ -18,7 +18,7 @@ export default function Signup() {
     password: "",
     first_name: "",
     last_name: "",
-    role: "ESTUDIANTE", // default
+    role: "ESTUDIANTE",
   });
   const [loading, setLoading] = useState(false);
 
@@ -96,19 +96,6 @@ export default function Signup() {
                   }
                   required
                 />
-              </div>
-
-              <div className="grid gap-3">
-                <Label htmlFor="role">Rol</Label>
-                <select
-                  id="role"
-                  value={form.role}
-                  onChange={(e) => setForm({ ...form, role: e.target.value })}
-                  className="border rounded p-2 w-full text-white"
-                  style={{ backgroundColor: "#18181B" }}>
-                  <option value="ESTUDIANTE">Estudiante</option>
-                  <option value="DOCENTE">Docente</option>
-                </select>
               </div>
 
               <Button type="submit" className="w-full" disabled={loading}>
