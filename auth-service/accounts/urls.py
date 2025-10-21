@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     RegisterView, MeView, LogoutView,
-    DocenteOnlyView, EstudianteOnlyView,
+    EstudianteOnlyView, UserListView, UserDetailView, UpdateUserRoleView, 
     CustomTokenObtainPairView, CustomTokenRefreshView
 )
 
@@ -11,7 +11,10 @@ urlpatterns = [
     path("refresh/", CustomTokenRefreshView.as_view(), name="refresh"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("me/", MeView.as_view(), name="me"),
-    # ejemplos de endpoints con permisos por rol:
-    path("only-docente/", DocenteOnlyView.as_view(), name="only-docente"),
+    
+    #ENDPOINTS DE ADMIN
+    path("users/", UserListView.as_view(), name="user-list"),
+    path("users/<int:pk>/", UserDetailView.as_view(), name="user-detail"),
+    path("users/<int:pk>/role/", UpdateUserRoleView.as_view(), name="user-update-role"),
     path("only-estudiante/", EstudianteOnlyView.as_view(), name="only-estudiante"),
 ]

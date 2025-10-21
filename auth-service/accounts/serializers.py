@@ -14,6 +14,11 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["username", "email", "password", "first_name", "last_name", "role"]
+        extra_kwargs = {
+            "role": {"required": False},
+        }
 
     def create(self, validated_data):
+        if "role" not in validated_data:
+            validated_data["role"] = "ESTUDIANTE"
         return User.objects.create_user(**validated_data)
