@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import AdminUsersModal from "@/components/AdminUsersModal";
 
 const AUTH_URL =
-  window._env_?.VITE_AUTH_URL ||
   import.meta.env.VITE_AUTH_URL
 
 export default function Profile() {
@@ -25,13 +24,13 @@ export default function Profile() {
 
   const fetchRecentUsers = async (userRole) => {
     if (!token || userRole !== "ADMIN") return;
-    
+
     setLoadingUsers(true);
     try {
       const res = await fetch(`${AUTH_URL}/users/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       if (res.ok) {
         const users = await res.json();
         const sortedUsers = users.sort((a, b) => b.id - a.id).slice(0, 3);
@@ -72,7 +71,7 @@ export default function Profile() {
         setMe(data);
         if (!firstName) setFirstName(data.first_name || "");
         if (!lastName) setLastName(data.last_name || "");
-        
+
         if (data.role === "ADMIN") {
           fetchRecentUsers(data.role);
         }
@@ -164,7 +163,6 @@ export default function Profile() {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="col-span-1 space-y-6">
-            {/* Profile card */}
             <section className="bg-card rounded-2xl p-6 shadow-lg border">
               <div className="flex items-center gap-4">
                 <div>
@@ -172,7 +170,6 @@ export default function Profile() {
                   <p className="text-sm text-muted-foreground">{me.email}</p>
                 </div>
               </div>
-
               <form onSubmit={handleSave} className="mt-6 space-y-4">
                 <div>
                   <label className="text-sm font-medium block mb-1">Nombre</label>
@@ -182,7 +179,6 @@ export default function Profile() {
                     onChange={(e) => setFirstName(e.target.value)}
                   />
                 </div>
-
                 <div>
                   <label className="text-sm font-medium block mb-1">Apellido</label>
                   <input
@@ -191,16 +187,14 @@ export default function Profile() {
                     onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
-
                 <div className="flex items-center gap-3">
                   <button
                     type="submit"
                     disabled={!hasChanges || saving}
-                    className={`px-4 py-2 rounded-md text-white text-sm font-medium shadow-lg transition ${
-                      !hasChanges || saving
+                    className={`px-4 py-2 rounded-md text-white text-sm font-medium shadow-lg transition ${!hasChanges || saving
                         ? "bg-gray-500 cursor-not-allowed"
                         : "bg-orange-600 hover:bg-orange-700"
-                    }`}
+                      }`}
                   >
                     {saving ? "Guardando..." : "Guardar cambios"}
                   </button>
@@ -210,23 +204,27 @@ export default function Profile() {
               </form>
             </section>
 
-            {/* Admin card - only show for admin users */}
             {me.role === "ADMIN" && (
-              <section className="bg-card rounded-2xl p-6 shadow-lg border">
+              // Fixed-size card for recent users: h-64 (static height), inner list scrolls
+              <section className="bg-card rounded-2xl p-6 shadow-lg border h-64 flex flex-col">
                 <h3 className="text-lg font-bold mb-4">Últimos Usuarios Registrados</h3>
 
-                <div className="mt-6">
+                <div className="mt-2 flex-1 overflow-y-auto">
                   {loadingUsers ? (
                     <div className="text-center py-4 text-muted-foreground">
                       Cargando usuarios...
                     </div>
-                  ) : recentUsers.length > 0 ? (
-                    <div className="space-y-3">
-                      {recentUsers.map((user) => (
-                        <div key={user.id} className="flex items-center gap-3 p-3 rounded-md border">
-                          <div className="flex-1">
-                            <p className="font-medium text-sm">{user.username}</p>
-                            <p className="text-xs text-muted-foreground">{user.email}</p>
+                  ) : recentUsers && recentUsers.length > 0 ? (
+                    <div className="space-y-2 px-1">
+                      {recentUsers.slice(0, 3).map((user) => (
+                        // each row has fixed height to keep cards static
+                        <div
+                          key={user.id}
+                          className="flex items-center gap-3 p-3 rounded-md border h-14"
+                        >
+                          <div className="flex-1 overflow-hidden">
+                            <p className="font-medium text-sm truncate">{user.username}</p>
+                            <p className="text-xs text-muted-foreground truncate">{user.email}</p>
                           </div>
                           <div className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700">
                             {user.role}
@@ -241,26 +239,23 @@ export default function Profile() {
                   )}
                 </div>
 
-                <div className="mt-6">
+                <div className="mt-4 pt-2 border-t flex-shrink-0">
                   <button
                     onClick={() => setShowAdminModal(true)}
-                    className="px-4 py-2 rounded-md bg-orange-600 text-white text-sm font-medium shadow-lg hover:bg-orange-700 transition"
+                    className="w-full px-4 py-2 rounded-md bg-orange-600 text-white text-sm font-medium shadow-lg hover:bg-orange-700 transition"
                   >
                     Ver más
                   </button>
                 </div>
               </section>
             )}
+
           </div>
 
-          {/* Right column: calendar */}
           <section className="col-span-3 lg:col-span-3">
             <div className="bg-card rounded-2xl p-6 shadow-lg border h-full min-h-[480px]">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-bold">Horario</h3>
-                <div className="text-sm text-muted-foreground">
-                  Aquí irá el calendario
-                </div>
               </div>
 
               <div className="h-[420px] rounded-md border border-dashed flex items-center justify-center text-gray-400">
@@ -269,7 +264,6 @@ export default function Profile() {
                 </div>
               </div>
 
-              {/* opcional: lista rápida de datos de usuario */}
               <div className="mt-6 grid grid-cols-2 gap-3">
                 <div className="p-3 rounded-md border">
                   <p className="text-xs text-muted-foreground">Usuario</p>
@@ -285,7 +279,6 @@ export default function Profile() {
         </div>
       </main>
 
-      {/* Admin Users Modal */}
       {showAdminModal && (
         <AdminUsersModal
           token={token}

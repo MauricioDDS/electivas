@@ -79,7 +79,6 @@ export default function AdminUsersModal({ token, authUrl, onClose }) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.detail || "Error updating active flag");
       }
-      // Update local state
       setUsers((prev) => prev.map((u) => (u.id === userId ? { ...u, is_active: !isActive } : u)));
     } catch (e) {
       console.error("toggleActive error:", e);
@@ -144,8 +143,6 @@ export default function AdminUsersModal({ token, authUrl, onClose }) {
                   <th className="text-left px-3 py-2 text-sm font-medium text-foreground">Usuario</th>
                   <th className="text-left px-3 py-2 text-sm font-medium text-foreground">Email</th>
                   <th className="text-left px-3 py-2 text-sm font-medium text-foreground">Rol</th>
-                  <th className="text-left px-3 py-2 text-sm font-medium text-foreground">Activo</th>
-                  <th className="text-left px-3 py-2 text-sm font-medium text-foreground">Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -155,7 +152,6 @@ export default function AdminUsersModal({ token, authUrl, onClose }) {
                     <td className="px-3 py-2 text-sm text-foreground">{user.username}</td>
                     <td className="px-3 py-2 text-sm text-foreground">{user.email}</td>
                     <td className="px-3 py-2 text-sm text-foreground">{user.role}</td>
-                    <td className="px-3 py-2 text-sm text-foreground">{user.is_active ? "Sí" : "No"}</td>
                     <td className="px-3 py-2 text-sm flex gap-2">
                       <button
                         className="px-3 py-1 rounded-md bg-orange-600 text-white text-xs font-medium shadow-lg hover:bg-orange-700 transition"
@@ -165,30 +161,12 @@ export default function AdminUsersModal({ token, authUrl, onClose }) {
                       >
                         {user.role === "ADMIN" ? "Quitar Admin" : "Hacer Admin"}
                       </button>
-
-                      <button
-                        className="px-3 py-1 rounded-md bg-yellow-600 text-white text-xs font-medium shadow-lg hover:bg-yellow-700 transition"
-                        onClick={() => toggleActive(user.id, user.is_active)}
-                        disabled={busy}
-                        title="Activar / Desactivar"
-                      >
-                        {user.is_active ? "Desactivar" : "Activar"}
-                      </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </div>
-
-        <div className="mt-4 flex justify-end">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 rounded-md bg-orange-600 text-white text-sm font-medium shadow-lg hover:bg-orange-700 transition"
-          >
-            Cerrar
-          </button>
         </div>
       </div>
     </div>

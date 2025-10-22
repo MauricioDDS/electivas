@@ -5,9 +5,7 @@ export function useAuth() {
   const [user, setUser] = useState(null);
 
   const AUTH_URL =
-    window._env_?.VITE_AUTH_URL ||
-    import.meta.env.VITE_AUTH_URL ||
-    "http://localhost:8018/api/auth";
+    import.meta.env.VITE_AUTH_URL;
 
   useEffect(() => {
     if (!token) {

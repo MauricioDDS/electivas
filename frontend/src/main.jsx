@@ -6,7 +6,6 @@ import "./index.css";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import Signup from "./pages/Signup";
-import AdminUsers from "./pages/AdminUsers";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -42,7 +41,6 @@ createRoot(document.getElementById("root")).render(
             </ProtectedRoute>
           }
         />
-        <Route path="/admin/users" element={<AdminUsers />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
