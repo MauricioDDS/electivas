@@ -31,8 +31,8 @@ export default function Pensum({ onVerMas }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const visible = colsDefault * rows;
-  const topCount = colsDefault * 2;
+  const visible = columns * rows;
+  const topCount = columns * 2;
   const topHalf = courses.slice(0, Math.min(topCount, courses.length));
   const bottomHalf = courses.slice(
     Math.min(topCount, courses.length),
@@ -58,7 +58,7 @@ export default function Pensum({ onVerMas }) {
           ))}
 
           {bottomHalf.map((c, idx) => {
-            const filaIndex = Math.floor(idx / colsDefault);
+            const filaIndex = Math.floor(idx / columns);
             const opacity =
               filaIndex === 0 ? 0.65 : filaIndex === 1 ? 0.35 : 0.18;
             return (

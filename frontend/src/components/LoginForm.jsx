@@ -93,7 +93,7 @@ export function LoginForm({ className, ...props }) {
               </Button>
               <div className="text-sm text-center mt-4">
                 ¿No tienes cuenta?{" "}
-                <a href="/signup" className="text-blue-400 hover:underline">
+                <a href="/signup" className="text-primary hover:text-primary/80 font-medium">
                   Regístrate aquí
                 </a>
               </div>

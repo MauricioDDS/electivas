@@ -16,10 +16,22 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
 
-class MeView(generics.RetrieveAPIView):
+class MeView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
     def get_object(self):
         return self.request.user
+
+    def patch(self, request, *args, **kwargs):
+        user = self.get_object()
+        data = request.data
+
+        user.first_name = data.get("first_name", user.first_name)
+        user.last_name = data.get("last_name", user.last_name)
+        user.save()
+
+        return Response(UserSerializer(user).data)
 
 class EstudianteOnlyView(APIView):
     permission_classes = [IsEstudiante]
