@@ -19,12 +19,10 @@ export default function Profile() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState(null);
 
-  // Admin-specific state
   const [recentUsers, setRecentUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [showAdminModal, setShowAdminModal] = useState(false);
 
-  // Function to fetch recent users for admin
   const fetchRecentUsers = async (userRole) => {
     if (!token || userRole !== "ADMIN") return;
     
@@ -36,7 +34,6 @@ export default function Profile() {
       
       if (res.ok) {
         const users = await res.json();
-        // Sort by ID descending (assuming higher ID = more recent) and take first 3
         const sortedUsers = users.sort((a, b) => b.id - a.id).slice(0, 3);
         setRecentUsers(sortedUsers);
       }
@@ -50,7 +47,6 @@ export default function Profile() {
   useEffect(() => {
     if (user) {
       setMe(user);
-      // Only set initial values if they're empty to avoid overriding user input
       if (!firstName) setFirstName(user.first_name || "");
       if (!lastName) setLastName(user.last_name || "");
       return;
@@ -74,18 +70,15 @@ export default function Profile() {
       })
       .then((data) => {
         setMe(data);
-        // Only set initial values if they're empty to avoid overriding user input
         if (!firstName) setFirstName(data.first_name || "");
         if (!lastName) setLastName(data.last_name || "");
         
-        // Fetch recent users if admin
         if (data.role === "ADMIN") {
           fetchRecentUsers(data.role);
         }
       })
       .catch((err) => {
         console.error("Error fetching profile:", err);
-        // si token inválido forzamos logout
         logout();
       })
       .finally(() => setLoading(false));
@@ -104,7 +97,7 @@ export default function Profile() {
 
     try {
       const res = await fetch(`${AUTH_URL}/me/`, {
-        method: "PATCH", // important trailing slash on URL
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -129,13 +122,11 @@ export default function Profile() {
         throw new Error(errMsg);
       }
 
-      // success
       const updated = body;
       setMe(updated);
       setMessage("Nombre actualizado correctamente.");
 
       if (login && typeof login === "function") {
-        // simple trigger: keep token same to re-run useAuth effect
         login(token);
       }
     } catch (err) {
@@ -172,14 +163,10 @@ export default function Profile() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Left column: profile and admin cards */}
           <div className="col-span-1 space-y-6">
             {/* Profile card */}
             <section className="bg-card rounded-2xl p-6 shadow-lg border">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-orange-600 to-red-600 flex items-center justify-center text-white font-bold text-xl">
-                  {me.username?.charAt(0)?.toUpperCase() || "U"}
-                </div>
                 <div>
                   <h2 className="font-semibold text-lg">{me.username}</h2>
                   <p className="text-sm text-muted-foreground">{me.email}</p>
@@ -237,9 +224,6 @@ export default function Profile() {
                     <div className="space-y-3">
                       {recentUsers.map((user) => (
                         <div key={user.id} className="flex items-center gap-3 p-3 rounded-md border">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-600 to-red-600 flex items-center justify-center text-white font-bold text-sm">
-                            {user.username?.charAt(0)?.toUpperCase() || "U"}
-                          </div>
                           <div className="flex-1">
                             <p className="font-medium text-sm">{user.username}</p>
                             <p className="text-xs text-muted-foreground">{user.email}</p>
@@ -275,16 +259,13 @@ export default function Profile() {
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-bold">Horario</h3>
                 <div className="text-sm text-muted-foreground">
-                  Aquí irá el calendario (FullCalendar)
+                  Aquí irá el calendario
                 </div>
               </div>
 
               <div className="h-[420px] rounded-md border border-dashed flex items-center justify-center text-gray-400">
                 <div className="text-center px-6">
-                  <p className="font-medium mb-2">Calendario (placeholder)</p>
-                  <p className="text-sm">
-                    Integrarás FullCalendar aquí para mostrar tu horario y eventos.
-                  </p>
+                  <p className="font-medium mb-2">Calendario</p>
                 </div>
               </div>
 

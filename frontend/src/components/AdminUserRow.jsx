@@ -101,15 +101,6 @@ export default function AdminUserRow({ user, token, authUrl, onView, onUpdated }
         </button>
 
         <button
-          className="px-2 py-1 rounded bg-yellow-600 text-white text-xs"
-          onClick={toggleActive}
-          disabled={busy}
-          title="Activar / Desactivar"
-        >
-          {user.is_active ? "Desactivar" : "Activar"}
-        </button>
-
-        <button
           className="px-2 py-1 rounded bg-red-600 text-white text-xs"
           onClick={handleDelete}
           disabled={busy}
