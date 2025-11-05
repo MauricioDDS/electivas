@@ -5,7 +5,6 @@ services:
     ports:
       - "8017:8000"
 
-  
   auth-ms:
     build:
       context: ./auth-service
@@ -22,7 +21,6 @@ services:
       - auth-db
     ports:
       - "8018:8000"
-  
 
   auth-db:
     image: postgres:15
@@ -39,12 +37,21 @@ services:
   frontend:
     build:
       context: ./frontend
-    # para dev con Vite usa 5173:5173 y cambia el Dockerfile/command
     ports:
       - "3000:80"
     depends_on:
       - courses-ms
       - auth-ms
+
+  scraper-ms:
+    build:
+      context: ./scraper-service
+      dockerfile: Dockerfile
+    env_file:
+      - ./scraper-service/.env
+    ports:
+      - "4004:4004"
+    restart: unless-stopped
 
 volumes:
   auth_db_data:

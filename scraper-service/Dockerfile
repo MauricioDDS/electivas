@@ -9,5 +9,6 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 4004
-CMD ["node", "dist/server.js"]
+EXPOSE 3000
+
+CMD ["node", "build/index.js"]
