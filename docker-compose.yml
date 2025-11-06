@@ -12,6 +12,22 @@ services:
       - "5433:5432"
     volumes:
       - auth_db_data:/var/lib/postgresql/data
+  courses-ms:
+    build:
+      context: ./course-service
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment:
+      ADMIN_KEY: "superKey123"
+      SCRAPER_HOST: "http://scraper-ms:4004"
+      SCRAPER_PENSUM_PATH: "/pensum"
+      COURSES_JSON_PATH: "/app/courses.json"
+      REQUEST_TIMEOUT: "300"
+    depends_on:
+      - scraper-ms
+    ports:
+      - "8017:8000"
+    volumes:
+      - ./course-service:/app
 
   auth-ms:
     build:
@@ -81,6 +97,9 @@ services:
     command: >
       sh -c "python manage.py migrate --noinput &&
             gunicorn groups_service.wsgi:application --bind 0.0.0.0:8000"
+      context: ./frontend
+    ports:
+      - "3000:80"
     depends_on:
       - groups-db
       - rabbitmq
@@ -109,6 +128,16 @@ services:
     depends_on:
       - groups-db
       - rabbitmq
+
+  scraper-ms:
+    build:
+      context: ./scraper-service
+      dockerfile: Dockerfile
+    env_file:
+      - ./scraper-service/.env
+    ports:
+      - "4004:4004"
+    restart: unless-stopped
 
 volumes:
   auth_db_data:

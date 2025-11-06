@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/Header";
 import { useNavigate } from "react-router-dom";
 import AdminUsersModal from "@/components/AdminUsersModal";
+import AdminPensumSync from "@/components/AdminPensumSync";
 
 const AUTH_URL =
   import.meta.env.VITE_AUTH_URL
@@ -205,7 +206,6 @@ export default function Profile() {
             </section>
 
             {me.role === "ADMIN" && (
-              // Fixed-size card for recent users: h-64 (static height), inner list scrolls
               <section className="bg-card rounded-2xl p-6 shadow-lg border h-64 flex flex-col">
                 <h3 className="text-lg font-bold mb-4">Últimos Usuarios Registrados</h3>
 
@@ -217,7 +217,6 @@ export default function Profile() {
                   ) : recentUsers && recentUsers.length > 0 ? (
                     <div className="space-y-2 px-1">
                       {recentUsers.slice(0, 3).map((user) => (
-                        // each row has fixed height to keep cards static
                         <div
                           key={user.id}
                           className="flex items-center gap-3 p-3 rounded-md border h-14"
@@ -248,6 +247,10 @@ export default function Profile() {
                   </button>
                 </div>
               </section>
+            )}
+
+            {me.role === "ADMIN" && (
+              <AdminPensumSync/>
             )}
 
           </div>
