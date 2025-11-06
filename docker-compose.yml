@@ -1,7 +1,7 @@
-version: '3.9'
+version: "3.9"
 
 services:
-  # =============== BASE EXISTENTE ===============
+  # =============== DATABASES & RABBITMQ ===============
   auth-db:
     image: postgres:15
     environment:
@@ -12,6 +12,28 @@ services:
       - "5433:5432"
     volumes:
       - auth_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  groups-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: groups_db
+      POSTGRES_USER: groups_user
+      POSTGRES_PASSWORD: groups_pass
+    volumes:
+      - groups_db_data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: unless-stopped
+
+  # =============== MICROSERVICES ===============
   courses-ms:
     build:
       context: ./course-service
@@ -28,6 +50,7 @@ services:
       - "8017:8000"
     volumes:
       - ./course-service:/app
+    restart: unless-stopped
 
   auth-ms:
     build:
@@ -41,42 +64,22 @@ services:
       DB_USER: auth_user
       DB_PASSWORD: auth_pass
       DB_HOST: auth-db
-      DB_PORT: '5432'
-      ALLOWED_HOSTS: '*'
+      DB_PORT: "5432"
+      ALLOWED_HOSTS: "*"
     depends_on:
       - auth-db
     ports:
       - "8018:8000"
-
-  courses-ms:
-    build:
-      context: ./course-service
-    ports:
-      - "8017:8000"
-
-  # =============== NUEVOS SERVICIOS ===============
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
-  groups-db:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: groups_db
-      POSTGRES_USER: groups_user
-      POSTGRES_PASSWORD: groups_pass
     volumes:
-      - groups_db_data:/var/lib/postgresql/data
-    ports:
-      - "5435:5432"
+      - ./auth-service:/app
+    restart: unless-stopped
 
   groups-ms:
     build:
       context: ./groups-service
-    volumes:
-    - ./groups-service:/app
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             gunicorn groups_service.wsgi:application --bind 0.0.0.0:8000"
     environment:
       DJANGO_SETTINGS_MODULE: groups_service.settings
       DB_NAME: groups_db
@@ -94,12 +97,6 @@ services:
       EMAIL_HOST_PASSWORD: "tu_contraseña_o_app_password"
       DEFAULT_FROM_EMAIL: "tu_correo@gmail.com"
       ALLOWED_HOSTS: "*"
-    command: >
-      sh -c "python manage.py migrate --noinput &&
-            gunicorn groups_service.wsgi:application --bind 0.0.0.0:8000"
-      context: ./frontend
-    ports:
-      - "3000:80"
     depends_on:
       - groups-db
       - rabbitmq
@@ -107,12 +104,13 @@ services:
       - courses-ms
     ports:
       - "8020:8000"
+    volumes:
+      - ./groups-service:/app
+    restart: unless-stopped
 
   groups-worker:
     build:
       context: ./groups-service
-    volumes:
-    - ./groups-service:/app
     command: celery -A groups_service.celery worker -l info
     environment:
       DJANGO_SETTINGS_MODULE: groups_service.settings
@@ -128,6 +126,18 @@ services:
     depends_on:
       - groups-db
       - rabbitmq
+    volumes:
+      - ./groups-service:/app
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - courses-ms
+      - auth-ms
 
   scraper-ms:
     build:
