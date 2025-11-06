@@ -2,8 +2,19 @@ services:
   courses-ms:
     build:
       context: ./course-service
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment:
+      ADMIN_KEY: "superKey123"
+      SCRAPER_HOST: "http://scraper-ms:4004"
+      SCRAPER_PENSUM_PATH: "/pensum"
+      COURSES_JSON_PATH: "/app/courses.json"
+      REQUEST_TIMEOUT: "300"
+    depends_on:
+      - scraper-ms
     ports:
       - "8017:8000"
+    volumes:
+      - ./course-service:/app
 
   auth-ms:
     build:
