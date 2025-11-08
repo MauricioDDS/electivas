@@ -1,0 +1,184 @@
+version: '3.9'
+
+services:
+  # =============== BASE EXISTENTE ===============
+  auth-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_pass
+      POSTGRES_DB: auth_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+
+  auth-ms:
+    build:
+      context: ./auth-service
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             gunicorn auth_service.wsgi:application --bind 0.0.0.0:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: auth_service.settings
+      DB_NAME: auth_db
+      DB_USER: auth_user
+      DB_PASSWORD: auth_pass
+      DB_HOST: auth-db
+      DB_PORT: "5432"
+      ALLOWED_HOSTS: "*"
+    depends_on:
+      - auth-db
+    ports:
+      - "8018:8000"
+
+  courses-ms:
+    build:
+      context: ./course-service
+    ports:
+      - "8017:8000"
+
+  # =============== MENSAJERÍA ===============
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  # =============== GROUPS SERVICE ===============
+  groups-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: groups_db
+      POSTGRES_USER: groups_user
+      POSTGRES_PASSWORD: groups_pass
+    volumes:
+      - groups_db_data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+
+  groups-ms:
+    build:
+      context: ./groups-service
+    volumes:
+      - ./groups-service:/app
+    environment:
+      DJANGO_SETTINGS_MODULE: groups_service.settings
+      DB_NAME: groups_db
+      DB_USER: groups_user
+      DB_PASSWORD: groups_pass
+      DB_HOST: groups-db
+      DB_PORT: "5432"
+      AUTH_BASE_URL: "http://auth-ms:8000/api/auth"
+      COURSES_BASE_URL: "http://courses-ms:8000"
+      CELERY_BROKER_URL: "amqp://guest:guest@rabbitmq:5672//"
+      CELERY_RESULT_BACKEND: "rpc://"
+      EMAIL_HOST: "smtp.gmail.com"
+      EMAIL_PORT: "587"
+      EMAIL_HOST_USER: "andresjulianoj@ufps.edu.co"
+      EMAIL_HOST_PASSWORD: "sgmbnlcppdfvfema"
+      DEFAULT_FROM_EMAIL: "andresjulianoj@ufps.edu.co"
+      PROGRAM_EMAIL: "andresjulianoj@ufps.edu.co"
+      ALLOWED_HOSTS: "*"
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             gunicorn groups_service.wsgi:application --bind 0.0.0.0:8000"
+    depends_on:
+      - groups-db
+      - rabbitmq
+      - auth-ms
+      - courses-ms
+    ports:
+      - "8020:8000"
+
+  groups-worker:
+    build:
+      context: ./groups-service
+    volumes:
+      - ./groups-service:/app
+    command: celery -A groups_service.celery worker -l info
+    environment:
+      DJANGO_SETTINGS_MODULE: groups_service.settings
+      CELERY_BROKER_URL: "amqp://guest:guest@rabbitmq:5672//"
+      CELERY_RESULT_BACKEND: "rpc://"
+      AUTH_BASE_URL: "http://auth-ms:8000/api/auth"
+      COURSES_BASE_URL: "http://courses-ms:8000"
+      EMAIL_HOST: "smtp.gmail.com"
+      EMAIL_PORT: "587"
+      EMAIL_HOST_USER: "tu_correo@gmail.com"
+      EMAIL_HOST_PASSWORD: "tu_contraseña_o_app_password"
+      DEFAULT_FROM_EMAIL: "tu_correo@gmail.com"
+    depends_on:
+      - groups-db
+      - rabbitmq
+
+  # =============== REQUESTS SERVICE (NUEVO) ===============
+  requests-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: requests_db
+      POSTGRES_USER: requests_user
+      POSTGRES_PASSWORD: requests_pass
+    volumes:
+      - requests_db_data:/var/lib/postgresql/data
+    ports:
+      - "5436:5432"
+
+  requests-ms:
+    build:
+      context: ./requests-service
+    volumes:
+      - ./requests-service:/app
+    environment:
+      DJANGO_SETTINGS_MODULE: requests_service.settings
+      DB_HOST: requests-db
+      DB_PORT: "5432"
+      DB_NAME: requests_db
+      DB_USER: requests_user
+      DB_PASSWORD: requests_pass
+
+      GROUPS_BASE_URL: "http://groups-ms:8000"
+
+      EMAIL_HOST: "smtp.gmail.com"
+      EMAIL_PORT: "587"
+      EMAIL_HOST_USER: "andresjulianoj@ufps.edu.co"
+      EMAIL_HOST_PASSWORD: "sgmbnlcppdfvfema"
+      DEFAULT_FROM_EMAIL: "andresjulianoj@ufps.edu.co"
+      PROGRAM_EMAIL: "andresjulianoj@ufps.edu.co"
+
+      CELERY_BROKER_URL: "amqp://guest:guest@rabbitmq:5672//"
+      CELERY_RESULT_BACKEND: "rpc://"
+      ALLOWED_HOSTS: "*"
+    depends_on:
+      - requests-db
+      - rabbitmq
+      - groups-ms
+    ports:
+      - "8021:8000"
+
+  requests-worker:
+    build:
+      context: ./requests-service
+    volumes:
+      - ./requests-service:/app
+    command: celery -A requests_service.celery worker -l info
+    environment:
+      DJANGO_SETTINGS_MODULE: requests_service.settings
+      CELERY_BROKER_URL: "amqp://guest:guest@rabbitmq:5672//"
+      CELERY_RESULT_BACKEND: "rpc://"
+      EMAIL_HOST: "smtp.gmail.com"
+      EMAIL_PORT: "587"
+      EMAIL_HOST_USER: "andresjulianoj@ufps.edu.co"
+      EMAIL_HOST_PASSWORD: "sgmbnlcppdfvfema"
+      DEFAULT_FROM_EMAIL: "andresjulianoj@ufps.edu.co"
+      GROUPS_BASE_URL: "http://groups-ms:8000"
+      PROGRAM_EMAIL: "andresjulianoj@ufps.edu.co"
+    depends_on:
+      - requests-db
+      - rabbitmq
+      - requests-ms
+
+volumes:
+  auth_db_data:
+  groups_db_data:
+  requests_db_data:
