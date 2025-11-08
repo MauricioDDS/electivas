@@ -7,10 +7,8 @@ import Home from "./pages/Home";
 import Login from "./components/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
+import EnrollmentRequestModal from "./components/enrollment-request-modal"
 import ProtectedRoute from "./components/ProtectedRoute";
-import CoursesList from "@/pages/CoursesList";
-import CourseDetail from "@/pages/CourseDetail";
-
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations()
@@ -36,8 +34,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/courses" element={<CoursesList />} />
-        <Route path="/course/:code" element={<CourseDetail />} />
+        <Route path="/enrollment" element={<EnrollmentRequestModal />} />
         <Route
           path="/"
           element={

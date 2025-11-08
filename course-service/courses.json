@@ -1,3789 +1,1198 @@
-{
-  "codigo": "115",
-  "fechaCaptura": "2025-11-06T12:44:42.109Z",
-  "nombre": "Ingenieria de sistemas",
-  "materias": {
-    "1150615": {
-      "carrera": "115",
-      "codigo": "1150615",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": true,
-      "nombre": "Habilidades esenciales para el ingeniero de sistemas",
-      "requisitos": [],
-      "semestre": 6,
-      "grupos": {},
-      "estado": 2
-    },
-    "1151057": {
-      "carrera": "115",
-      "codigo": "1151057",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Mineria de datos",
-      "requisitos": [
-        "1150924",
-        "1150505"
-      ],
-      "semestre": 10,
-      "grupos": {},
-      "estado": 2
-    },
-    "1151058": {
-      "carrera": "115",
-      "codigo": "1151058",
-      "creditos": 15,
-      "horas": 6,
-      "isElectiva": false,
-      "nombre": "Proyecto academico",
-      "requisitos": [
-        "Cre:150"
-      ],
-      "semestre": 10,
-      "grupos": {
-        "1151058-A": {
-          "nombre": "1151058-A",
-          "maximo": 1,
-          "disponible": 0,
-          "profesor": "-",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 10,
-              "horaInicio": 8,
-              "salon": "SA311"
-            },
-            {
-              "dia": 1,
-              "horaFin": 12,
-              "horaInicio": 8,
-              "salon": "TE000"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1151059": {
-      "carrera": "115",
-      "codigo": "1151059",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Sistemas distribuidos",
-      "requisitos": [
-        "1150604"
-      ],
-      "semestre": 10,
-      "grupos": {},
-      "estado": 2
-    },
-    "1151060": {
-      "carrera": "115",
-      "codigo": "1151060",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Deuda tecnica en el desarrollo de software",
-      "requisitos": [
-        "1155805"
-      ],
-      "semestre": 9,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155101": {
-      "carrera": "115",
-      "codigo": "1155101",
-      "creditos": 4,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Calculo diferencial",
-      "requisitos": [],
-      "semestre": 1,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155102": {
-      "carrera": "115",
-      "codigo": "1155102",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Matematicas discretas",
-      "requisitos": [],
-      "semestre": 1,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155104": {
-      "carrera": "115",
-      "codigo": "1155104",
-      "creditos": 3,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Fundamentos de programacion",
-      "requisitos": [],
-      "semestre": 1,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155105": {
-      "carrera": "115",
-      "codigo": "1155105",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Introduccion ing sistemas",
-      "requisitos": [],
-      "semestre": 1,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155106": {
-      "carrera": "115",
-      "codigo": "1155106",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": false,
-      "nombre": "Comunicacion I",
-      "requisitos": [],
-      "semestre": 1,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155108": {
-      "carrera": "115",
-      "codigo": "1155108",
-      "creditos": 1,
-      "horas": 1,
-      "isElectiva": false,
-      "nombre": "Intro vida universitaria",
-      "requisitos": [],
-      "semestre": 1,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155201": {
-      "carrera": "115",
-      "codigo": "1155201",
-      "creditos": 4,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Calculo integral",
-      "requisitos": [
-        "1155101"
-      ],
-      "semestre": 2,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155202": {
-      "carrera": "115",
-      "codigo": "1155202",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Algebra lineal",
-      "requisitos": [
-        "1155101"
-      ],
-      "semestre": 2,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155203": {
-      "carrera": "115",
-      "codigo": "1155203",
-      "creditos": 4,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Fisica mecanica",
-      "requisitos": [
-        "1155101"
-      ],
-      "semestre": 2,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155204": {
-      "carrera": "115",
-      "codigo": "1155204",
-      "creditos": 3,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Programacion orientada a objetos",
-      "requisitos": [
-        "1155104"
-      ],
-      "semestre": 2,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155206": {
-      "carrera": "115",
-      "codigo": "1155206",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": false,
-      "nombre": "Comunicacion II",
-      "requisitos": [
-        "1155106"
-      ],
-      "semestre": 2,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155209": {
-      "carrera": "115",
-      "codigo": "1155209",
-      "creditos": 1,
-      "horas": 1,
-      "isElectiva": false,
-      "nombre": "Seminario integrador I",
-      "requisitos": [
-        "1155104"
-      ],
-      "semestre": 2,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155301": {
-      "carrera": "115",
-      "codigo": "1155301",
-      "creditos": 4,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Calculo vectorial",
-      "requisitos": [
-        "1155201"
-      ],
-      "semestre": 3,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155303": {
-      "carrera": "115",
-      "codigo": "1155303",
-      "creditos": 4,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Fisica electromagnetica",
-      "requisitos": [
-        "1155203"
-      ],
-      "semestre": 3,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155304": {
-      "carrera": "115",
-      "codigo": "1155304",
-      "creditos": 3,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Estructuras de datos",
-      "requisitos": [
-        "1155204"
-      ],
-      "semestre": 3,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155305": {
-      "carrera": "115",
-      "codigo": "1155305",
-      "creditos": 3,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Programacion orientada a objetos II",
-      "requisitos": [
-        "1155204"
-      ],
-      "semestre": 3,
-      "grupos": {
-        "1155305-B": {
-          "nombre": "1155305-B",
-          "maximo": 25,
-          "disponible": 5,
-          "profesor": "Herrera Caceres Matias",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SB401"
-            },
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SB403"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155306": {
-      "carrera": "115",
-      "codigo": "1155306",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": false,
-      "nombre": "Seminario de investigacion I",
-      "requisitos": [
-        "1155209",
-        "Cre:23"
-      ],
-      "semestre": 3,
-      "grupos": {
-        "1155306-A": {
-          "nombre": "1155306-A",
-          "maximo": 30,
-          "disponible": 23,
-          "profesor": "Gutierrez Buitrago Ana Gissel",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SB401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155401": {
-      "carrera": "115",
-      "codigo": "1155401",
-      "creditos": 4,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Ecuaciones diferenciales",
-      "requisitos": [
-        "1155301"
-      ],
-      "semestre": 4,
-      "grupos": {
-        "1155401-A": {
-          "nombre": "1155401-A",
-          "maximo": 35,
-          "disponible": 6,
-          "profesor": "Garcia Martinez Ruth Stella",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SP106"
-            },
-            {
-              "dia": 4,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SC103"
-            }
-          ],
-          "estado": 0
-        },
-        "1155401-B": {
-          "nombre": "1155401-B",
-          "maximo": 35,
-          "disponible": 6,
-          "profesor": "Rincon Leal Olga Lucy",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SC103"
-            },
-            {
-              "dia": 4,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SP106"
-            }
-          ],
-          "estado": 0
-        },
-        "1090411-A": {
-          "nombre": "1090411-A",
-          "maximo": 25,
-          "disponible": 8,
-          "profesor": "Saenz Contreras Daniel",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 9,
-              "horaInicio": 8,
-              "salon": "AG105"
-            },
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SE102"
-            },
-            {
-              "dia": 3,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "SP107"
-            }
-          ],
-          "estado": 0
-        },
-        "1090411-B": {
-          "nombre": "1090411-B",
-          "maximo": 25,
-          "disponible": 19,
-          "profesor": "Vergel Ortega Mawency",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SE102"
-            },
-            {
-              "dia": 3,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "AG104"
-            },
-            {
-              "dia": 3,
-              "horaFin": 5,
-              "horaInicio": 4,
-              "salon": "SC104"
-            }
-          ],
-          "estado": 0
-        },
-        "1110401-A": {
-          "nombre": "1110401-A",
-          "maximo": 47,
-          "disponible": 2,
-          "profesor": "Saenz Contreras Daniel",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "AO401"
-            },
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "AG203"
-            }
-          ],
-          "estado": 0
-        },
-        "1110401-B": {
-          "nombre": "1110401-B",
-          "maximo": 46,
-          "disponible": 3,
-          "profesor": "Vergel Ortega Mawency",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "FU103"
-            },
-            {
-              "dia": 2,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SE101"
-            }
-          ],
-          "estado": 0
-        },
-        "1191401-A": {
-          "nombre": "1191401-A",
-          "maximo": 45,
-          "disponible": 1,
-          "profesor": "Villa Peralta Alfonso",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "SP206"
-            },
-            {
-              "dia": 2,
-              "horaFin": 14,
-              "horaInicio": 12,
-              "salon": "SF204"
-            }
-          ],
-          "estado": 0
-        },
-        "1191401-B": {
-          "nombre": "1191401-B",
-          "maximo": 40,
-          "disponible": 12,
-          "profesor": "Rincon Leal Olga Lucy",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "FU102"
-            },
-            {
-              "dia": 4,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SP106"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155402": {
-      "carrera": "115",
-      "codigo": "1155402",
-      "creditos": 3,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Probabilidad y estadistica",
-      "requisitos": [
-        "1155102"
-      ],
-      "semestre": 4,
-      "grupos": {
-        "1155402-A": {
-          "nombre": "1155402-A",
-          "maximo": 35,
-          "disponible": 9,
-          "profesor": "Riveros Mojica Diego",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "AG203"
-            },
-            {
-              "dia": 4,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SE304"
-            }
-          ],
-          "estado": 0
-        },
-        "1110403-A": {
-          "nombre": "1110403-A",
-          "maximo": 48,
-          "disponible": 15,
-          "profesor": "Zambrano Contreras Arturo",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SC104"
-            },
-            {
-              "dia": 4,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "AO205"
-            }
-          ],
-          "estado": 0
-        },
-        "1110403-B": {
-          "nombre": "1110403-B",
-          "maximo": 45,
-          "disponible": 8,
-          "profesor": "Hernandez Rosa Virginia",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "AO301"
-            },
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "AO201"
-            }
-          ],
-          "estado": 0
-        },
-        "1160050-A": {
-          "nombre": "1160050-A",
-          "maximo": 43,
-          "disponible": 8,
-          "profesor": "Maduro Mendoza Ricardo Alfonso",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "AN401"
-            },
-            {
-              "dia": 3,
-              "horaFin": 11,
-              "horaInicio": 10,
-              "salon": "FU303"
-            }
-          ],
-          "estado": 0
-        },
-        "1191406-A": {
-          "nombre": "1191406-A",
-          "maximo": 45,
-          "disponible": 2,
-          "profesor": "Saenz Contreras Daniel",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SE203"
-            }
-          ],
-          "estado": 0
-        },
-        "1191406-B": {
-          "nombre": "1191406-B",
-          "maximo": 40,
-          "disponible": 0,
-          "profesor": "Saenz Contreras Daniel",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "AG203"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155403": {
-      "carrera": "115",
-      "codigo": "1155403",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Ondas y particulas",
-      "requisitos": [
-        "1155303"
-      ],
-      "semestre": 4,
-      "grupos": {
-        "1155403-A": {
-          "nombre": "1155403-A",
-          "maximo": 39,
-          "disponible": 0,
-          "profesor": "Solarte Mompotes Jhon Jairo",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 4,
-              "horaInicio": 3,
-              "salon": "SE103"
-            },
-            {
-              "dia": 4,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SP205"
-            }
-          ],
-          "estado": 0
-        },
-        "1155403-B": {
-          "nombre": "1155403-B",
-          "maximo": 40,
-          "disponible": 1,
-          "profesor": "Espinel Omaña Jorge Willian",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 4,
-              "horaInicio": 3,
-              "salon": "SA204"
-            },
-            {
-              "dia": 4,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA210"
-            }
-          ],
-          "estado": 0
-        },
-        "1090410-A": {
-          "nombre": "1090410-A",
-          "maximo": 43,
-          "disponible": 16,
-          "profesor": "Castaño Carrillo Jesus David",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SE103"
-            },
-            {
-              "dia": 3,
-              "horaFin": 9,
-              "horaInicio": 8,
-              "salon": "SA211"
-            }
-          ],
-          "estado": 0
-        },
-        "1090410-B": {
-          "nombre": "1090410-B",
-          "maximo": 35,
-          "disponible": 13,
-          "profesor": "Fabra Araque Jose Miguel",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 12,
-              "horaInicio": 11,
-              "salon": "FU101"
-            },
-            {
-              "dia": 4,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "AG101"
-            }
-          ],
-          "estado": 0
-        },
-        "1110402-A": {
-          "nombre": "1110402-A",
-          "maximo": 50,
-          "disponible": 10,
-          "profesor": "Romero Becerra Ana Ludia",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 5,
-              "horaInicio": 4,
-              "salon": "AO201"
-            },
-            {
-              "dia": 3,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "AO402"
-            }
-          ],
-          "estado": 0
-        },
-        "1110402-B": {
-          "nombre": "1110402-B",
-          "maximo": 46,
-          "disponible": 17,
-          "profesor": "Cely Cely Marco Fernando",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "AO401"
-            },
-            {
-              "dia": 4,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "AO401"
-            }
-          ],
-          "estado": 0
-        },
-        "1160041-A": {
-          "nombre": "1160041-A",
-          "maximo": 46,
-          "disponible": 0,
-          "profesor": "Raba Paez Angela Mercedes",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 3,
-              "horaInicio": 2,
-              "salon": "AG104"
-            },
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "AG103"
-            }
-          ],
-          "estado": 0
-        },
-        "1191402-A": {
-          "nombre": "1191402-A",
-          "maximo": 42,
-          "disponible": 20,
-          "profesor": "Peña Rodriguez Gabriel",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 11,
-              "horaInicio": 10,
-              "salon": "FU207"
-            },
-            {
-              "dia": 3,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "SA206"
-            }
-          ],
-          "estado": 0
-        },
-        "1191402-B": {
-          "nombre": "1191402-B",
-          "maximo": 36,
-          "disponible": 11,
-          "profesor": "Peña Rodriguez Gabriel",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SD202"
-            },
-            {
-              "dia": 2,
-              "horaFin": 3,
-              "horaInicio": 2,
-              "salon": "SP207"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155404": {
-      "carrera": "115",
-      "codigo": "1155404",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Analisis de algoritmos",
-      "requisitos": [
-        "1155304"
-      ],
-      "semestre": 4,
-      "grupos": {
-        "1155404-A": {
-          "nombre": "1155404-A",
-          "maximo": 48,
-          "disponible": 0,
-          "profesor": "Adarme Jaimes Marco Antonio",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA414"
-            },
-            {
-              "dia": 2,
-              "horaFin": 7,
-              "horaInicio": 6,
-              "salon": "SA414"
-            }
-          ],
-          "estado": 0
-        },
-        "1155404-B": {
-          "nombre": "1155404-B",
-          "maximo": 48,
-          "disponible": 5,
-          "profesor": "Fuentes Camargo Jairo Alberto",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SB403"
-            },
-            {
-              "dia": 4,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "SB403"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155405": {
-      "carrera": "115",
-      "codigo": "1155405",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Teoria de la computacion",
-      "requisitos": [
-        "1155304"
-      ],
-      "semestre": 4,
-      "grupos": {
-        "1155405-A": {
-          "nombre": "1155405-A",
-          "maximo": 37,
-          "disponible": 0,
-          "profesor": "Parada Carmen Janeth",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 3,
-              "horaInicio": 2,
-              "salon": "SB401"
-            },
-            {
-              "dia": 1,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA403"
-            }
-          ],
-          "estado": 0
-        },
-        "1155405-B": {
-          "nombre": "1155405-B",
-          "maximo": 35,
-          "disponible": 11,
-          "profesor": "Puerto Cuadros Eduard Gilberto",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA402"
-            },
-            {
-              "dia": 3,
-              "horaFin": 5,
-              "horaInicio": 4,
-              "salon": "SA403"
-            }
-          ],
-          "estado": 0
-        },
-        "1155405-C": {
-          "nombre": "1155405-C",
-          "maximo": 36,
-          "disponible": 8,
-          "profesor": "Fuentes Camargo Jairo Alberto",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 3,
-              "horaInicio": 2,
-              "salon": "SB403"
-            },
-            {
-              "dia": 1,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SB403"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155406": {
-      "carrera": "115",
-      "codigo": "1155406",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": true,
-      "nombre": "Descubriendo negocios basados tic (opcional)",
-      "requisitos": [
-        "Cre:58"
-      ],
-      "semestre": 4,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155501": {
-      "carrera": "115",
-      "codigo": "1155501",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Analisis numerico",
-      "requisitos": [
-        "1155401"
-      ],
-      "semestre": 5,
-      "grupos": {
-        "1155501-A": {
-          "nombre": "1155501-A",
-          "maximo": 30,
-          "disponible": 2,
-          "profesor": "Mariño Luis Fernando",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SP106"
-            },
-            {
-              "dia": 2,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "SP109"
-            }
-          ],
-          "estado": 0
-        },
-        "1155501-B": {
-          "nombre": "1155501-B",
-          "maximo": 32,
-          "disponible": 9,
-          "profesor": "Mariño Luis Fernando",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "FU102"
-            },
-            {
-              "dia": 4,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "FU101"
-            }
-          ],
-          "estado": 0
-        },
-        "1110501-A": {
-          "nombre": "1110501-A",
-          "maximo": 41,
-          "disponible": 24,
-          "profesor": "Ortega Sierra Alvaro",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 3,
-              "horaInicio": 2,
-              "salon": "AO201"
-            },
-            {
-              "dia": 0,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SG407"
-            }
-          ],
-          "estado": 0
-        },
-        "1110501-B": {
-          "nombre": "1110501-B",
-          "maximo": 50,
-          "disponible": 0,
-          "profesor": "Gonzalez Sepulveda Ruth Mery",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "AO203"
-            },
-            {
-              "dia": 3,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "AO201"
-            }
-          ],
-          "estado": 0
-        },
-        "1160060-A": {
-          "nombre": "1160060-A",
-          "maximo": 16,
-          "disponible": 4,
-          "profesor": "Garcia Martinez Ruth Stella",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 1,
-              "horaInicio": 0,
-              "salon": "AG105"
-            },
-            {
-              "dia": 4,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SC103"
-            }
-          ],
-          "estado": 0
-        },
-        "1160060-B": {
-          "nombre": "1160060-B",
-          "maximo": 16,
-          "disponible": 3,
-          "profesor": "Gonzalez Sepulveda Ruth Mery",
-          "clases": [
-            {
-              "dia": 4,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "AG105"
-            },
-            {
-              "dia": 4,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SB201"
-            }
-          ],
-          "estado": 0
-        },
-        "1160060-C": {
-          "nombre": "1160060-C",
-          "maximo": 15,
-          "disponible": 3,
-          "profesor": "Gonzalez Sepulveda Ruth Mery",
-          "clases": [
-            {
-              "dia": 4,
-              "horaFin": 1,
-              "horaInicio": 0,
-              "salon": "AG105"
-            },
-            {
-              "dia": 4,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SB201"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155502": {
-      "carrera": "115",
-      "codigo": "1155502",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Investigacion de operaciones",
-      "requisitos": [
-        "1155402"
-      ],
-      "semestre": 5,
-      "grupos": {
-        "1155502-A": {
-          "nombre": "1155502-A",
-          "maximo": 40,
-          "disponible": 4,
-          "profesor": "Gallardo Perez Henry De Jesus",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 1,
-              "salon": "SB402"
-            }
-          ],
-          "estado": 0
-        },
-        "1191605-A": {
-          "nombre": "1191605-A",
-          "maximo": 42,
-          "disponible": 3,
-          "profesor": "Palacios Alvarado Wlamyr",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "FU210"
-            },
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SC204"
-            }
-          ],
-          "estado": 0
-        },
-        "1191605-B": {
-          "nombre": "1191605-B",
-          "maximo": 21,
-          "disponible": 4,
-          "profesor": "Santafe Chaustre Luis Enrique",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SP207"
-            },
-            {
-              "dia": 3,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SF301"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155503": {
-      "carrera": "115",
-      "codigo": "1155503",
-      "creditos": 3,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Electronica",
-      "requisitos": [
-        "1155403"
-      ],
-      "semestre": 5,
-      "grupos": {
-        "1155503-A": {
-          "nombre": "1155503-A",
-          "maximo": 12,
-          "disponible": 0,
-          "profesor": "Duque Suarez Maria Carolina",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "LG108"
-            },
-            {
-              "dia": 1,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "SE301"
-            }
-          ],
-          "estado": 0
-        },
-        "1155503-B": {
-          "nombre": "1155503-B",
-          "maximo": 14,
-          "disponible": 1,
-          "profesor": "Duque Suarez Maria Carolina",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "SD203"
-            },
-            {
-              "dia": 2,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "LG108"
-            }
-          ],
-          "estado": 0
-        },
-        "1155503-C": {
-          "nombre": "1155503-C",
-          "maximo": 12,
-          "disponible": 2,
-          "profesor": "Guzman Romo Ingrid Clariethe",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 10,
-              "horaInicio": 8,
-              "salon": "LG108"
-            },
-            {
-              "dia": 2,
-              "horaFin": 10,
-              "horaInicio": 8,
-              "salon": "SE202"
-            }
-          ],
-          "estado": 0
-        },
-        "1155503-D": {
-          "nombre": "1155503-D",
-          "maximo": 12,
-          "disponible": 1,
-          "profesor": "Duque Suarez Maria Carolina",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 10,
-              "horaInicio": 8,
-              "salon": "TE000"
-            },
-            {
-              "dia": 3,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "LG108"
-            }
-          ],
-          "estado": 0
-        },
-        "1155503-E": {
-          "nombre": "1155503-E",
-          "maximo": 12,
-          "disponible": 1,
-          "profesor": "Guzman Romo Ingrid Clariethe",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 10,
-              "horaInicio": 8,
-              "salon": "AG206"
-            },
-            {
-              "dia": 3,
-              "horaFin": 10,
-              "horaInicio": 8,
-              "salon": "LG110"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155504": {
-      "carrera": "115",
-      "codigo": "1155504",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Arquitectura de computadores",
-      "requisitos": [
-        "1155304"
-      ],
-      "semestre": 5,
-      "grupos": {
-        "1155504-A": {
-          "nombre": "1155504-A",
-          "maximo": 35,
-          "disponible": 6,
-          "profesor": "Robles Angarita Miguel Fabian",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "SB404"
-            },
-            {
-              "dia": 4,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SB404"
-            }
-          ],
-          "estado": 0
-        },
-        "1155504-B": {
-          "nombre": "1155504-B",
-          "maximo": 35,
-          "disponible": 12,
-          "profesor": "Robles Angarita Miguel Fabian",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 1,
-              "horaInicio": 0,
-              "salon": "SB404"
-            },
-            {
-              "dia": 3,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SB404"
-            }
-          ],
-          "estado": 0
-        },
-        "1155504-C": {
-          "nombre": "1155504-C",
-          "maximo": 35,
-          "disponible": 0,
-          "profesor": "Rey Castillo Jonathan Rolando",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SA401"
-            },
-            {
-              "dia": 2,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "SA401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155506": {
-      "carrera": "115",
-      "codigo": "1155506",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": false,
-      "nombre": "Seminario de investigacion II",
-      "requisitos": [
-        "1155306"
-      ],
-      "semestre": 5,
-      "grupos": {
-        "1155506-A": {
-          "nombre": "1155506-A",
-          "maximo": 30,
-          "disponible": 11,
-          "profesor": "Gomez Llanez Claudia Yamile",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA411"
-            }
-          ],
-          "estado": 0
-        },
-        "1155506-B": {
-          "nombre": "1155506-B",
-          "maximo": 30,
-          "disponible": 1,
-          "profesor": "Fuentes Camargo Jairo Alberto",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA411"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155511": {
-      "carrera": "115",
-      "codigo": "1155511",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": true,
-      "nombre": "Problemas sociales de frontera",
-      "requisitos": [
-        "Cre:5"
-      ],
-      "semestre": 5,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155513": {
-      "carrera": "115",
-      "codigo": "1155513",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": true,
-      "nombre": "Psicologia",
-      "requisitos": [
-        "Cre:5"
-      ],
-      "semestre": 5,
-      "grupos": {
-        "1155513-A": {
-          "nombre": "1155513-A",
-          "maximo": 40,
-          "disponible": 17,
-          "profesor": "Colmenares Ramirez Estrella De Los Angeles",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 7,
-              "horaInicio": 5,
-              "salon": "SA208"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155515": {
-      "carrera": "115",
-      "codigo": "1155515",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": true,
-      "nombre": "Psicologia industrial",
-      "requisitos": [
-        "Cre:5"
-      ],
-      "semestre": 5,
-      "grupos": {
-        "1155515-A": {
-          "nombre": "1155515-A",
-          "maximo": 40,
-          "disponible": 4,
-          "profesor": "Colmenares Ramirez Estrella De Los Angeles",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA311"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155516": {
-      "carrera": "115",
-      "codigo": "1155516",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": true,
-      "nombre": "Catedra de paz, desarrollo y posconflicto",
-      "requisitos": [
-        "Cre:5"
-      ],
-      "semestre": 5,
-      "grupos": {
-        "1155516-A": {
-          "nombre": "1155516-A",
-          "maximo": 40,
-          "disponible": 18,
-          "profesor": "Cristancho Villamizar Bernardo Xavier",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA206"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155521": {
-      "carrera": "115",
-      "codigo": "1155521",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": true,
-      "nombre": "Nuevas tecnologias y sociedad",
-      "requisitos": [
-        "1155105"
-      ],
-      "semestre": 5,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155522": {
-      "carrera": "115",
-      "codigo": "1155522",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": true,
-      "nombre": "Relaciones humanas",
-      "requisitos": [
-        "Cre:60"
-      ],
-      "semestre": 5,
-      "grupos": {
-        "1155522-A": {
-          "nombre": "1155522-A",
-          "maximo": 30,
-          "disponible": 7,
-          "profesor": "Pedraza Rincon Luz Elena",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SD201"
-            }
-          ],
-          "estado": 0
-        },
-        "1110905-A": {
-          "nombre": "1110905-A",
-          "maximo": 43,
-          "disponible": 7,
-          "profesor": "Rojas Mendoza Yenni Carolina",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "AO203"
-            }
-          ],
-          "estado": 0
-        },
-        "1110905-B": {
-          "nombre": "1110905-B",
-          "maximo": 42,
-          "disponible": 5,
-          "profesor": "Caceres Cogollo Edith",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "AO205"
-            }
-          ],
-          "estado": 0
-        },
-        "1120722-A": {
-          "nombre": "1120722-A",
-          "maximo": 45,
-          "disponible": 30,
-          "profesor": "Sanchez Elsa Audrey",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SP205"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155523": {
-      "carrera": "115",
-      "codigo": "1155523",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "AnalÍtica de datos en modelos cognitivos",
-      "requisitos": [
-        "1155605"
-      ],
-      "semestre": 7,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155604": {
-      "carrera": "115",
-      "codigo": "1155604",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Sistemas operativos",
-      "requisitos": [
-        "1155504"
-      ],
-      "semestre": 6,
-      "grupos": {
-        "1155604-A": {
-          "nombre": "1155604-A",
-          "maximo": 35,
-          "disponible": 6,
-          "profesor": "Adarme Jaimes Marco Antonio",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 5,
-              "horaInicio": 4,
-              "salon": "SA401"
-            },
-            {
-              "dia": 3,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA401"
-            }
-          ],
-          "estado": 0
-        },
-        "1155604-B": {
-          "nombre": "1155604-B",
-          "maximo": 35,
-          "disponible": 1,
-          "profesor": "Robles Angarita Miguel Fabian",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 5,
-              "horaInicio": 4,
-              "salon": "SB404"
-            },
-            {
-              "dia": 3,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SB404"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155605": {
-      "carrera": "115",
-      "codigo": "1155605",
-      "creditos": 3,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Bases de datos",
-      "requisitos": [
-        "1155304",
-        "1155305"
-      ],
-      "semestre": 6,
-      "grupos": {
-        "1155605-A": {
-          "nombre": "1155605-A",
-          "maximo": 30,
-          "disponible": 11,
-          "profesor": "Parada Carmen Janeth",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA402"
-            },
-            {
-              "dia": 4,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA414"
-            }
-          ],
-          "estado": 0
-        },
-        "1155605-B": {
-          "nombre": "1155605-B",
-          "maximo": 30,
-          "disponible": 0,
-          "profesor": "Angarita Sanguino Carlos Rene",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA401"
-            },
-            {
-              "dia": 4,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA402"
-            }
-          ],
-          "estado": 0
-        },
-        "1155605-C": {
-          "nombre": "1155605-C",
-          "maximo": 30,
-          "disponible": 1,
-          "profesor": "Gomez Llanez Claudia Yamile",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA414"
-            },
-            {
-              "dia": 4,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SB403"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155606": {
-      "carrera": "115",
-      "codigo": "1155606",
-      "creditos": 3,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Programacion web",
-      "requisitos": [
-        "1155305",
-        "1155304"
-      ],
-      "semestre": 6,
-      "grupos": {
-        "1155606-A": {
-          "nombre": "1155606-A",
-          "maximo": 25,
-          "disponible": 8,
-          "profesor": "Rey Castillo Jonathan Rolando",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SA402"
-            },
-            {
-              "dia": 4,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SA401"
-            }
-          ],
-          "estado": 0
-        },
-        "1155606-B": {
-          "nombre": "1155606-B",
-          "maximo": 26,
-          "disponible": 4,
-          "profesor": "Angarita Sanguino Carlos Rene",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA414"
-            },
-            {
-              "dia": 4,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA411"
-            }
-          ],
-          "estado": 0
-        },
-        "1155606-C": {
-          "nombre": "1155606-C",
-          "maximo": 25,
-          "disponible": 4,
-          "profesor": "Esteban Carrillo Daniel Andres",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SA411"
-            },
-            {
-              "dia": 4,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SA411"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155607": {
-      "carrera": "115",
-      "codigo": "1155607",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": false,
-      "nombre": "Constitucion y civismo",
-      "requisitos": [
-        "Cre:20"
-      ],
-      "semestre": 6,
-      "grupos": {
-        "1155607-A": {
-          "nombre": "1155607-A",
-          "maximo": 40,
-          "disponible": 9,
-          "profesor": "Gandolfo Quintero Genni Leonor",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 7,
-              "horaInicio": 5,
-              "salon": "AG404"
-            }
-          ],
-          "estado": 0
-        },
-        "1110305-A": {
-          "nombre": "1110305-A",
-          "maximo": 40,
-          "disponible": 7,
-          "profesor": "Vahos Arias Yollmar Gildardo",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 14,
-              "horaInicio": 12,
-              "salon": "AO204"
-            }
-          ],
-          "estado": 0
-        },
-        "1110305-B": {
-          "nombre": "1110305-B",
-          "maximo": 41,
-          "disponible": 0,
-          "profesor": "Vahos Arias Yollmar Gildardo",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "AO301"
-            }
-          ],
-          "estado": 0
-        },
-        "1110305-C": {
-          "nombre": "1110305-C",
-          "maximo": 50,
-          "disponible": 0,
-          "profesor": "Sanchez Dueñas Luis Arnulfo",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "AO302"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155608": {
-      "carrera": "115",
-      "codigo": "1155608",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Planeacion estrategica de sistemas de inf",
-      "requisitos": [
-        "Cre:48"
-      ],
-      "semestre": 6,
-      "grupos": {
-        "1155608-A": {
-          "nombre": "1155608-A",
-          "maximo": 30,
-          "disponible": 5,
-          "profesor": "Diaz Leal Nelly Rosana",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SD403"
-            },
-            {
-              "dia": 2,
-              "horaFin": 3,
-              "horaInicio": 2,
-              "salon": "SB402"
-            }
-          ],
-          "estado": 0
-        },
-        "1155608-B": {
-          "nombre": "1155608-B",
-          "maximo": 30,
-          "disponible": 21,
-          "profesor": "Diaz Leal Nelly Rosana",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SB402"
-            },
-            {
-              "dia": 2,
-              "horaFin": 4,
-              "horaInicio": 3,
-              "salon": "SB401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155609": {
-      "carrera": "115",
-      "codigo": "1155609",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": false,
-      "nombre": "Seminario integrador II",
-      "requisitos": [
-        "1155209",
-        "1155304",
-        "Cre:75"
-      ],
-      "semestre": 6,
-      "grupos": {
-        "1155609-A": {
-          "nombre": "1155609-A",
-          "maximo": 35,
-          "disponible": 2,
-          "profesor": "Pardo Garcia Carlos Eduardo",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA414"
-            }
-          ],
-          "estado": 0
-        },
-        "1155609-B": {
-          "nombre": "1155609-B",
-          "maximo": 36,
-          "disponible": 2,
-          "profesor": "Falla Delgado Byron",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155611": {
-      "carrera": "115",
-      "codigo": "1155611",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": true,
-      "nombre": "Proyecto social en ing de sistemas",
-      "requisitos": [
-        "Cre:40"
-      ],
-      "semestre": 6,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155612": {
-      "carrera": "115",
-      "codigo": "1155612",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": true,
-      "nombre": "Crecimeinto de negocios (opcional)",
-      "requisitos": [
-        "Cre:80"
-      ],
-      "semestre": 6,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155613": {
-      "carrera": "115",
-      "codigo": "1155613",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Analisis de datos sobre python",
-      "requisitos": [
-        "1155305"
-      ],
-      "semestre": 6,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155614": {
-      "carrera": "115",
-      "codigo": "1155614",
-      "creditos": 0,
-      "horas": 0,
-      "isElectiva": true,
-      "nombre": "Deuda tÉcnica en el desarrollo de software",
-      "requisitos": [
-        "1155305"
-      ],
-      "semestre": 6,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155615": {
-      "carrera": "115",
-      "codigo": "1155615",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Multimedia y realidad mixta",
-      "requisitos": [
-        "1155504"
-      ],
-      "semestre": 6,
-      "grupos": {
-        "1155615-A": {
-          "nombre": "1155615-A",
-          "maximo": 24,
-          "disponible": 0,
-          "profesor": "Rodriguez Ibañez Raul Eduardo",
-          "clases": [
-            {
-              "dia": 4,
-              "horaFin": 12,
-              "horaInicio": 9,
-              "salon": "SA401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155616": {
-      "carrera": "115",
-      "codigo": "1155616",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Aplicaciones prÁcticas de teoria de grafos",
-      "requisitos": [
-        "1155404"
-      ],
-      "semestre": 6,
-      "grupos": {
-        "1155616-A": {
-          "nombre": "1155616-A",
-          "maximo": 20,
-          "disponible": 8,
-          "profesor": "Fuentes Camargo Jairo Alberto",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 7,
-              "horaInicio": 4,
-              "salon": "SB403"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155704": {
-      "carrera": "115",
-      "codigo": "1155704",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Teoria general de las comunicaciones",
-      "requisitos": [
-        "1155604"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1155704-A": {
-          "nombre": "1155704-A",
-          "maximo": 30,
-          "disponible": 7,
-          "profesor": "Pardo Garcia Carlos Eduardo",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 5,
-              "horaInicio": 4,
-              "salon": "SA413"
-            },
-            {
-              "dia": 4,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA413"
-            }
-          ],
-          "estado": 0
-        },
-        "1155704-B": {
-          "nombre": "1155704-B",
-          "maximo": 30,
-          "disponible": 3,
-          "profesor": "Pardo Garcia Carlos Eduardo",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 5,
-              "horaInicio": 4,
-              "salon": "SA413"
-            },
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA413"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155705": {
-      "carrera": "115",
-      "codigo": "1155705",
-      "creditos": 4,
-      "horas": 5,
-      "isElectiva": false,
-      "nombre": "Analisis y diseÑo de sistemas",
-      "requisitos": [
-        "1155605"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1155705-A": {
-          "nombre": "1155705-A",
-          "maximo": 31,
-          "disponible": 3,
-          "profesor": "Rodriguez Tenjo Judith Del Pilar",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA404"
-            },
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA414"
-            }
-          ],
-          "estado": 0
-        },
-        "1155705-B": {
-          "nombre": "1155705-B",
-          "maximo": 32,
-          "disponible": 0,
-          "profesor": "Beltran Galvis Nelson",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA401"
-            },
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA402"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155706": {
-      "carrera": "115",
-      "codigo": "1155706",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": false,
-      "nombre": "Seminario de investigacion III",
-      "requisitos": [
-        "1155506"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1155706-A": {
-          "nombre": "1155706-A",
-          "maximo": 20,
-          "disponible": 8,
-          "profesor": "Perez Gutierrez Boris Rainiero",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SB402"
-            }
-          ],
-          "estado": 0
-        },
-        "1155706-B": {
-          "nombre": "1155706-B",
-          "maximo": 16,
-          "disponible": 1,
-          "profesor": "Pardo Garcia Carlos Eduardo",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SB404"
-            }
-          ],
-          "estado": 0
-        },
-        "1155706-C": {
-          "nombre": "1155706-C",
-          "maximo": 15,
-          "disponible": 0,
-          "profesor": "Leal Pabon Jessica Lorena",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA403"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155707": {
-      "carrera": "115",
-      "codigo": "1155707",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": false,
-      "nombre": "Etica profesional",
-      "requisitos": [
-        "Cre:90"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1155707-A": {
-          "nombre": "1155707-A",
-          "maximo": 35,
-          "disponible": 2,
-          "profesor": "Fossi Gonzalez Julio Enrique",
-          "clases": [
-            {
-              "dia": 4,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA205"
-            }
-          ],
-          "estado": 0
-        },
-        "1110805-A": {
-          "nombre": "1110805-A",
-          "maximo": 50,
-          "disponible": 0,
-          "profesor": "Jaimes Vega Karen Patricia",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SG206"
-            }
-          ],
-          "estado": 0
-        },
-        "1110805-B": {
-          "nombre": "1110805-B",
-          "maximo": 50,
-          "disponible": 7,
-          "profesor": "Angarita Sanchez Ana Helena",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "AO201"
-            }
-          ],
-          "estado": 0
-        },
-        "1110805-C": {
-          "nombre": "1110805-C",
-          "maximo": 46,
-          "disponible": 6,
-          "profesor": "Gomez Lugo Alejandra",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 14,
-              "horaInicio": 12,
-              "salon": "AO201"
-            }
-          ],
-          "estado": 0
-        },
-        "1160034-A": {
-          "nombre": "1160034-A",
-          "maximo": 40,
-          "disponible": 3,
-          "profesor": "Cristancho Villamizar Bernardo Xavier",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 14,
-              "horaInicio": 12,
-              "salon": "SP208"
-            }
-          ],
-          "estado": 0
-        },
-        "1191904-A": {
-          "nombre": "1191904-A",
-          "maximo": 45,
-          "disponible": 9,
-          "profesor": "Angarita Sanchez Ana Helena",
-          "clases": [
-            {
-              "dia": 4,
-              "horaFin": 10,
-              "horaInicio": 8,
-              "salon": "AG301"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155708": {
-      "carrera": "115",
-      "codigo": "1155708",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Administracion de proyectos informaticos",
-      "requisitos": [
-        "1155608"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1155708-A": {
-          "nombre": "1155708-A",
-          "maximo": 30,
-          "disponible": 8,
-          "profesor": "Rojas Puentes Maria Del Pilar",
-          "clases": [
-            {
-              "dia": 4,
-              "horaFin": 7,
-              "horaInicio": 4,
-              "salon": "SB404"
-            }
-          ],
-          "estado": 0
-        },
-        "1155708-B": {
-          "nombre": "1155708-B",
-          "maximo": 31,
-          "disponible": 4,
-          "profesor": "Leal Pabon Jessica Lorena",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 4,
-              "horaInicio": 1,
-              "salon": "SA403"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155711": {
-      "carrera": "115",
-      "codigo": "1155711",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Tecnicas gerenciales y de negociacion",
-      "requisitos": [
-        "1155608"
-      ],
-      "semestre": 7,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155712": {
-      "carrera": "115",
-      "codigo": "1155712",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Economia y finanzas para ingenieros",
-      "requisitos": [
-        "1155608"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1155712-A": {
-          "nombre": "1155712-A",
-          "maximo": 35,
-          "disponible": 2,
-          "profesor": "Velasco Fernandez Oscar Dario",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 7,
-              "horaInicio": 4,
-              "salon": "AG302"
-            }
-          ],
-          "estado": 0
-        },
-        "1110706-A": {
-          "nombre": "1110706-A",
-          "maximo": 40,
-          "disponible": 16,
-          "profesor": "Peña Caceres Omar Enrique",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 11,
-              "horaInicio": 10,
-              "salon": "AO401"
-            },
-            {
-              "dia": 4,
-              "horaFin": 12,
-              "horaInicio": 10,
-              "salon": "AO204"
-            }
-          ],
-          "estado": 0
-        },
-        "1110706-B": {
-          "nombre": "1110706-B",
-          "maximo": 50,
-          "disponible": 5,
-          "profesor": "Peña Caceres Omar Enrique",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 8,
-              "horaInicio": 6,
-              "salon": "AO402"
-            },
-            {
-              "dia": 4,
-              "horaFin": 7,
-              "horaInicio": 6,
-              "salon": "AO402"
-            }
-          ],
-          "estado": 0
-        },
-        "1110706-C": {
-          "nombre": "1110706-C",
-          "maximo": 50,
-          "disponible": 0,
-          "profesor": "Rodriguez Guevara Jorge Enrique",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 8,
-              "horaInicio": 6,
-              "salon": "AO201"
-            },
-            {
-              "dia": 4,
-              "horaFin": 7,
-              "horaInicio": 6,
-              "salon": "AO401"
-            }
-          ],
-          "estado": 0
-        },
-        "1160063-A": {
-          "nombre": "1160063-A",
-          "maximo": 35,
-          "disponible": 5,
-          "profesor": "Velasco Fernandez Oscar Dario",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SE202"
-            },
-            {
-              "dia": 2,
-              "horaFin": 3,
-              "horaInicio": 2,
-              "salon": "SF201"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155713": {
-      "carrera": "115",
-      "codigo": "1155713",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Bases  de datos avanzadas",
-      "requisitos": [
-        "1155605"
-      ],
-      "semestre": 7,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155714": {
-      "carrera": "115",
-      "codigo": "1155714",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "TransformaciÓn digital de las organizaciones",
-      "requisitos": [
-        "1155608"
-      ],
-      "semestre": 7,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155715": {
-      "carrera": "115",
-      "codigo": "1155715",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Soluciones tecnologica en el contexto social",
-      "requisitos": [
-        "1155611"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1155715-A": {
-          "nombre": "1155715-A",
-          "maximo": 20,
-          "disponible": 10,
-          "profesor": "Murillo Rodriguez Dioselina",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 11,
-              "horaInicio": 8,
-              "salon": "SA401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155716": {
-      "carrera": "115",
-      "codigo": "1155716",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Analitica de datos",
-      "requisitos": [
-        "1155605"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1155716-A": {
-          "nombre": "1155716-A",
-          "maximo": 29,
-          "disponible": 0,
-          "profesor": "Beltran Galvis Nelson",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA402"
-            },
-            {
-              "dia": 2,
-              "horaFin": 4,
-              "horaInicio": 3,
-              "salon": "SA414"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155717": {
-      "carrera": "115",
-      "codigo": "1155717",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Hacking defensivo y herramientas seguras",
-      "requisitos": [
-        "1155604"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1155717-A": {
-          "nombre": "1155717-A",
-          "maximo": 20,
-          "disponible": 5,
-          "profesor": "Robles Angarita Miguel Fabian",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 3,
-              "horaInicio": 2,
-              "salon": "SB401"
-            },
-            {
-              "dia": 4,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA411"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155804": {
-      "carrera": "115",
-      "codigo": "1155804",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Redes de computadores",
-      "requisitos": [
-        "1155704"
-      ],
-      "semestre": 8,
-      "grupos": {
-        "1155804-A": {
-          "nombre": "1155804-A",
-          "maximo": 21,
-          "disponible": 4,
-          "profesor": "Calixto Cely Jose Martin",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SA413"
-            },
-            {
-              "dia": 4,
-              "horaFin": 5,
-              "horaInicio": 4,
-              "salon": "SB403"
-            }
-          ],
-          "estado": 0
-        },
-        "1155804-B": {
-          "nombre": "1155804-B",
-          "maximo": 28,
-          "disponible": 0,
-          "profesor": "Pardo Garcia Carlos Eduardo",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 4,
-              "horaInicio": 2,
-              "salon": "SB403"
-            },
-            {
-              "dia": 4,
-              "horaFin": 5,
-              "horaInicio": 4,
-              "salon": "SA402"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155805": {
-      "carrera": "115",
-      "codigo": "1155805",
-      "creditos": 4,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Ingenieria de software",
-      "requisitos": [
-        "1155705"
-      ],
-      "semestre": 8,
-      "grupos": {
-        "1155805-A": {
-          "nombre": "1155805-A",
-          "maximo": 48,
-          "disponible": 1,
-          "profesor": "Rodriguez Tenjo Judith Del Pilar",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SA402"
-            },
-            {
-              "dia": 3,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SA414"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155808": {
-      "carrera": "115",
-      "codigo": "1155808",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Formulacion y evaluacion de proyectos de sistemas",
-      "requisitos": [
-        "1155708"
-      ],
-      "semestre": 8,
-      "grupos": {
-        "1155808-A": {
-          "nombre": "1155808-A",
-          "maximo": 35,
-          "disponible": 1,
-          "profesor": "Parada Carmen Janeth",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 4,
-              "horaInicio": 3,
-              "salon": "SA402"
-            },
-            {
-              "dia": 4,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA403"
-            }
-          ],
-          "estado": 0
-        },
-        "1155808-B": {
-          "nombre": "1155808-B",
-          "maximo": 30,
-          "disponible": 8,
-          "profesor": "Rojas Puentes Maria Del Pilar",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 7,
-              "horaInicio": 4,
-              "salon": "SC401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155809": {
-      "carrera": "115",
-      "codigo": "1155809",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": false,
-      "nombre": "Seminario integrador III",
-      "requisitos": [
-        "1155705",
-        "1155606",
-        "1155609"
-      ],
-      "semestre": 8,
-      "grupos": {
-        "1155809-A": {
-          "nombre": "1155809-A",
-          "maximo": 25,
-          "disponible": 0,
-          "profesor": "Parada Carmen Janeth",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SB402"
-            }
-          ],
-          "estado": 0
-        },
-        "1155809-B": {
-          "nombre": "1155809-B",
-          "maximo": 22,
-          "disponible": 4,
-          "profesor": "Rojas Puentes Maria Del Pilar",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SC401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155810": {
-      "carrera": "115",
-      "codigo": "1155810",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Adquisiciones en la gestiÓn de proyectos",
-      "requisitos": [
-        "1155708"
-      ],
-      "semestre": 8,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155811": {
-      "carrera": "115",
-      "codigo": "1155811",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Laboratorio de programacion",
-      "requisitos": [
-        "1155204",
-        "Cre:40"
-      ],
-      "semestre": 6,
-      "grupos": {},
-      "estado": 2
-    },
-    "1155905": {
-      "carrera": "115",
-      "codigo": "1155905",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": false,
-      "nombre": "Arquitectura de software",
-      "requisitos": [
-        "1155805"
-      ],
-      "semestre": 9,
-      "grupos": {
-        "1155905-A": {
-          "nombre": "1155905-A",
-          "maximo": 45,
-          "disponible": 5,
-          "profesor": "Perez Gutierrez Boris Rainiero",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 5,
-              "horaInicio": 4,
-              "salon": "SC402"
-            },
-            {
-              "dia": 3,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA402"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155906": {
-      "carrera": "115",
-      "codigo": "1155906",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Estrategias para la empleabiliad en sistemas",
-      "requisitos": [
-        "1155805"
-      ],
-      "semestre": 9,
-      "grupos": {
-        "1155906-A": {
-          "nombre": "1155906-A",
-          "maximo": 20,
-          "disponible": 9,
-          "profesor": "Esteban Carrillo Daniel Andres",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 3,
-              "horaInicio": 0,
-              "salon": "SC401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155908": {
-      "carrera": "115",
-      "codigo": "1155908",
-      "creditos": 2,
-      "horas": 2,
-      "isElectiva": false,
-      "nombre": "Gestion de tics",
-      "requisitos": [
-        "1155808"
-      ],
-      "semestre": 9,
-      "grupos": {
-        "1155908-A": {
-          "nombre": "1155908-A",
-          "maximo": 40,
-          "disponible": 10,
-          "profesor": "Diaz Leal Nelly Rosana",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SB403"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155909": {
-      "carrera": "115",
-      "codigo": "1155909",
-      "creditos": 6,
-      "horas": 4,
-      "isElectiva": false,
-      "nombre": "Practica en ing de sistemas",
-      "requisitos": [
-        "Cre:130"
-      ],
-      "semestre": 9,
-      "grupos": {
-        "1155909-A": {
-          "nombre": "1155909-A",
-          "maximo": 15,
-          "disponible": 0,
-          "profesor": "Calixto Cely Jose Martin",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 12,
-              "horaInicio": 8,
-              "salon": "SA411"
-            }
-          ],
-          "estado": 0
-        },
-        "1155909-B": {
-          "nombre": "1155909-B",
-          "maximo": 15,
-          "disponible": 1,
-          "profesor": "Calixto Cely Jose Martin",
-          "clases": [
-            {
-              "dia": 4,
-              "horaFin": 12,
-              "horaInicio": 8,
-              "salon": "SA312"
-            }
-          ],
-          "estado": 0
-        },
-        "1155909-C": {
-          "nombre": "1155909-C",
-          "maximo": 15,
-          "disponible": 3,
-          "profesor": "Robles Angarita Miguel Fabian",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 12,
-              "horaInicio": 8,
-              "salon": "SC402"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1155910": {
-      "carrera": "115",
-      "codigo": "1155910",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Emprendimiento digital y transformacion tecnologica",
-      "requisitos": [
-        "1155808",
-        "1155705"
-      ],
-      "semestre": 9,
-      "grupos": {
-        "1155910-A": {
-          "nombre": "1155910-A",
-          "maximo": 15,
-          "disponible": 4,
-          "profesor": "Jaramillo Vega Jefferson Ferney",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SF401"
-            },
-            {
-              "dia": 2,
-              "horaFin": 1,
-              "horaInicio": 0,
-              "salon": "SB401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1156001": {
-      "carrera": "115",
-      "codigo": "1156001",
-      "creditos": 8,
-      "horas": 0,
-      "isElectiva": false,
-      "nombre": "Proyecto de grado",
-      "requisitos": [
-        "Cre:100"
-      ],
-      "semestre": 10,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156701": {
-      "carrera": "115",
-      "codigo": "1156701",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Patrones de diseÑo",
-      "requisitos": [
-        "1155605"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1156701-A": {
-          "nombre": "1156701-A",
-          "maximo": 22,
-          "disponible": 6,
-          "profesor": "Rey Castillo Jonathan Rolando",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SB401"
-            },
-            {
-              "dia": 2,
-              "horaFin": 1,
-              "horaInicio": 0,
-              "salon": "SB403"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1156702": {
-      "carrera": "115",
-      "codigo": "1156702",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Gestion de bases de datos",
-      "requisitos": [
-        "1155605"
-      ],
-      "semestre": 7,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156703": {
-      "carrera": "115",
-      "codigo": "1156703",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Inteligencia artificial",
-      "requisitos": [
-        "1155304"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1156703-A": {
-          "nombre": "1156703-A",
-          "maximo": 25,
-          "disponible": 8,
-          "profesor": "Puerto Cuadros Eduard Gilberto",
-          "clases": [
-            {
-              "dia": 4,
-              "horaFin": 7,
-              "horaInicio": 4,
-              "salon": "SB401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1156704": {
-      "carrera": "115",
-      "codigo": "1156704",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Teoria de grafos",
-      "requisitos": [
-        "1155404"
-      ],
-      "semestre": 7,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156801": {
-      "carrera": "115",
-      "codigo": "1156801",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Sistemas de informacion geografica",
-      "requisitos": [
-        "1155705"
-      ],
-      "semestre": 8,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156802": {
-      "carrera": "115",
-      "codigo": "1156802",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Informatica educativa",
-      "requisitos": [
-        "1155705"
-      ],
-      "semestre": 8,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156803": {
-      "carrera": "115",
-      "codigo": "1156803",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Redes inalambricas",
-      "requisitos": [
-        "1155704"
-      ],
-      "semestre": 8,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156804": {
-      "carrera": "115",
-      "codigo": "1156804",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Administracion de so de red",
-      "requisitos": [
-        "1155604"
-      ],
-      "semestre": 8,
-      "grupos": {
-        "1156804-A": {
-          "nombre": "1156804-A",
-          "maximo": 20,
-          "disponible": 2,
-          "profesor": "Cequeda Olago Jean Polo",
-          "clases": [
-            {
-              "dia": 4,
-              "horaFin": 12,
-              "horaInicio": 9,
-              "salon": "SA411"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1156805": {
-      "carrera": "115",
-      "codigo": "1156805",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Gerencia y tecnologia",
-      "requisitos": [
-        "1155608"
-      ],
-      "semestre": 8,
-      "grupos": {
-        "1156805-A": {
-          "nombre": "1156805-A",
-          "maximo": 20,
-          "disponible": 0,
-          "profesor": "Parada Carmen Janeth",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SC401"
-            },
-            {
-              "dia": 3,
-              "horaFin": 4,
-              "horaInicio": 3,
-              "salon": "SA401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1156807": {
-      "carrera": "115",
-      "codigo": "1156807",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Compiladores",
-      "requisitos": [],
-      "semestre": 6,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156808": {
-      "carrera": "115",
-      "codigo": "1156808",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Las tic  y la educacion ambiental",
-      "requisitos": [],
-      "semestre": 6,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156901": {
-      "carrera": "115",
-      "codigo": "1156901",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Desarrollo de aplicaciones moviles",
-      "requisitos": [
-        "1155704",
-        "1155705"
-      ],
-      "semestre": 9,
-      "grupos": {
-        "1156901-A": {
-          "nombre": "1156901-A",
-          "maximo": 25,
-          "disponible": 7,
-          "profesor": "Herrera Caceres Matias",
-          "clases": [
-            {
-              "dia": 1,
-              "horaFin": 12,
-              "horaInicio": 9,
-              "salon": "SB401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1156902": {
-      "carrera": "115",
-      "codigo": "1156902",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Seguridad informatica",
-      "requisitos": [
-        "1155704"
-      ],
-      "semestre": 9,
-      "grupos": {
-        "1156902-A": {
-          "nombre": "1156902-A",
-          "maximo": 20,
-          "disponible": 6,
-          "profesor": "Villamizar Nuñez Cesar Antonio",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 2,
-              "horaInicio": 0,
-              "salon": "SB402"
-            },
-            {
-              "dia": 3,
-              "horaFin": 2,
-              "horaInicio": 1,
-              "salon": "SB401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1156903": {
-      "carrera": "115",
-      "codigo": "1156903",
-      "creditos": 15,
-      "horas": 6,
-      "isElectiva": true,
-      "nombre": "Proyecto academico",
-      "requisitos": [
-        "Prerrequisito:",
-        "Cre:150"
-      ],
-      "semestre": 9,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156904": {
-      "carrera": "115",
-      "codigo": "1156904",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Herramientas tic para gestion de proyectos",
-      "requisitos": [
-        "1155805"
-      ],
-      "semestre": 9,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156906": {
-      "carrera": "115",
-      "codigo": "1156906",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Auditoria de sistemas",
-      "requisitos": [
-        "1155805"
-      ],
-      "semestre": 9,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156907": {
-      "carrera": "115",
-      "codigo": "1156907",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Arquitectura dirigida por ontologias",
-      "requisitos": [
-        "1155805"
-      ],
-      "semestre": 9,
-      "grupos": {},
-      "estado": 2
-    },
-    "1156910": {
-      "carrera": "115",
-      "codigo": "1156910",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Redes neuronales",
-      "requisitos": [],
-      "semestre": 10,
-      "grupos": {},
-      "estado": 2
-    },
-    "1157001": {
-      "carrera": "115",
-      "codigo": "1157001",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Sistemas de informacion empresarial",
-      "requisitos": [
-        "1155705"
-      ],
-      "semestre": 10,
-      "grupos": {},
-      "estado": 2
-    },
-    "1157002": {
-      "carrera": "115",
-      "codigo": "1157002",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Redes convergentes",
-      "requisitos": [
-        "1155804"
-      ],
-      "semestre": 10,
-      "grupos": {},
-      "estado": 2
-    },
-    "1157003": {
-      "carrera": "115",
-      "codigo": "1157003",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Informatica juridica",
-      "requisitos": [
-        "1155705"
-      ],
-      "semestre": 10,
-      "grupos": {
-        "1157003-A": {
-          "nombre": "1157003-A",
-          "maximo": 24,
-          "disponible": 4,
-          "profesor": "Gonzalez Sanjuan Alvaro Javier",
-          "clases": [
-            {
-              "dia": 5,
-              "horaFin": 4,
-              "horaInicio": 1,
-              "salon": "SB401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1157004": {
-      "carrera": "115",
-      "codigo": "1157004",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Computacion en la nube",
-      "requisitos": [
-        "1155604"
-      ],
-      "semestre": 10,
-      "grupos": {
-        "1157004-A": {
-          "nombre": "1157004-A",
-          "maximo": 31,
-          "disponible": 0,
-          "profesor": "Esteban Carrillo Daniel Andres",
-          "clases": [
-            {
-              "dia": 0,
-              "horaFin": 12,
-              "horaInicio": 9,
-              "salon": "SA401"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1157005": {
-      "carrera": "115",
-      "codigo": "1157005",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Mineria de datos",
-      "requisitos": [
-        "1155606",
-        "1155605"
-      ],
-      "semestre": 10,
-      "grupos": {
-        "1157005-A": {
-          "nombre": "1157005-A",
-          "maximo": 21,
-          "disponible": 0,
-          "profesor": "Beltran Galvis Nelson",
-          "clases": [
-            {
-              "dia": 3,
-              "horaFin": 6,
-              "horaInicio": 4,
-              "salon": "SA414"
-            },
-            {
-              "dia": 4,
-              "horaFin": 6,
-              "horaInicio": 5,
-              "salon": "SA414"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1157006": {
-      "carrera": "115",
-      "codigo": "1157006",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Sistemas distribuidos",
-      "requisitos": [
-        "1155604"
-      ],
-      "semestre": 10,
-      "grupos": {},
-      "estado": 2
-    },
-    "1157007": {
-      "carrera": "115",
-      "codigo": "1157007",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Desarrollo de aplicaciones basadas en microservicios",
-      "requisitos": [
-        "1155606",
-        "1155605"
-      ],
-      "semestre": 7,
-      "grupos": {
-        "1157007-A": {
-          "nombre": "1157007-A",
-          "maximo": 23,
-          "disponible": 3,
-          "profesor": "Vera Rivera Fredy Humberto",
-          "clases": [
-            {
-              "dia": 2,
-              "horaFin": 7,
-              "horaInicio": 4,
-              "salon": "SA411"
-            }
-          ],
-          "estado": 0
-        }
-      },
-      "estado": 2
-    },
-    "1159608": {
-      "carrera": "115",
-      "codigo": "1159608",
-      "creditos": 3,
-      "horas": 3,
-      "isElectiva": true,
-      "nombre": "Metodologias agiles para el desarrollo de software",
-      "requisitos": [
-        "1155805"
-      ],
-      "semestre": 9,
-      "grupos": {},
-      "estado": 2
+[
+    {
+        "id": 1,
+        "codigo": "1155101",
+        "nombre": "Cálculo Diferencial",
+        "tipo": "obligatoria",
+        "creditos": 4,
+        "hours": 4,
+        "prerequisitos": [],
+        "semestre": 1
+    },
+    {
+        "id": 2,
+        "codigo": "1155102",
+        "nombre": "Matemáticas Discretas",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [],
+        "semestre": 1
+    },
+    {
+        "id": 3,
+        "codigo": "1155104",
+        "nombre": "Fundamentos de Programación",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 4,
+        "prerequisitos": [],
+        "semestre": 1
+    },
+    {
+        "id": 4,
+        "codigo": "1155105",
+        "nombre": "Introducción a la Ingeniería de Sistemas",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [],
+        "semestre": 1
+    },
+    {
+        "id": 5,
+        "codigo": "1155106",
+        "nombre": "Comunicación I",
+        "tipo": "obligatoria",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [],
+        "semestre": 1
+    },
+    {
+        "id": 6,
+        "codigo": "1155108",
+        "nombre": "Introducción a la Vida Universitaria",
+        "tipo": "obligatoria",
+        "creditos": 1,
+        "hours": 1,
+        "prerequisitos": [],
+        "semestre": 1
+    },
+    {
+        "id": 7,
+        "codigo": "1155201",
+        "nombre": "Cálculo Integral",
+        "tipo": "obligatoria",
+        "creditos": 4,
+        "hours": 4,
+        "prerequisitos": [
+            "1155101"
+        ],
+        "semestre": 2
+    },
+    {
+        "id": 8,
+        "codigo": "1155202",
+        "nombre": "Álgebra Lineal",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155101"
+        ],
+        "semestre": 2
+    },
+    {
+        "id": 9,
+        "codigo": "1155203",
+        "nombre": "Física Mecánica",
+        "tipo": "obligatoria",
+        "creditos": 4,
+        "hours": 4,
+        "prerequisitos": [
+            "1155101"
+        ],
+        "semestre": 2
+    },
+    {
+        "id": 10,
+        "codigo": "1155204",
+        "nombre": "Programación Orientada a Objetos",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 4,
+        "prerequisitos": [
+            "1155104"
+        ],
+        "semestre": 2
+    },
+    {
+        "id": 11,
+        "codigo": "1155206",
+        "nombre": "Comunicación II",
+        "tipo": "obligatoria",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "1155106"
+        ],
+        "semestre": 2
+    },
+    {
+        "id": 12,
+        "codigo": "1155209",
+        "nombre": "Seminario Integrador I",
+        "tipo": "obligatoria",
+        "creditos": 1,
+        "hours": 1,
+        "prerequisitos": [
+            "1155104"
+        ],
+        "semestre": 2
+    },
+    {
+        "id": 13,
+        "codigo": "1155301",
+        "nombre": "Cálculo Vectorial",
+        "tipo": "obligatoria",
+        "creditos": 4,
+        "hours": 4,
+        "prerequisitos": [
+            "1155201"
+        ],
+        "semestre": 3
+    },
+    {
+        "id": 14,
+        "codigo": "1155303",
+        "nombre": "Física Electromagnética",
+        "tipo": "obligatoria",
+        "creditos": 4,
+        "hours": 4,
+        "prerequisitos": [
+            "1155203"
+        ],
+        "semestre": 3
+    },
+    {
+        "id": 15,
+        "codigo": "1155304",
+        "nombre": "Estructuras de Datos",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 4,
+        "prerequisitos": [
+            "1155204"
+        ],
+        "semestre": 3
+    },
+    {
+        "id": 16,
+        "codigo": "1155305",
+        "nombre": "Programación Orientada a Objetos II",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 4,
+        "prerequisitos": [
+            "1155204"
+        ],
+        "semestre": 3
+    },
+    {
+        "id": 17,
+        "codigo": "1155306",
+        "nombre": "Seminario de Investigación I",
+        "tipo": "obligatoria",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "1155209"
+        ],
+        "semestre": 3
+    },
+    {
+        "id": 18,
+        "codigo": "1155401",
+        "nombre": "Ecuaciones Diferenciales",
+        "tipo": "obligatoria",
+        "creditos": 4,
+        "hours": 4,
+        "prerequisitos": [
+            "1155301"
+        ],
+        "semestre": 4
+    },
+    {
+        "id": 19,
+        "codigo": "1155402",
+        "nombre": "Probabilidad y Estadística",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 4,
+        "prerequisitos": [
+            "1155102"
+        ],
+        "semestre": 4
+    },
+    {
+        "id": 20,
+        "codigo": "1155403",
+        "nombre": "Ondas y particulas",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155303"
+        ],
+        "semestre": 4
+    },
+    {
+        "id": 21,
+        "codigo": "1155404",
+        "nombre": "Analisis de algoritmos",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155304"
+        ],
+        "semestre": 4
+    },
+    {
+        "id": 22,
+        "codigo": "1155405",
+        "nombre": "Teoría de la Computación",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155304"
+        ],
+        "semestre": 4
+    },
+    {
+        "id": 23,
+        "codigo": "1155406",
+        "nombre": "Descubriendo negocios basados en TIC",
+        "tipo": "electiva",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "Cre:58"
+        ],
+        "semestre": 4
+    },
+    {
+        "id": 24,
+        "codigo": "1155501",
+        "nombre": "Analisis numerico",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155401"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 25,
+        "codigo": "1155502",
+        "nombre": "Investigación de Operaciones",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155402"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 26,
+        "codigo": "1155503",
+        "nombre": "Electronica",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 4,
+        "prerequisitos": [
+            "1155403"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 27,
+        "codigo": "1155504",
+        "nombre": "Arquitectura de computadores",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155304"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 28,
+        "codigo": "1155506",
+        "nombre": "Seminario de Investigación II",
+        "tipo": "obligatoria",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "1155306"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 29,
+        "codigo": "1155511",
+        "nombre": "Problemas sociales de frontera",
+        "tipo": "electiva",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "Cre:5"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 30,
+        "codigo": "1155513",
+        "nombre": "Psicologia",
+        "tipo": "electiva",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "Cre:5"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 31,
+        "codigo": "1155515",
+        "nombre": "Psicologia industrial",
+        "tipo": "electiva",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "Cre:5"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 32,
+        "codigo": "1155516",
+        "nombre": "Catedra de paz",
+        "tipo": "electiva",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "Cre:5"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 33,
+        "codigo": "1155521",
+        "nombre": "Nuevas tecnologías y sociedad",
+        "tipo": "electiva",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "1155105"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 34,
+        "codigo": "1155522",
+        "nombre": "Relaciones humanas",
+        "tipo": "electiva",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "Cre:60"
+        ],
+        "semestre": 5
+    },
+    {
+        "id": 35,
+        "codigo": "1150615",
+        "nombre": "Habilidades escenciales para el ingeniero de sistemas",
+        "tipo": "electiva",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [],
+        "semestre": 6
+    },
+    {
+        "id": 36,
+        "codigo": "1155604",
+        "nombre": "Sistemas operativos",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155504"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 37,
+        "codigo": "1155605",
+        "nombre": "Bases de datos",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 4,
+        "prerequisitos": [
+            "1155305"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 38,
+        "codigo": "1155606",
+        "nombre": "Programacion web",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 4,
+        "prerequisitos": [
+            "1155305-1155304"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 39,
+        "codigo": "1155607",
+        "nombre": "Constitucion y civismo",
+        "tipo": "obligatoria",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "Cre:20"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 40,
+        "codigo": "1155608",
+        "nombre": "Planeacion estrategica de sistemas de inf",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "Cre:48"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 41,
+        "codigo": "1155609",
+        "nombre": "Seminario Integrador II",
+        "tipo": "obligatoria",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "1155209-1155304"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 42,
+        "codigo": "1155611",
+        "nombre": "Proyecto social en ing de sistemas",
+        "tipo": "electiva",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "Cre:40"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 43,
+        "codigo": "1155612",
+        "nombre": "Crecimiento de negocios",
+        "tipo": "electiva",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "Cre:80"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 44,
+        "codigo": "1155613",
+        "nombre": "Analisis de datos en Python",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155305"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 45,
+        "codigo": "1155614",
+        "nombre": "Deuda tecninca en el desarrollo de software",
+        "tipo": "electiva",
+        "creditos": 0,
+        "hours": 0,
+        "prerequisitos": [
+            "1155305"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 46,
+        "codigo": "",
+        "nombre": "easter egg",
+        "tipo": "electiva",
+        "creditos": 0,
+        "hours": 0,
+        "prerequisitos": [
+            ""
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 47,
+        "codigo": "1155615",
+        "nombre": "Multimedia y realidad mixta",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155504"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 48,
+        "codigo": "1155616",
+        "nombre": "Aplicaciones practicas de teorias de grafos",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155404"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 49,
+        "codigo": "1155811",
+        "nombre": "Laboratorio de programacion",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155204 Cre:40"
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 50,
+        "codigo": "1156807",
+        "nombre": "Compiladores",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            ""
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 51,
+        "codigo": "1156808",
+        "nombre": "Las tic y educacion ambiental",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            ""
+        ],
+        "semestre": 6
+    },
+    {
+        "id": 52,
+        "codigo": "1155523",
+        "nombre": "Analitica de datos en modelos cognitivos",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155605"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 53,
+        "codigo": "1155704",
+        "nombre": "Teoria general de las comunicaciones",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155604"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 54,
+        "codigo": "1155705",
+        "nombre": "Analisis y diseño de sistemas",
+        "tipo": "obligatoria",
+        "creditos": 4,
+        "hours": 5,
+        "prerequisitos": [
+            "1155605"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 55,
+        "codigo": "1155706",
+        "nombre": "Seminario de investigacion III",
+        "tipo": "obligatoria",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "1155506"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 56,
+        "codigo": "1155707",
+        "nombre": "Etica profesional",
+        "tipo": "obligatoria",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "Cre:90"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 57,
+        "codigo": "1155708",
+        "nombre": "Administracion de proyecto informaticos",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155608"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 58,
+        "codigo": "1155709",
+        "nombre": "Tecnicas gerenciales y de negociación",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155608"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 59,
+        "codigo": "1155712",
+        "nombre": "Economía y finanzas",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155608"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 60,
+        "codigo": "1155713",
+        "nombre": "Bases de datos avanzadas",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155605"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 61,
+        "codigo": "1155714",
+        "nombre": "Transformación digital de las organizaciones",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155608"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 62,
+        "codigo": "1155715",
+        "nombre": "Soluciones tecnológicas en el contexto social",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155611"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 63,
+        "codigo": "1155716",
+        "nombre": "Analítica de datos",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155605"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 64,
+        "codigo": "1155717",
+        "nombre": "Hacking defensivo y ciberseguridad",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155604"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 65,
+        "codigo": "1156701",
+        "nombre": "Patrones de diseño",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155605"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 66,
+        "codigo": "1156702",
+        "nombre": "Gestión de bases de datos",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155605"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 67,
+        "codigo": "1156703",
+        "nombre": "Inteligencia artificial",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155304"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 68,
+        "codigo": "1156704",
+        "nombre": "Teoría de grafos",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155404"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 69,
+        "codigo": "1157007",
+        "nombre": "Desarrollo de aplicaciones basadas en microservicios",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155606-1155605"
+        ],
+        "semestre": 7
+    },
+    {
+        "id": 70,
+        "codigo": "1155804",
+        "nombre": "Redes de computadores",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155704"
+        ],
+        "semestre": 8
+    },
+    {
+        "id": 71,
+        "codigo": "1155805",
+        "nombre": "Ingeniería de software",
+        "tipo": "obligatoria",
+        "creditos": 4,
+        "hours": 4,
+        "prerequisitos": [
+            "1155705"
+        ],
+        "semestre": 8
+    },
+    {
+        "id": 72,
+        "codigo": "1155808",
+        "nombre": "Formulación y evaluación de proyectos de sistemas",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155708"
+        ],
+        "semestre": 8
+    },
+    {
+        "id": 73,
+        "codigo": "1155809",
+        "nombre": "Seminario integrador III",
+        "tipo": "obligatoria",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "1155705-1155609"
+        ],
+        "semestre": 8
+    },
+    {
+        "id": 74,
+        "codigo": "1155810",
+        "nombre": "Adquisiciones en la gestión de proyectos",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155708"
+        ],
+        "semestre": 8
+    },
+    {
+        "id": 75,
+        "codigo": "1156801",
+        "nombre": "Sistemas de información geografica",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155705"
+        ],
+        "semestre": 8
+    },
+    {
+        "id": 76,
+        "codigo": "1156802",
+        "nombre": "Informática educativa",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155705"
+        ],
+        "semestre": 8
+    },
+    {
+        "id": 77,
+        "codigo": "1156803",
+        "nombre": "Redes inalámbricas",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155704"
+        ],
+        "semestre": 8
+    },
+    {
+        "id": 78,
+        "codigo": "1156804",
+        "nombre": "Administración de so de red",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155604"
+        ],
+        "semestre": 8
+    },
+    {
+        "id": 79,
+        "codigo": "1156805",
+        "nombre": "Gerencia y tecnología",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155608"
+        ],
+        "semestre": 8
+    },
+    {
+        "id": 80,
+        "codigo": "1151060",
+        "nombre": "Deuda técnica en el desarrollo de software",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155805"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 81,
+        "codigo": "1155905",
+        "nombre": "Arquitectura de software",
+        "tipo": "obligatoria",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155805"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 82,
+        "codigo": "1155906",
+        "nombre": "Estrategias para la empleabilidad en sistemas",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155805"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 83,
+        "codigo": "1155908",
+        "nombre": "Gestión de TICs",
+        "tipo": "obligatoria",
+        "creditos": 2,
+        "hours": 2,
+        "prerequisitos": [
+            "1155808"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 84,
+        "codigo": "1155909",
+        "nombre": "Práctica en ingeniería de sistemas",
+        "tipo": "obligatoria",
+        "creditos": 6,
+        "hours": 4,
+        "prerequisitos": [
+            "Cre:130"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 85,
+        "codigo": "1155910",
+        "nombre": "Emprendimiento digital y transformacion tecnologica",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155808-1155705"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 86,
+        "codigo": "1156901",
+        "nombre": "Desarrollo de aplicaciones distribuidas",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155704-1155705"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 87,
+        "codigo": "1156902",
+        "nombre": "Seguridad informática",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155704"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 88,
+        "codigo": "1156903",
+        "nombre": "Proyecto académico opcional",
+        "tipo": "electiva",
+        "creditos": 15,
+        "hours": 6,
+        "prerequisitos": [
+            "Cre:150"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 89,
+        "codigo": "1156904",
+        "nombre": "Herramientas TIC para la gestion de proyectos",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155806"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 90,
+        "codigo": "1156906",
+        "nombre": "Auditoría de sistemas",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155805"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 91,
+        "codigo": "1156907",
+        "nombre": "Arquitectura dirigida para ontologias",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155805"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 92,
+        "codigo": "1159608",
+        "nombre": "Metodologías ágiles para desarrollo de software",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155805"
+        ],
+        "semestre": 9
+    },
+    {
+        "id": 93,
+        "codigo": "1151058",
+        "nombre": "Proyecto académico",
+        "tipo": "obligatoria",
+        "creditos": 15,
+        "hours": 6,
+        "prerequisitos": [
+            "Cre:150"
+        ],
+        "semestre": 10
+    },
+    {
+        "id": 94,
+        "codigo": "1156001",
+        "nombre": "Proyecto de grado",
+        "tipo": "obligatoria",
+        "creditos": 8,
+        "hours": 0,
+        "prerequisitos": [
+            "Cre:100"
+        ],
+        "semestre": 10
+    },
+    {
+        "id": 95,
+        "codigo": "1156910",
+        "nombre": "Redes neuronales",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [],
+        "semestre": 10
+    },
+    {
+        "id": 96,
+        "codigo": "1157001",
+        "nombre": "Sistemas de información avanzada",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155705"
+        ],
+        "semestre": 10
+    },
+    {
+        "id": 97,
+        "codigo": "1157002",
+        "nombre": "Redes convergentes",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155804"
+        ],
+        "semestre": 10
+    },
+    {
+        "id": 98,
+        "codigo": "1157003",
+        "nombre": "Informática jurídica",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155705"
+        ],
+        "semestre": 10
+    },
+    {
+        "id": 99,
+        "codigo": "1157004",
+        "nombre": "Computación en la nube",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155604"
+        ],
+        "semestre": 10
+    },
+    {
+        "id": 100,
+        "codigo": "1157005",
+        "nombre": "Minería de datos",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155606-1155605"
+        ],
+        "semestre": 10
+    },
+    {
+        "id": 101,
+        "codigo": "1157006",
+        "nombre": "Sistemas distribuidos",
+        "tipo": "electiva",
+        "creditos": 3,
+        "hours": 3,
+        "prerequisitos": [
+            "1155604"
+        ],
+        "semestre": 10
     }
-  }
-}
+]

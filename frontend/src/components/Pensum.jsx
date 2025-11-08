@@ -9,6 +9,7 @@ export default function Pensum({ onVerMas }) {
 
   const COURSES_URL = import.meta.env.VITE_COURSES_URL;
   console.log("Pensum COURSES_URL =", COURSES_URL);
+  console.log("Fetching courses from:", COURSES_URL);
 
   useEffect(() => {
     fetch(`${COURSES_URL}/courses`)
@@ -17,6 +18,7 @@ export default function Pensum({ onVerMas }) {
       .catch((err) => console.error("Error fetching courses:", err));
   }, [COURSES_URL]);
 
+  
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth < 640) setColumns(2);
@@ -49,7 +51,7 @@ export default function Pensum({ onVerMas }) {
               key={c.codigo}
               code={c.codigo}
               name={c.nombre}
-              hours={c.horas}
+              hours={c.hours}
               credits={c.creditos}
               type={c.tipo}
             />
@@ -64,7 +66,7 @@ export default function Pensum({ onVerMas }) {
                 <CourseCard
                   code={c.codigo}
                   name={c.nombre}
-                  hours={c.horas}
+                  hours={c.hours}
                   credits={c.creditos}
                   type={c.tipo}
                 />
