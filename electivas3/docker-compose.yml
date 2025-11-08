@@ -1,0 +1,235 @@
+version: '3.9'
+
+services:
+
+  # ================== FRONTEND (Vite) ==================
+  frontend:
+    image: node:22.12.0-alpine
+    working_dir: /app
+    user: root
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules   # <— volumen nombrado
+    command: >
+      sh -c "if [ -f package-lock.json ]; then npm ci; else npm install; fi &&
+             npm run dev -- --host 0.0.0.0 --port 5173"
+    ports:
+      - "5173:5173"
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      VITE_AUTH_API: "http://localhost:8018"
+      VITE_COURSES_API: "http://localhost:8017"
+      VITE_GROUPS_API: "http://localhost:8020"
+      VITE_REQUESTS_API: "http://localhost:8021"
+    depends_on:
+      - auth-ms
+      - courses-ms
+      - groups-ms
+      - requests-ms
+
+  # ================== AUTH SERVICE ==================
+  auth-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_pass
+      POSTGRES_DB: auth_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+
+  auth-ms:
+    build:
+      context: ./auth-service
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             gunicorn auth_service.wsgi:application --bind 0.0.0.0:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: auth_service.settings
+      DB_NAME: auth_db
+      DB_USER: auth_user
+      DB_PASSWORD: auth_pass
+      DB_HOST: auth-db
+      DB_PORT: "5432"
+      ALLOWED_HOSTS: "*"
+    depends_on:
+      - auth-db
+    ports:
+      - "8018:8000"
+
+  # ================== COURSES SERVICE ==================
+  courses-ms:
+    build:
+      context: ./course-service
+    ports:
+      - "8017:8000"
+
+  # ================== MENSAJERÍA ==================
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: appuser
+      RABBITMQ_DEFAULT_PASS: apppass
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  # ================== GROUPS SERVICE ==================
+  groups-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: groups_db
+      POSTGRES_USER: groups_user
+      POSTGRES_PASSWORD: groups_pass
+    volumes:
+      - groups_db_data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+
+  groups-ms:
+    build:
+      context: ./groups-service
+    volumes:
+      - ./groups-service:/app
+    environment:
+      DJANGO_SETTINGS_MODULE: groups_service.settings
+      DB_NAME: groups_db
+      DB_USER: groups_user
+      DB_PASSWORD: groups_pass
+      DB_HOST: groups-db
+      DB_PORT: "5432"
+      AUTH_BASE_URL: "http://auth-ms:8000/api/auth"
+      COURSES_BASE_URL: "http://courses-ms:8000"
+      CELERY_BROKER_URL: "amqp://appuser:apppass@rabbitmq:5672//"
+      CELERY_RESULT_BACKEND: "rpc://"
+      EMAIL_HOST: "smtp.gmail.com"
+      EMAIL_PORT: "587"
+      EMAIL_HOST_USER: "andresjulianoj@ufps.edu.co"
+      EMAIL_HOST_PASSWORD: "sgmbnlcppdfvfema"
+      DEFAULT_FROM_EMAIL: "andresjulianoj@ufps.edu.co"
+      PROGRAM_EMAIL: "andresjulianoj@ufps.edu.co"
+      ALLOWED_HOSTS: "*"
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             gunicorn groups_service.wsgi:application --bind 0.0.0.0:8000"
+    depends_on:
+      groups-db:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      auth-ms:
+        condition: service_started
+      courses-ms:
+        condition: service_started
+    ports:
+      - "8020:8000"
+
+  groups-worker:
+    build:
+      context: ./groups-service
+    volumes:
+      - ./groups-service:/app
+    command: celery -A groups_service.celery worker -l info
+    environment:
+      DJANGO_SETTINGS_MODULE: groups_service.settings
+      CELERY_BROKER_URL: "amqp://appuser:apppass@rabbitmq:5672//"
+      CELERY_RESULT_BACKEND: "rpc://"
+      AUTH_BASE_URL: "http://auth-ms:8000/api/auth"
+      COURSES_BASE_URL: "http://courses-ms:8000"
+      EMAIL_HOST: "smtp.gmail.com"
+      EMAIL_PORT: "587"
+      EMAIL_HOST_USER: "andresjulianoj@ufps.edu.co"
+      EMAIL_HOST_PASSWORD: "sgmbnlcppdfvfema"
+      DEFAULT_FROM_EMAIL: "andresjulianoj@ufps.edu.co"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      groups-db:
+        condition: service_started
+      groups-ms:
+        condition: service_started
+
+  # ================== REQUESTS SERVICE ==================
+  requests-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: requests_db
+      POSTGRES_USER: requests_user
+      POSTGRES_PASSWORD: requests_pass
+    volumes:
+      - requests_db_data:/var/lib/postgresql/data
+    ports:
+      - "5436:5432"
+
+  requests-ms:
+    build:
+      context: ./requests-service
+    volumes:
+      - ./requests-service:/app
+    environment:
+      DJANGO_SETTINGS_MODULE: requests_service.settings
+
+      DB_HOST: requests-db
+      DB_PORT: "5432"
+      DB_NAME: requests_db
+      DB_USER: requests_user
+      DB_PASSWORD: requests_pass
+
+      GROUPS_BASE_URL: "http://groups-ms:8000"
+
+      EMAIL_HOST: "smtp.gmail.com"
+      EMAIL_PORT: "587"
+      EMAIL_HOST_USER: "andresjulianoj@ufps.edu.co"
+      EMAIL_HOST_PASSWORD: "sgmbnlcppdfvfema"
+      DEFAULT_FROM_EMAIL: "andresjulianoj@ufps.edu.co"
+      PROGRAM_EMAIL: "andresjulianoj@ufps.edu.co"
+
+      CELERY_BROKER_URL: "amqp://appuser:apppass@rabbitmq:5672//"
+      CELERY_RESULT_BACKEND: "rpc://"
+      ALLOWED_HOSTS: "*"
+    depends_on:
+      requests-db:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      groups-ms:
+        condition: service_started
+    ports:
+      - "8021:8000"
+
+  requests-worker:
+    build:
+      context: ./requests-service
+    volumes:
+      - ./requests-service:/app
+    command: celery -A requests_service.celery worker -l info
+    environment:
+      DJANGO_SETTINGS_MODULE: requests_service.settings
+      CELERY_BROKER_URL: "amqp://appuser:apppass@rabbitmq:5672//"
+      CELERY_RESULT_BACKEND: "rpc://"
+      EMAIL_HOST: "smtp.gmail.com"
+      EMAIL_PORT: "587"
+      EMAIL_HOST_USER: "andresjulianoj@ufps.edu.co"
+      EMAIL_HOST_PASSWORD: "sgmbnlcppdfvfema"
+      DEFAULT_FROM_EMAIL: "andresjulianoj@ufps.edu.co"
+      GROUPS_BASE_URL: "http://groups-ms:8000"
+      PROGRAM_EMAIL: "andresjulianoj@ufps.edu.co"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      requests-db:
+        condition: service_started
+      requests-ms:
+        condition: service_started
+
+volumes:
+  auth_db_data:
+  groups_db_data:
+  requests_db_data:
+  frontend_node_modules: {} 
