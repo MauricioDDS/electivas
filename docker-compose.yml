@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   # =============== DATABASES & RABBITMQ ===============
   auth-db:
@@ -17,8 +15,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5672:5672" # AMQP
-      - "15672:15672" # management UI
+      - "5672:5672"
+      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
@@ -53,6 +51,7 @@ services:
     build: ./email-worker
     depends_on:
       - rabbitmq
+      - auth-ms
     environment:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_USER: guest
@@ -62,6 +61,8 @@ services:
       SMTP_PORT: 587
       SMTP_USER: your_email@gmail.com
       SMTP_PASS: "rdmk ajua yedj rjpl"
+      AUTH_SERVICE_URL: http://auth-ms:8000/api/auth/users/
+      NEW_GROUP_QUEUE: new_group_notification
     restart: unless-stopped
 
   auth-ms:

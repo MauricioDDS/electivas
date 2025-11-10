@@ -205,7 +205,30 @@
         "1155101"
       ],
       "semestre": 2,
-      "grupos": {},
+      "grupos": {
+        "1624421b-f398-472e-ac35-31ea7895dd61": {
+          "id": "1624421b-f398-472e-ac35-31ea7895dd61",
+          "group_name": "mauro",
+          "nombre": "mauro",
+          "schedule": "Lunes 8-10",
+          "horario": "Lunes 8-10",
+          "available_slots": 2,
+          "disponible": 2,
+          "professor": "de",
+          "profesor": "de"
+        },
+        "7c7dd8d6-d9e2-46ef-80d8-d9a6c8385f54": {
+          "id": "7c7dd8d6-d9e2-46ef-80d8-d9a6c8385f54",
+          "group_name": "B",
+          "nombre": "B",
+          "schedule": "8-10",
+          "horario": "8-10",
+          "available_slots": 4,
+          "disponible": 4,
+          "professor": "Prato",
+          "profesor": "Prato"
+        }
+      },
       "estado": 2
     },
     "1155204": {

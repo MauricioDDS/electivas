@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, BackgroundTasks, Header, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import json
@@ -8,13 +8,9 @@ import requests
 from typing import Optional
 import uuid
 import threading
-from fastapi import BackgroundTasks
 from fastapi.responses import FileResponse
 import pika
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from pydantic import BaseModel
+
 
 app = FastAPI(title="Sistema de Pensum Universitario")
 
@@ -26,7 +22,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "rabbitmq")  # service name in compose
+RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "rabbitmq")
 RABBITMQ_PORT = int(os.getenv("RABBITMQ_PORT", "5672"))
 RABBITMQ_USER = os.getenv("RABBITMQ_USER", "guest")
 RABBITMQ_PASS = os.getenv("RABBITMQ_PASS", "guest")
@@ -37,6 +33,7 @@ SCRAPER_URL = SCRAPER_HOST.rstrip("/") + SCRAPER_PENSUM_PATH
 ADMIN_KEY = os.getenv("ADMIN_KEY", "dev-admin-key")
 COURSES_JSON_PATH = os.getenv("COURSES_JSON_PATH", "courses.json")
 REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "60"))
+NEW_GROUP_QUEUE = os.getenv("NEW_GROUP_QUEUE", "new_group_queue")
 
 TASKS = {}
 
@@ -44,7 +41,6 @@ class SyncBody(BaseModel):
     ci_session: str
     delay: Optional[int] = None
 
-# --- helpers ---
 def load_courses_raw():
     """
     Devuelve el contenido crudo de courses.json (puede ser lista antigua,
@@ -282,7 +278,6 @@ async def request_cupo(body: CupoRequest, request: Request):
     if header_admin != ADMIN_KEY:
         raise HTTPException(status_code=403, detail="forbidden")
 
-    # Build email payload (consumer will format and send)
     to_email = os.getenv("EMAIL_TO", body.user_email)
     payload = {
         "to": to_email,
@@ -301,10 +296,179 @@ async def request_cupo(body: CupoRequest, request: Request):
     try:
         publish_email_message(payload)
     except Exception as e:
-        # If publishing fails, return 500
         raise HTTPException(status_code=500, detail=f"Failed to queue email: {e}")
 
     return {"status": "queued", "message": "Solicitud encolada correctamente"}
+
+class GroupCreate(BaseModel):
+    group_name: str
+    schedule: str
+    available_slots: int
+    professor: str | None = None
+
+def publish_to_queue(queue_name, message):
+    credentials = pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASS)
+    params = pika.ConnectionParameters(host=RABBITMQ_HOST, credentials=credentials)
+    connection = None
+    try:
+        connection = pika.BlockingConnection(params)
+        channel = connection.channel()
+        channel.queue_declare(queue=queue_name, durable=True)
+        channel.basic_publish(
+            exchange="",
+            routing_key=queue_name,
+            body=json.dumps(message),
+            properties=pika.BasicProperties(delivery_mode=2),
+        )
+        print(f"[publish_to_queue] published to queue {queue_name}")
+    except Exception as e:
+        print(f"[publish_to_queue] error publishing to {queue_name}: {e}")
+        raise
+    finally:
+        if connection and connection.is_open:
+            try:
+                connection.close()
+            except Exception:
+                pass
+
+@app.post("/courses/{course_code}/groups")
+def create_group(course_code: str, group: GroupCreate, x_admin_key: str = Header(None), response: Response = None):
+    if x_admin_key != ADMIN_KEY:
+        raise HTTPException(status_code=403, detail="Not authorized")
+
+    group_payload = {
+        "group_name": group.group_name,
+        "schedule": group.schedule,
+        "available_slots": group.available_slots,
+        "professor": group.professor,
+    }
+
+    raw = load_courses_raw()
+    if raw is None:
+        raise HTTPException(status_code=500, detail="courses.json not found or unreadable")
+
+    try:
+        new_group_id = _find_and_add_group_in_raw(raw, course_code, group_payload)
+    except KeyError as ke:
+        raise HTTPException(status_code=404, detail=str(ke))
+    except Exception as e:
+        print(f"[create_group] error adding group to raw data: {e}")
+        raise HTTPException(status_code=500, detail="Failed to add group to courses.json")
+
+    try:
+        saved_to = save_raw_courses(raw)
+        print(f"[create_group] wrote new group {new_group_id} to {saved_to}")
+    except Exception as e:
+        print(f"[create_group] error writing courses.json: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to persist courses.json: {e}")
+
+    publish_error = None
+    try:
+        publish_to_queue(
+            NEW_GROUP_QUEUE,
+            {
+                "type": "new_group",
+                "course_name": course_code,
+                "group_id": new_group_id,
+                **group_payload,
+            },
+        )
+        print(f"[create_group] published new_group for {course_code} group_id={new_group_id}")
+    except Exception as e:
+        publish_error = str(e)
+        print(f"[create_group] publish failed: {publish_error}")
+
+    result = {
+        "message": "Group created and saved to courses.json",
+        "group": {
+            "group_id": new_group_id,
+            **group_payload,
+        },
+        "saved_to": saved_to,
+    }
+
+    if publish_error:
+        result["warning"] = "failed to publish notification"
+        result["publish_error"] = publish_error
+        # optional: set status code to 201
+        response.status_code = 201
+        return result
+
+    response.status_code = 201
+    result["detail"] = "published to queue"
+    return result
+
+def save_raw_courses(raw_data):
+    """
+    Persist the raw_data object to COURSES_JSON_PATH using atomic_write.
+    """
+    try:
+        p = pathlib.Path(COURSES_JSON_PATH)
+        pretty = json.dumps(raw_data, ensure_ascii=False, indent=2)
+        atomic_write(p, pretty)
+        return str(p.resolve())
+    except Exception as e:
+        raise
+
+def _find_and_add_group_in_raw(raw, course_code, group_payload):
+    """
+    Mutates `raw` and adds a group entry for course_code.
+    Returns the generated group_id.
+    Supports these formats of courses.json:
+      - dict with key "materias" -> materias is a dict of codigo -> materia
+      - list of course objects -> each has 'codigo'
+      - single dict representing a course
+    """
+    group_id = str(uuid.uuid4())
+    group_obj = {
+        "id": group_id,
+        "group_name": group_payload.get("group_name"),
+        "nombre": group_payload.get("group_name"),
+        "schedule": group_payload.get("schedule"),
+        "horario": group_payload.get("schedule"),
+        "available_slots": int(group_payload.get("available_slots") or 0),
+        "disponible": int(group_payload.get("available_slots") or 0),
+        "professor": group_payload.get("professor"),
+        "profesor": group_payload.get("professor"),
+    }
+
+    if isinstance(raw, dict) and "materias" in raw and isinstance(raw["materias"], dict):
+        materias = raw["materias"]
+        if course_code not in materias:
+            raise KeyError(f"course {course_code} not found in materias")
+        materia = materias[course_code]
+        if not isinstance(materia, dict):
+            raise TypeError("materia entry is not a dict")
+        grupos = materia.get("grupos")
+        if grupos is None:
+            materia["grupos"] = {}
+            grupos = materia["grupos"]
+        grupos[group_id] = group_obj
+        return group_id
+
+    if isinstance(raw, list):
+        for c in raw:
+            try:
+                if str(c.get("codigo", "")).strip() == str(course_code).strip():
+                    if "grupos" not in c or not isinstance(c["grupos"], dict):
+                        c["grupos"] = {}
+                    c["grupos"][group_id] = group_obj
+                    return group_id
+            except Exception:
+                continue
+        raise KeyError(f"course {course_code} not found in list")
+
+    if isinstance(raw, dict):
+        try:
+            if str(raw.get("codigo", "")).strip() == str(course_code).strip():
+                if "grupos" not in raw or not isinstance(raw["grupos"], dict):
+                    raw["grupos"] = {}
+                raw["grupos"][group_id] = group_obj
+                return group_id
+        except Exception:
+            pass
+
+    raise KeyError(f"course {course_code} not found in courses.json")
 
 if __name__ == "__main__":
     import uvicorn

@@ -1,10 +1,23 @@
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import RequestCupoModal from "./RequestCupoModal";
+import useAddGroup from "@/hooks/useAddGroup";
 
-export default function CourseDetailModal({ course, onClose, COURSES_URL }) {
+export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmin: isAdminProp }) {
   if (!course) return null;
 
+  // prefer explicit prop, otherwise fallback to authenticated user's role === "ADMIN"
+  const { user } = useAuth();
+  const isAdmin = Boolean(isAdminProp) || (user && user.role === "ADMIN");
+
   const [showCupoModal, setShowCupoModal] = useState(false);
+  const {
+    showAddGroup,
+    setShowAddGroup,
+    groupData,
+    setGroupData,
+    handleAddGroup,
+  } = useAddGroup(COURSES_URL, course);
 
   const hours = course.horas ?? course.hours ?? "-";
   const credits = course.creditos ?? course.credits ?? "-";
@@ -14,9 +27,8 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL }) {
   const grupos = Array.isArray(gruposMap)
     ? gruposMap
     : Object.entries(gruposMap || {}).map(([k, v]) => ({ id: k, ...v }));
-
   const totalCupos = grupos.reduce((acc, g) => {
-    const val = g.disponible ?? 0;
+    const val = g.disponible ?? g.available ?? 0;
     return acc + (parseInt(val, 10) || 0);
   }, 0);
 
@@ -32,15 +44,66 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL }) {
               <p className="text-sm">Horas: {hours} • Créditos: {credits}</p>
             </div>
 
-            <div className="ml-4">
+            <div className="flex gap-2 ml-4">
+              {isAdmin && (
+                <button
+                  onClick={() => setShowAddGroup(!showAddGroup)}
+                  className={`px-3 py-1 rounded-md text-sm text-white font-medium shadow ${showAddGroup ? "bg-gray-500 hover:bg-gray-600" : "bg-gray-500 hover:bg-gray-600"
+                    } transition`}
+                >
+                  {showAddGroup ? "Cancelar" : "➕ Grupo"}
+                </button>
+              )}
+
               <button
                 onClick={onClose}
-                className="px-3 py-1 rounded-md bg-gray-200 text-black text-sm"
+                className="px-3 py-1 rounded-md bg-gray-200 text-black text-sm hover:bg-gray-300 transition"
               >
                 Cerrar
               </button>
             </div>
           </div>
+
+          {showAddGroup && (
+            <div className="mt-4 border-t border-gray-300 pt-4">
+              <h3 className="font-semibold mb-2">Nuevo grupo</h3>
+              <div className="space-y-2">
+                <input
+                  placeholder="Nombre del grupo"
+                  value={groupData.group_name || ""}
+                  onChange={(e) => setGroupData({ ...groupData, group_name: e.target.value })}
+                  className="w-full border rounded p-2 text-sm"
+                />
+                <input
+                  placeholder="Horario (ej: Lunes 8-10AM)"
+                  value={groupData.schedule || ""}
+                  onChange={(e) => setGroupData({ ...groupData, schedule: e.target.value })}
+                  className="w-full border rounded p-2 text-sm"
+                />
+                <input
+                  type="number"
+                  placeholder="Cupos disponibles"
+                  value={groupData.available_slots ?? ""}
+                  onChange={(e) =>
+                    setGroupData({ ...groupData, available_slots: parseInt(e.target.value || "0", 10) })
+                  }
+                  className="w-full border rounded p-2 text-sm"
+                />
+                <input
+                  placeholder="Profesor"
+                  value={groupData.professor || ""}
+                  onChange={(e) => setGroupData({ ...groupData, professor: e.target.value })}
+                  className="w-full border rounded p-2 text-sm"
+                />
+                <button
+                  onClick={handleAddGroup}
+                  className="mt-2 px-4 py-2 rounded-md bg-green-600 text-white text-sm hover:bg-green-700 transition"
+                >
+                  Confirmar grupo
+                </button>
+              </div>
+            </div>
+          )}
 
           <div className="mt-4">
             <h3 className="font-semibold">Requisitos</h3>
@@ -62,7 +125,7 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL }) {
             ) : (
               <div className="space-y-3">
                 {grupos.map((g) => (
-                  <div key={g.id || g.nombre} className="p-3 border rounded-md">
+                  <div key={g.id ?? g.nombre} className="p-3 border rounded-md">
                     <div className="flex justify-between">
                       <div>
                         <div className="font-medium">{g.nombre ?? g.id}</div>
