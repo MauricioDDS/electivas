@@ -11,7 +11,7 @@ export default function CourseSelectModal({ onClose, onConfirm, COURSES_URL }) {
     fetch(`${COURSES_URL}/courses`)
       .then((res) => res.json())
       .then((data) => {
-        // normalize data if backend may return pensum object
+
         let list = data;
         if (Array.isArray(data) && data.length === 1 && data[0] && data[0].materias) {
           list = Object.values(data[0].materias);
@@ -98,7 +98,6 @@ export default function CourseSelectModal({ onClose, onConfirm, COURSES_URL }) {
         </div>
       </div>
 
-      {/* Detail modal */}
       {detailCourse && (
         <CourseDetailModal
           course={detailCourse}

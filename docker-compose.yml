@@ -13,31 +13,13 @@ services:
     volumes:
       - auth_db_data:/var/lib/postgresql/data
     restart: unless-stopped
-
-  groups-db:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: groups_db
-      POSTGRES_USER: groups_user
-      POSTGRES_PASSWORD: groups_pass
-    volumes:
-      - groups_db_data:/var/lib/postgresql/data
-    ports:
-      - "5435:5432"
-    restart: unless-stopped
-
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    restart: unless-stopped
-
-  # =============== MICROSERVICES ===============
+  # ============== MICROSERVICES ===============
   courses-ms:
     build:
       context: ./course-service
     command: uvicorn main:app --host 0.0.0.0 --port 8000
+    env_file:
+      - ./course-service/.env
     environment:
       ADMIN_KEY: "superKey123"
       SCRAPER_HOST: "http://scraper-ms:4004"
@@ -73,63 +55,6 @@ services:
     volumes:
       - ./auth-service:/app
     restart: unless-stopped
-
-  groups-ms:
-    build:
-      context: ./groups-service
-    command: >
-      sh -c "python manage.py migrate --noinput &&
-             gunicorn groups_service.wsgi:application --bind 0.0.0.0:8000"
-    environment:
-      DJANGO_SETTINGS_MODULE: groups_service.settings
-      DB_NAME: groups_db
-      DB_USER: groups_user
-      DB_PASSWORD: groups_pass
-      DB_HOST: groups-db
-      DB_PORT: "5432"
-      AUTH_BASE_URL: "http://auth-ms:8000/api/auth"
-      COURSES_BASE_URL: "http://courses-ms:8000"
-      CELERY_BROKER_URL: "amqp://guest:guest@rabbitmq:5672//"
-      CELERY_RESULT_BACKEND: "rpc://"
-      EMAIL_HOST: "smtp.gmail.com"
-      EMAIL_PORT: "587"
-      EMAIL_HOST_USER: "tu_correo@gmail.com"
-      EMAIL_HOST_PASSWORD: "tu_contraseña_o_app_password"
-      DEFAULT_FROM_EMAIL: "tu_correo@gmail.com"
-      ALLOWED_HOSTS: "*"
-    depends_on:
-      - groups-db
-      - rabbitmq
-      - auth-ms
-      - courses-ms
-    ports:
-      - "8020:8000"
-    volumes:
-      - ./groups-service:/app
-    restart: unless-stopped
-
-  groups-worker:
-    build:
-      context: ./groups-service
-    command: celery -A groups_service.celery worker -l info
-    environment:
-      DJANGO_SETTINGS_MODULE: groups_service.settings
-      CELERY_BROKER_URL: "amqp://guest:guest@rabbitmq:5672//"
-      CELERY_RESULT_BACKEND: "rpc://"
-      AUTH_BASE_URL: "http://auth-ms:8000/api/auth"
-      COURSES_BASE_URL: "http://courses-ms:8000"
-      EMAIL_HOST: "smtp.gmail.com"
-      EMAIL_PORT: "587"
-      EMAIL_HOST_USER: "tu_correo@gmail.com"
-      EMAIL_HOST_PASSWORD: "tu_contraseña_o_app_password"
-      DEFAULT_FROM_EMAIL: "tu_correo@gmail.com"
-    depends_on:
-      - groups-db
-      - rabbitmq
-    volumes:
-      - ./groups-service:/app
-    restart: unless-stopped
-
   frontend:
     build:
       context: ./frontend
@@ -151,4 +76,3 @@ services:
 
 volumes:
   auth_db_data:
-  groups_db_data:

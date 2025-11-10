@@ -10,6 +10,10 @@ import uuid
 import threading
 from fastapi import BackgroundTasks
 from fastapi.responses import FileResponse
+import pika
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = FastAPI(title="Sistema de Pensum Universitario")
 
@@ -239,6 +243,55 @@ def sync_pensum(body: SyncBody, request: Request):
         total_mat = 0
 
     return {"status": "ok", "saved_to": str(p.resolve()), "total_materias": total_mat}
+
+def send_email_async(to_email: str, subject: str, body: str):
+    host = os.getenv("EMAIL_HOST", "smtp.gmail.com")
+    port = int(os.getenv("EMAIL_PORT", "587"))
+    user = os.getenv("EMAIL_HOST_USER")
+    password = os.getenv("EMAIL_HOST_PASSWORD")
+    from_email = os.getenv("EMAIL_FROM", user)
+
+    if not all([host, port, user, password, from_email]):
+        print("[send_email_async] Missing email configuration")
+        return
+
+    msg = MIMEMultipart()
+    msg["From"] = from_email
+    msg["To"] = to_email
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain"))
+
+    try:
+        with smtplib.SMTP(host, port) as server:
+            server.starttls()
+            server.login(user, password)
+            server.send_message(msg)
+            print(f"[send_email_async] Email sent to {to_email}")
+    except Exception as e:
+        print(f"[send_email_async] Failed to send email: {e}")
+
+@app.post("/request-cupo")
+async def request_cupo(background_tasks: BackgroundTasks, request: Request):
+    try:
+        data = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid JSON body")
+
+    course_code = data.get("course_code")
+    group_name = data.get("group_name")
+    user_email = data.get("user_email")
+
+    if not all([course_code, group_name, user_email]):
+        raise HTTPException(status_code=400, detail="Missing required fields")
+
+    to_email = os.getenv("EMAIL_TO", user_email)
+
+    subject = f"Solicitud de cupo para {course_code}"
+    body = f"El usuario {user_email} ha solicitado un cupo en el grupo {group_name} del curso {course_code}."
+
+    background_tasks.add_task(send_email_async, to_email, subject, body)
+
+    return {"status": "ok", "message": "Solicitud de cupo enviada correctamente"}
 
 if __name__ == "__main__":
     import uvicorn
