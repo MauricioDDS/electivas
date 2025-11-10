@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import RequestCupoModal from "./RequestCupoModal";
 import useAddGroup from "@/hooks/useAddGroup";
@@ -6,7 +6,6 @@ import useAddGroup from "@/hooks/useAddGroup";
 export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmin: isAdminProp }) {
   if (!course) return null;
 
-  // prefer explicit prop, otherwise fallback to authenticated user's role === "ADMIN"
   const { user } = useAuth();
   const isAdmin = Boolean(isAdminProp) || (user && user.role === "ADMIN");
 
@@ -17,20 +16,47 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmi
     groupData,
     setGroupData,
     handleAddGroup,
+    loading: adding,
   } = useAddGroup(COURSES_URL, course);
+  const initialGroups = useMemo(() => {
+    const gruposMap = course.grupos ?? {};
+    if (Array.isArray(gruposMap)) return gruposMap;
+    return Object.entries(gruposMap || {}).map(([k, v]) => ({ id: k, ...v }));
+  }, [course.grupos]);
+
+  const [localGroups, setLocalGroups] = useState(initialGroups);
 
   const hours = course.horas ?? course.hours ?? "-";
   const credits = course.creditos ?? course.credits ?? "-";
   const requisitos = course.requisitos ?? course.prerequisitos ?? [];
-  const gruposMap = course.grupos ?? {};
 
-  const grupos = Array.isArray(gruposMap)
-    ? gruposMap
-    : Object.entries(gruposMap || {}).map(([k, v]) => ({ id: k, ...v }));
-  const totalCupos = grupos.reduce((acc, g) => {
-    const val = g.disponible ?? g.available ?? 0;
-    return acc + (parseInt(val, 10) || 0);
+  const totalCupos = localGroups.reduce((acc, g) => {
+    const val = (g.disponible ?? g.available ?? g.available_slots ?? g.maximo ?? 0);
+    const n = parseInt(val, 10) || 0;
+    return acc + Math.max(n, 0);
   }, 0);
+
+  const onConfirmAddGroup = async () => {
+    try {
+      const created = await handleAddGroup();
+      const normalized = {
+        id: created.id,
+        nombre: created.nombre ?? created.group_name ?? created.id,
+        group_name: created.group_name ?? created.nombre,
+        horario: created.horario ?? created.schedule ?? "",
+        schedule: created.schedule ?? created.horario ?? "",
+        disponible: Math.max(Number(created.disponible ?? created.available_slots ?? 0), 0),
+        available_slots: Math.max(Number(created.available_slots ?? created.disponible ?? 0), 0),
+        professor: created.professor ?? created.profesor ?? "",
+        profesor: created.professor ?? created.profesor ?? "",
+      };
+
+      setLocalGroups((prev) => [{ id: normalized.id, ...normalized }, ...prev]);
+    } catch (err) {
+
+      alert(`Error creando grupo: ${err?.message ?? err}`);
+    }
+  };
 
   return (
     <>
@@ -51,7 +77,7 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmi
                   className={`px-3 py-1 rounded-md text-sm text-white font-medium shadow ${showAddGroup ? "bg-gray-500 hover:bg-gray-600" : "bg-gray-500 hover:bg-gray-600"
                     } transition`}
                 >
-                  {showAddGroup ? "Cancelar" : "➕ Grupo"}
+                  {showAddGroup ? "Cancelar" : "+ Grupo"}
                 </button>
               )}
 
@@ -69,24 +95,27 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmi
               <h3 className="font-semibold mb-2">Nuevo grupo</h3>
               <div className="space-y-2">
                 <input
-                  placeholder="Nombre del grupo"
+                  placeholder="Nombre del grupo (ej: 1155305-B)"
                   value={groupData.group_name || ""}
                   onChange={(e) => setGroupData({ ...groupData, group_name: e.target.value })}
                   className="w-full border rounded p-2 text-sm"
                 />
                 <input
-                  placeholder="Horario (ej: Lunes 8-10AM)"
+                  placeholder="Horario (ej: Lunes 8-10)"
                   value={groupData.schedule || ""}
                   onChange={(e) => setGroupData({ ...groupData, schedule: e.target.value })}
                   className="w-full border rounded p-2 text-sm"
                 />
                 <input
                   type="number"
+                  min={0}
                   placeholder="Cupos disponibles"
                   value={groupData.available_slots ?? ""}
-                  onChange={(e) =>
-                    setGroupData({ ...groupData, available_slots: parseInt(e.target.value || "0", 10) })
-                  }
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const n = val === "" ? "" : Math.max(parseInt(val || "0", 10) || 0, 0);
+                    setGroupData({ ...groupData, available_slots: n });
+                  }}
                   className="w-full border rounded p-2 text-sm"
                 />
                 <input
@@ -95,12 +124,25 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmi
                   onChange={(e) => setGroupData({ ...groupData, professor: e.target.value })}
                   className="w-full border rounded p-2 text-sm"
                 />
-                <button
-                  onClick={handleAddGroup}
-                  className="mt-2 px-4 py-2 rounded-md bg-green-600 text-white text-sm hover:bg-green-700 transition"
-                >
-                  Confirmar grupo
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={onConfirmAddGroup}
+                    disabled={adding}
+                    className={`mt-2 px-4 py-2 rounded-md text-white text-sm font-medium transition ${adding ? "bg-gray-500 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+                      }`}
+                  >
+                    {adding ? "Creando..." : "Confirmar grupo"}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowAddGroup(false);
+                      setGroupData({ group_name: "", schedule: "", available_slots: "", professor: "" });
+                    }}
+                    className="mt-2 px-4 py-2 rounded-md bg-gray-200 text-black text-sm hover:bg-gray-300 transition"
+                  >
+                    Cancelar
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -120,19 +162,19 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmi
 
           <div className="mt-4">
             <h3 className="font-semibold">Grupos</h3>
-            {grupos.length === 0 ? (
+            {localGroups.length === 0 ? (
               <p className="text-sm text-muted-foreground">No hay grupos disponibles.</p>
             ) : (
               <div className="space-y-3">
-                {grupos.map((g) => (
+                {localGroups.map((g) => (
                   <div key={g.id ?? g.nombre} className="p-3 border rounded-md">
                     <div className="flex justify-between">
                       <div>
-                        <div className="font-medium">{g.nombre ?? g.id}</div>
+                        <div className="font-medium">{g.nombre ?? g.group_name ?? g.id}</div>
                         <div className="text-sm text-muted-foreground">{g.profesor ?? g.professor ?? "-"}</div>
                       </div>
                       <div className="text-sm">
-                        Cupos: {g.disponible ?? g.available ?? g.maximo ?? "-"}
+                        Cupos: {Math.max(Number(g.disponible ?? g.available ?? g.available_slots ?? g.maximo ?? 0), 0)}
                       </div>
                     </div>
 
@@ -153,7 +195,7 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmi
             )}
           </div>
 
-          {(grupos.length === 0 || totalCupos <= 0) && (
+          {(localGroups.length === 0 || totalCupos <= 0) && (
             <div className="mt-6 flex justify-end">
               <button
                 onClick={() => setShowCupoModal(true)}
