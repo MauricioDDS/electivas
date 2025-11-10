@@ -14,6 +14,7 @@ import pika
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from pydantic import BaseModel
 
 app = FastAPI(title="Sistema de Pensum Universitario")
 
@@ -25,6 +26,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "rabbitmq")  # service name in compose
+RABBITMQ_PORT = int(os.getenv("RABBITMQ_PORT", "5672"))
+RABBITMQ_USER = os.getenv("RABBITMQ_USER", "guest")
+RABBITMQ_PASS = os.getenv("RABBITMQ_PASS", "guest")
+EMAIL_QUEUE = os.getenv("EMAIL_QUEUE", "email_queue")
 SCRAPER_HOST = os.getenv("SCRAPER_HOST", "http://scraper-ms:4004")
 SCRAPER_PENSUM_PATH = os.getenv("SCRAPER_PENSUM_PATH", "/pensum")
 SCRAPER_URL = SCRAPER_HOST.rstrip("/") + SCRAPER_PENSUM_PATH
@@ -244,54 +250,61 @@ def sync_pensum(body: SyncBody, request: Request):
 
     return {"status": "ok", "saved_to": str(p.resolve()), "total_materias": total_mat}
 
-def send_email_async(to_email: str, subject: str, body: str):
-    host = os.getenv("EMAIL_HOST", "smtp.gmail.com")
-    port = int(os.getenv("EMAIL_PORT", "587"))
-    user = os.getenv("EMAIL_HOST_USER")
-    password = os.getenv("EMAIL_HOST_PASSWORD")
-    from_email = os.getenv("EMAIL_FROM", user)
-
-    if not all([host, port, user, password, from_email]):
-        print("[send_email_async] Missing email configuration")
-        return
-
-    msg = MIMEMultipart()
-    msg["From"] = from_email
-    msg["To"] = to_email
-    msg["Subject"] = subject
-    msg.attach(MIMEText(body, "plain"))
-
+def publish_email_message(payload: dict):
+    """Publish a JSON message to RabbitMQ (blocking)."""
+    credentials = pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASS)
+    params = pika.ConnectionParameters(host=RABBITMQ_HOST, port=RABBITMQ_PORT, credentials=credentials)
     try:
-        with smtplib.SMTP(host, port) as server:
-            server.starttls()
-            server.login(user, password)
-            server.send_message(msg)
-            print(f"[send_email_async] Email sent to {to_email}")
+        connection = pika.BlockingConnection(params)
+        channel = connection.channel()
+        channel.queue_declare(queue=EMAIL_QUEUE, durable=True)
+        channel.basic_publish(
+            exchange="",
+            routing_key=EMAIL_QUEUE,
+            body=json.dumps(payload),
+            properties=pika.BasicProperties(delivery_mode=2),  # persistent
+        )
+        connection.close()
+        print("[publish_email_message] published to queue")
     except Exception as e:
-        print(f"[send_email_async] Failed to send email: {e}")
+        print(f"[publish_email_message] error publishing: {e}")
+        raise
+
+class CupoRequest(BaseModel):
+    course_code: str
+    group_name: str
+    user_email: str
+    message: Optional[str] = ""
 
 @app.post("/request-cupo")
-async def request_cupo(background_tasks: BackgroundTasks, request: Request):
+async def request_cupo(body: CupoRequest, request: Request):
+    header_admin = request.headers.get("X-ADMIN-KEY", "")
+    if header_admin != ADMIN_KEY:
+        raise HTTPException(status_code=403, detail="forbidden")
+
+    # Build email payload (consumer will format and send)
+    to_email = os.getenv("EMAIL_TO", body.user_email)
+    payload = {
+        "to": to_email,
+        "subject": f"Solicitud de cupo: {body.course_code} ({body.group_name})",
+        "body": (
+            f"El estudiante {body.user_email} solicita cupo en {body.group_name} de {body.course_code}.\n\n"
+            f"Mensaje:\n{body.message or '(sin mensaje)'}"
+        ),
+        "meta": {
+            "course_code": body.course_code,
+            "group_name": body.group_name,
+            "requester": body.user_email,
+        },
+    }
+
     try:
-        data = await request.json()
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid JSON body")
+        publish_email_message(payload)
+    except Exception as e:
+        # If publishing fails, return 500
+        raise HTTPException(status_code=500, detail=f"Failed to queue email: {e}")
 
-    course_code = data.get("course_code")
-    group_name = data.get("group_name")
-    user_email = data.get("user_email")
-
-    if not all([course_code, group_name, user_email]):
-        raise HTTPException(status_code=400, detail="Missing required fields")
-
-    to_email = os.getenv("EMAIL_TO", user_email)
-
-    subject = f"Solicitud de cupo para {course_code}"
-    body = f"El usuario {user_email} ha solicitado un cupo en el grupo {group_name} del curso {course_code}."
-
-    background_tasks.add_task(send_email_async, to_email, subject, body)
-
-    return {"status": "ok", "message": "Solicitud de cupo enviada correctamente"}
+    return {"status": "queued", "message": "Solicitud encolada correctamente"}
 
 if __name__ == "__main__":
     import uvicorn

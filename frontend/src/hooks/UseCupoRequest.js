@@ -8,17 +8,22 @@ export function useCupoRequest(baseUrl) {
     setLoading(true);
     setStatus(null);
     try {
-      const resp = await fetch(`${baseUrl}/request-cupo`, {
+      const resp = await fetch(`${import.meta.env.VITE_COURSES_URL}/request-cupo`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-ADMIN-KEY": import.meta.env.VITE_ADMIN_KEY,
+        },
         body: JSON.stringify({
           course_code: courseCode,
           group_name: groupName,
           user_email: userEmail,
-          message,
+          message: message,
         }),
       });
-      console.log(baseUrl)
+
+      console.log("➡️ Sending request to:", `${import.meta.env.VITE_COURSES_URL}/request-cupo`);
+      console.log("Payload:", { courseCode, groupName, userEmail, message });
 
       if (!resp.ok) {
         const err = await resp.text();
