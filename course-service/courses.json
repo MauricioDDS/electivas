@@ -1,6 +1,6 @@
 {
   "codigo": "115",
-  "fechaCaptura": "2025-11-06T12:44:42.109Z",
+  "fechaCaptura": "2025-11-12T13:43:40.048Z",
   "nombre": "Ingenieria de sistemas",
   "materias": {
     "1150615": {
@@ -1018,17 +1018,6 @@
             }
           ],
           "estado": 0
-        },
-        "70e824c9-e080-4f32-9dbe-b2085a67c80c": {
-          "id": "70e824c9-e080-4f32-9dbe-b2085a67c80c",
-          "group_name": "1155405",
-          "nombre": "1155405",
-          "schedule": "",
-          "horario": "",
-          "available_slots": 2,
-          "disponible": 2,
-          "professor": "Mauricio",
-          "profesor": "Mauricio"
         }
       },
       "estado": 2
@@ -1475,17 +1464,6 @@
             }
           ],
           "estado": 0
-        },
-        "75ce4d61-e18c-457c-b2e3-1df2c030e94a": {
-          "id": "75ce4d61-e18c-457c-b2e3-1df2c030e94a",
-          "group_name": "1155504",
-          "nombre": "1155504",
-          "schedule": "",
-          "horario": "",
-          "available_slots": 5,
-          "disponible": 5,
-          "professor": "Mauricio Di Donato",
-          "profesor": "Mauricio Di Donato"
         }
       },
       "estado": 2

@@ -33,7 +33,7 @@ SCRAPER_URL = SCRAPER_HOST.rstrip("/") + SCRAPER_PENSUM_PATH
 ADMIN_KEY = os.getenv("ADMIN_KEY", "dev-admin-key")
 COURSES_JSON_PATH = os.getenv("COURSES_JSON_PATH", "courses.json")
 REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "60"))
-NEW_GROUP_QUEUE = os.getenv("NEW_GROUP_QUEUE", "new_group_queue")
+NEW_GROUP_QUEUE = os.getenv("NEW_GROUP_QUEUE", "new_group_notification")
 
 TASKS = {}
 
@@ -390,7 +390,6 @@ def create_group(course_code: str, group: GroupCreate, x_admin_key: str = Header
     if publish_error:
         result["warning"] = "failed to publish notification"
         result["publish_error"] = publish_error
-        # optional: set status code to 201
         response.status_code = 201
         return result
 

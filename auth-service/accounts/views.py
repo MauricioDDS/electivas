@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenBlacklistView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import generics, permissions, status
+from rest_framework.permissions import AllowAny
 
 from .serializers import RegisterSerializer, UserSerializer
 from .tokens import CustomTokenObtainPairSerializer
@@ -60,7 +61,7 @@ class UserListView(generics.ListAPIView):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAdmin]
+    permission_classes = [AllowAny]
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     """

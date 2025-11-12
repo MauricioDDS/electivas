@@ -39,6 +39,7 @@ services:
       RABBITMQ_USER: "guest"
       RABBITMQ_PASS: "guest"
       EMAIL_QUEUE: "email_queue"
+      NEW_GROUP_QUEUE: "new_group_notification"
     depends_on:
       - scraper-ms
       - rabbitmq
@@ -59,7 +60,7 @@ services:
       EMAIL_QUEUE: email_queue
       SMTP_SERVER: smtp.gmail.com
       SMTP_PORT: 587
-      SMTP_USER: your_email@gmail.com
+      SMTP_USER: mauriciodidonato794@gmail.com
       SMTP_PASS: "rdmk ajua yedj rjpl"
       AUTH_SERVICE_URL: http://auth-ms:8000/api/auth/users/
       NEW_GROUP_QUEUE: new_group_notification
