@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import { useNavigate } from "react-router-dom";
 import AdminUsersModal from "@/components/AdminUsersModal";
 import AdminPensumSync from "@/components/AdminPensumSync";
+import UserHorarioFetcher from "@/components/UserHorarioFetcher";
 
 const AUTH_URL =
   import.meta.env.VITE_AUTH_URL
@@ -193,8 +194,8 @@ export default function Profile() {
                     type="submit"
                     disabled={!hasChanges || saving}
                     className={`px-4 py-2 rounded-md text-white text-sm font-medium shadow-lg transition ${!hasChanges || saving
-                        ? "bg-gray-500 cursor-not-allowed"
-                        : "bg-orange-600 hover:bg-orange-700"
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-orange-600 hover:bg-orange-700"
                       }`}
                   >
                     {saving ? "Guardando..." : "Guardar cambios"}
@@ -250,7 +251,7 @@ export default function Profile() {
             )}
 
             {me.role === "ADMIN" && (
-              <AdminPensumSync/>
+              <AdminPensumSync />
             )}
 
           </div>
@@ -261,11 +262,10 @@ export default function Profile() {
                 <h3 className="text-lg font-bold">Horario</h3>
               </div>
 
-              <div className="h-[420px] rounded-md border border-dashed flex items-center justify-center text-gray-400">
-                <div className="text-center px-6">
-                  <p className="font-medium mb-2">Calendario</p>
-                </div>
+              <div className="rounded-md border p-2 bg-card">
+                <UserHorarioFetcher userEmail={me.email} />
               </div>
+
 
               <div className="mt-6 grid grid-cols-2 gap-3">
                 <div className="p-3 rounded-md border">

@@ -47,6 +47,7 @@ services:
       - "8017:8000"
     volumes:
       - ./course-service:/app
+      - ./course-service/horarios:/app/horarios
     restart: unless-stopped
   email-worker:
     build: ./email-worker

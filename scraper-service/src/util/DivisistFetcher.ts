@@ -199,7 +199,6 @@ export default class DivisistFetcher {
                 }
             }
         }
-        //eliminar Grupos sin clases
         for (const grupoCod in materia.grupos) {
             const grupo: Grupo = materia.grupos[grupoCod];
             if (grupo.clases.length === 0) {
@@ -341,7 +340,6 @@ export default class DivisistFetcher {
         const document: Document = await this.getJSDOM("informacion_academica/notas", HttpMethod.GET);
         const notasPorPeriodo: NotasPorPeriodo = {};
 
-        // Cada panel corresponde a un periodo
         const panels = document.querySelectorAll(".panel.box-primary");
 
         panels.forEach(panel => {
@@ -352,8 +350,8 @@ export default class DivisistFetcher {
 
             filas.forEach(fila => {
                 const celdas = fila.querySelectorAll("td");
-                if (celdas.length < 5) return; // Asegurarse que tiene todas las columnas
-
+                if (celdas.length < 5) return; 
+                
                 const nota: Nota = {
                     codigo: celdas[0].textContent?.trim() ?? "",
                     materia: celdas[1].textContent?.trim() ?? "",
