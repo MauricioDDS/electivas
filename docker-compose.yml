@@ -87,6 +87,16 @@ services:
     volumes:
       - ./auth-service:/app
     restart: unless-stopped
+  
+  calendar-ms:
+    build:
+      context: ./calendar-service
+    ports:
+      - "8022:8002"
+    volumes:
+      - ./calendar-service/data:/data
+    restart: unless-stopped
+
   frontend:
     build:
       context: ./frontend
