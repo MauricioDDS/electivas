@@ -1,5 +1,4 @@
 export default function CourseSelectCard({ course, selected, onToggle, onShow }) {
-  // support both shapes: horas (scraper) or hours (old)
   const hours = course.horas ?? course.hours ?? "-";
   const credits = course.creditos ?? course.creditos ?? course.credits ?? "-";
 

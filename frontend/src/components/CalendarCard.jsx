@@ -1,4 +1,4 @@
-export default function CourseCard({ code, name, hours, credits, type, faded, className = ""}) {
+export default function CalendarCard({ code, name, hours, credits, type, faded, className = "" }) {
   const electiveStyle =
     type === "electiva"
       ? "bg-black-600/30 border-orange-400"
@@ -6,8 +6,8 @@ export default function CourseCard({ code, name, hours, credits, type, faded, cl
 
   return (
     <div
-      className={`w-40 h-20 p-2 rounded-lg shadow-md backdrop-blur-sm text-white text-xs 
-      flex flex-col border justify-between ${faded ? "opacity-50" : "opacity-100"} ${electiveStyle} ${className}`}
+      className={`min-w-[140px] min-h-[80px] w-full h-full p-2 rounded-lg flex flex-col 
+      border justify-between ${faded ? "opacity-50" : "opacity-100"} ${electiveStyle} ${className}`}
     >
       <h3 className="font-bold truncate">{code}</h3>
       <p className="truncate">{name}</p>

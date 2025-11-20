@@ -1,62 +1,132 @@
 import { useState, useEffect } from "react";
+import ReactDOM from "react-dom/client";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import CalendarCard from "./CalendarCard";
 
-const COURSES_API = import.meta.env.VITE_COURSES_URL || "http://localhost:8017";
+const CALENDAR_API = import.meta.env.VITE_CALENDAR_URL || "http://localhost:8022";
 
-function parseClaseToEvent(clase) {
-  const daysMap = {
-    "Lunes": 1, "Martes": 2, "Miércoles": 3, "Miercoles": 3, "Jueves": 4, "Viernes": 5, "Sábado": 6, "Sabado": 6, "Domingo": 0
-  };
-  const weekday = daysMap[clase.dia] ?? null;
-  let startTime = null, endTime = null;
-  if (clase.hora) {
-    const hr = clase.hora.replace(/\s+/g, "");
-    const parts = hr.split("-");
-    startTime = parts[0] ?? null;
-    endTime = parts[1] ?? null;
-  }
-  const today = new Date();
-  const todayDow = today.getDay();
-  let daysAhead = 0;
-  if (weekday === null) daysAhead = 1;
-  else {
-    daysAhead = (7 + weekday - todayDow) % 7;
-    if (daysAhead === 0) daysAhead = 7;
-  }
-  const baseDate = new Date();
-  baseDate.setDate(baseDate.getDate() + daysAhead);
+function timeStrToMinutes(t) {
+  if (!t) return null;
+  const [h, m = "0"] = t.split(":");
+  return parseInt(h || "0", 10) * 60 + parseInt(m || "0", 10);
+}
 
-  function timeToISO(dateBase, timeStr) {
-    if (!timeStr) return null;
-    const [h, m] = timeStr.split(":");
-    const d = new Date(dateBase);
-    d.setHours(parseInt(h, 10));
-    d.setMinutes(parseInt(m || "0", 10));
-    d.setSeconds(0);
-    d.setMilliseconds(0);
-    return d.toISOString();
-  }
+function parseRange(horaRaw) {
+  if (!horaRaw) return { startMin: null, endMin: null, startStr: null, endStr: null };
+  const hr = horaRaw.replace(/\s+/g, "");
+  const parts = hr.split("-");
+  const start = parts[0] ?? null;
+  const end = parts[1] ?? null;
+  return { startMin: timeStrToMinutes(start), endMin: timeStrToMinutes(end), startStr: start, endStr: end };
+}
 
-  const startISO = timeToISO(baseDate, startTime);
-  const endISO = endTime ? timeToISO(baseDate, endTime) : null;
-  const titleParts = [clase.materia, clase.grupo].filter(Boolean).join(" - ");
+function mergeConsecutiveClases(clases) {
+  const groups = {};
+  clases.forEach((c) => {
+    const key = `${c.dia}||${c.materia || ""}||${c.grupo || ""}||${c.salon || ""}`;
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(c);
+  });
 
-  return {
-    id: `${clase.materia}-${clase.grupo}-${clase.dia}-${clase.hora}`.replace(/\s+/g, "_"),
-    title: titleParts || clase.salon || "Clase",
-    start: startISO,
-    end: endISO,
-    extendedProps: {
-      salon: clase.salon,
-      edificio: clase.edificio,
-      ubicacion: clase.ubicacion,
-      tipoAula: clase.tipoAula,
-      horario_raw: clase,
+  const merged = [];
+  Object.values(groups).forEach((list) => {
+    const sorted = list
+      .map((c) => {
+        const { startMin, endMin, startStr, endStr } = parseRange(c.hora || "");
+        return { raw: c, startMin, endMin, startStr, endStr };
+      })
+      .filter((x) => x.startMin !== null && x.endMin !== null)
+      .sort((a, b) => a.startMin - b.startMin);
+
+    if (sorted.length === 0) return;
+
+    let cur = { ...sorted[0] };
+    for (let i = 1; i < sorted.length; i++) {
+      const s = sorted[i];
+      if (s.startMin === cur.endMin) {
+        cur.endMin = s.endMin;
+        cur.endStr = s.endStr;
+      } else if (s.startMin <= cur.endMin) {
+        cur.endMin = Math.max(cur.endMin, s.endMin);
+        cur.endStr = cur.endStr && s.endStr ? (cur.endMin >= s.endMin ? cur.endStr : s.endStr) : (s.endStr || cur.endStr);
+      } else {
+        merged.push(cur);
+        cur = { ...s };
+      }
     }
+    merged.push(cur);
+  });
+
+  return merged.map((m) => {
+    const out = { ...m.raw };
+    out.hora = `${m.startStr || ""}-${m.endStr || ""}`;
+    out._startMin = m.startMin;
+    out._endMin = m.endMin;
+    return out;
+  });
+}
+
+function clasesToEvents(clases) {
+  const daysMap = {
+    Lunes: 1,
+    Martes: 2,
+    Miércoles: 3,
+    Miercoles: 3,
+    Jueves: 4,
+    Viernes: 5,
+    Sábado: 6,
+    Sabado: 6,
+    Domingo: 0,
   };
+
+  const today = new Date();
+  const startOfWeek = new Date(today);
+  startOfWeek.setHours(0, 0, 0, 0);
+  startOfWeek.setDate(today.getDate() - today.getDay());
+
+  const evs = [];
+
+  clases.forEach((clase) => {
+    const weekday = daysMap[clase.dia] ?? null;
+    if (weekday === null) return;
+
+    if (weekday === 0) return;
+
+    const baseDate = new Date(startOfWeek);
+    baseDate.setDate(startOfWeek.getDate() + weekday);
+
+    const hr = (clase.hora || "").replace(/\s+/g, "");
+    const parts = hr.split("-");
+    const startStr = parts[0] ?? null;
+    const endStr = parts[1] ?? null;
+    if (!startStr || !endStr) return;
+
+    function timeToISO(dateBase, timeStr) {
+      if (!timeStr) return null;
+      const [h, m = "0"] = timeStr.split(":");
+      const d = new Date(dateBase);
+      d.setHours(parseInt(h || "0", 10), parseInt(m || "0", 10), 0, 0);
+      return d.toISOString();
+    }
+
+    const start = timeToISO(baseDate, startStr);
+    const end = timeToISO(baseDate, endStr);
+
+    const id = `${clase.materia || "mat"}-${clase.grupo || "g"}-${clase.dia || "d"}-${startStr}-${endStr}`.replace(/\s+/g, "_");
+
+    evs.push({
+      id,
+      title: clase.materia || clase.codigo || "Clase",
+      start,
+      end,
+      extendedProps: { horario_raw: clase },
+    });
+  });
+
+  return evs;
 }
 
 export default function UserHorarioFetcher({ userEmail }) {
@@ -74,27 +144,34 @@ export default function UserHorarioFetcher({ userEmail }) {
     setMessage(null);
     setLoading(true);
     try {
-      const res = await fetch(`${COURSES_API}/fetch-horario/`, {
+      const res = await fetch(`${CALENDAR_API}/fetch-horario/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ci_session: cookie, user: userEmail || "anon" }),
       });
-      const body = await res.json();
-      if (!res.ok) {
-        throw new Error(body.detail || JSON.stringify(body));
+
+      const bodyText = await res.text();
+      let body;
+      try {
+        body = bodyText ? JSON.parse(bodyText) : {};
+      } catch (err) {
+        if (!res.ok) throw new Error(`scraper returned ${res.status}: ${bodyText.slice(0, 500)}`);
+        throw new Error(`scraper returned non-JSON: ${bodyText.slice(0, 500)}`);
       }
-      const clases = body.horario ?? [];
-      setHorario(clases);
-      const evs = (clases || []).map(parseClaseToEvent);
+
+      if (!res.ok) throw new Error(body.detail || JSON.stringify(body) || `HTTP ${res.status}`);
+
+      const clasesRaw = body.horario ?? body ?? [];
+      setHorario(clasesRaw);
+
+      const merged = mergeConsecutiveClases(clasesRaw);
+      const evs = clasesToEvents(merged);
       setEvents(evs);
 
-      if (userEmail) {
-        localStorage.setItem(`horario_${userEmail}`, JSON.stringify(clases));
-      } else {
-        localStorage.setItem(`horario_anon`, JSON.stringify(clases));
-      }
+      const key = userEmail ? `horario_${userEmail}` : "horario_anon";
+      localStorage.setItem(key, JSON.stringify(clasesRaw));
 
-      setMessage(`Horario cargado (${clases.length} entradas).`);
+      setMessage(`Horario cargado (${merged.length} eventos, ${clasesRaw.length} filas).`);
     } catch (err) {
       console.error("traerHorario error", err);
       setMessage(`Error: ${err.message || err}`);
@@ -108,12 +185,61 @@ export default function UserHorarioFetcher({ userEmail }) {
     try {
       const raw = localStorage.getItem(key);
       if (raw) {
-        const clases = JSON.parse(raw);
-        setHorario(clases);
-        setEvents((clases || []).map(parseClaseToEvent));
+        const clasesRaw = JSON.parse(raw);
+        setHorario(clasesRaw);
+        const merged = mergeConsecutiveClases(clasesRaw);
+        const evs = clasesToEvents(merged);
+        setEvents(evs);
       }
-    } catch { }
+    } catch (err) {
+      console.warn("could not load saved horario", err);
+    }
   }, [userEmail]);
+
+  function eventContent(arg) {
+  const rootEl = document.createElement("div");
+  rootEl.setAttribute("data-rroot", "1");
+  rootEl.style.width = "100%";
+  rootEl.style.height = "100%";
+  rootEl.style.display = "flex";
+  rootEl.style.alignItems = "stretch";
+  rootEl.style.justifyContent = "center";
+  rootEl.style.boxSizing = "border-box";
+  rootEl.style.padding = "4px";
+  
+
+  const root = ReactDOM.createRoot(rootEl);
+  rootEl.__rroot = root;
+
+  const d = arg.event.extendedProps.horario_raw || {};
+
+  root.render(
+    <div className="w-full h-full flex items-stretch">
+      <CalendarCard
+        code={d.materia || d.codigo}
+        name={d.nombre || d.grupo || d.salon}
+        hours={d.hora}
+        credits={d.creditos}
+        type={d.tipo || (d.materia?.toLowerCase?.().includes("electiv") ? "electiva" : "")}
+        faded={false}
+        className="w-full h-full"
+      />
+    </div>
+  );
+
+  return { domNodes: [rootEl] };
+}
+
+
+  function handleEventWillUnmount(arg) {
+    const ourNode = arg.el.querySelector("[data-rroot]");
+    if (ourNode && ourNode.__rroot) {
+      try {
+        ourNode.__rroot.unmount();
+      } catch (err) {
+      }
+    }
+  }
 
   return (
     <div className="bg-card rounded-2xl p-4 shadow-lg border">
@@ -156,7 +282,7 @@ export default function UserHorarioFetcher({ userEmail }) {
 
       {message && <div className="text-sm text-muted-foreground mb-3">{message}</div>}
 
-      <div className="mb-4 border rounded-md overflow-hidden">
+      <div className="mb-4 border rounded-md overflow-hidden bg-[#0b0b0d]">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="timeGridWeek"
@@ -165,15 +291,19 @@ export default function UserHorarioFetcher({ userEmail }) {
             center: "title",
             right: "timeGridWeek,timeGridDay"
           }}
+          firstDay={1}         
+          hiddenDays={[0]}           
           slotMinTime="06:00:00"
           slotMaxTime="20:00:00"
           allDaySlot={false}
           events={events}
-          height="600px"
+          eventContent={eventContent}
+          eventWillUnmount={handleEventWillUnmount}
+          height="auto"
           contentHeight="auto"
+          expandRows={true}
         />
       </div>
-
     </div>
   );
 }

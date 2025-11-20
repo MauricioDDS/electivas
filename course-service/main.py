@@ -470,62 +470,6 @@ def _find_and_add_group_in_raw(raw, course_code, group_payload):
 
     raise KeyError(f"course {course_code} not found in courses.json")
 
-HORARIOS_DIR = pathlib.Path("/app/horarios") 
-HORARIOS_DIR.mkdir(parents=True, exist_ok=True)
-
-def save_user_horario(user_key: str, data: dict):
-    safe = "".join(ch for ch in user_key if ch.isalnum() or ch in ("-", "_", "@", "."))
-    p = HORARIOS_DIR / f"{safe}.json"
-    p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    return str(p.resolve())
-
-def load_user_horario(user_key: str):
-    safe = "".join(ch for ch in user_key if ch.isalnum() or ch in ("-", "_", "@", "."))
-    p = HORARIOS_DIR / f"{safe}.json"
-    if not p.exists():
-        return None
-    return json.loads(p.read_text(encoding="utf-8"))
-
-class HorarioRequest(BaseModel):
-    ci_session: str
-    user: Optional[str] = None 
-
-@app.post("/fetch-horario/")
-def fetch_horario(body: HorarioRequest):
-    ci_session = (body.ci_session or "").strip()
-    if not ci_session:
-        raise HTTPException(status_code=400, detail="ci_session required")
-
-    params = {"ci_session": ci_session}
-    try:
-        url = SCRAPER_HOST.rstrip("/") + "/informacion_academica/horario"
-        resp = requests.get(url, params=params, timeout=REQUEST_TIMEOUT)
-    except requests.RequestException as e:
-        raise HTTPException(status_code=502, detail=f"scraper unreachable: {e}")
-
-    if resp.status_code == 404:
-        alt_url = SCRAPER_HOST.rstrip("/") + "/divisist/informacion_academica/horario"
-        try:
-            resp = requests.get(alt_url, params=params, timeout=REQUEST_TIMEOUT)
-        except requests.RequestException as e:
-            raise HTTPException(status_code=502, detail=f"scraper unreachable (fallback): {e}")
-
-    if resp.status_code != 200:
-        snippet = resp.text[:1200]
-        raise HTTPException(status_code=502, detail=f"scraper returned {resp.status_code}: {snippet}")
-
-    try:
-        data = resp.json()
-    except ValueError:
-        html = resp.text
-        return JSONResponse(status_code=200, content={"raw_html": html})
-
-    if body.user:
-        save_user_horario(body.user, data)
-
-    return {"status": "ok", "total": len(data) if isinstance(data, list) else 1, "horario": data}
-
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000)
