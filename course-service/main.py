@@ -11,7 +11,9 @@ import threading
 from fastapi.responses import FileResponse, JSONResponse
 import pika
 import datetime
+import httpx
 
+COURSES_HOST = os.getenv("COURSES_HOST", "http://courses-ms:8000")
 
 app = FastAPI(title="Sistema de Pensum Universitario")
 
@@ -469,6 +471,12 @@ def _find_and_add_group_in_raw(raw, course_code, group_payload):
             pass
 
     raise KeyError(f"course {course_code} not found in courses.json")
+
+async def fetch_course_info(course_code: str):
+    async with httpx.AsyncClient() as client:
+        r = await client.get(f"{COURSES_HOST}/courses/{course_code}")
+        r.raise_for_status()
+        return r.json()
 
 if __name__ == "__main__":
     import uvicorn
