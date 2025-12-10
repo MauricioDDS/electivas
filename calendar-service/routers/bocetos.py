@@ -1,4 +1,3 @@
-# routers/bocetos.py
 from fastapi import APIRouter, Depends, HTTPException, Header, Request
 from sqlalchemy.orm import Session
 from database import SessionLocal
@@ -20,12 +19,10 @@ def get_db():
     finally:
         db.close()
 
-# --- auth helper: validate token by calling auth-ms /api/auth/me/ (if configured)
 def validate_token(auth_header: Optional[str]):
     if not auth_header:
         raise HTTPException(status_code=401, detail="Authorization header required")
     if not AUTH_SERVICE_ME:
-        # no remote validation configured; accept but return minimal user
         return {"email": "unknown", "id": None}
     try:
         resp = requests.get(AUTH_SERVICE_ME, headers={"Authorization": auth_header}, timeout=5)
@@ -35,7 +32,6 @@ def validate_token(auth_header: Optional[str]):
     except requests.RequestException:
         raise HTTPException(status_code=502, detail="auth service unreachable")
 
-# utility: parse minutes
 def to_minutes(hhmm):
     h,m = hhmm.split(":")
     return int(h)*60 + int(m)
@@ -43,88 +39,25 @@ def to_minutes(hhmm):
 def overlaps(a_start, a_end, b_start, b_end):
     return not (to_minutes(a_end) <= to_minutes(b_start) or to_minutes(b_end) <= to_minutes(a_start))
 
-# --- create draft
 @router.post("/", response_model=DraftOut, status_code=201)
 def create_boceto(payload: DraftCreate, Authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
-    # validate token
     userinfo = validate_token(Authorization)
-    # note: additional ownership validation can be added
+    
     d = DraftSchedule(student_id=payload.student_id, semester=payload.semester, name=payload.name, description=payload.description)
     db.add(d)
     db.commit()
     db.refresh(d)
 
-    # attempt to pre-populate candidate groups from course-service for that semester
-    courses = []
-    try:
-        resp = requests.get(f"{COURSE_SERVICE}/courses", timeout=8)
-        if resp.ok:
-            all_courses = resp.json()
-            # filter by semester if provided
-            if payload.semester:
-                all_courses = [c for c in all_courses if (c.get("semestre") == payload.semester or str(c.get("semestre"))==str(payload.semester))]
-            # for each course try to extract groups/clases and add as DraftGroup candidates with meta
-            for c in all_courses:
-                codigo = str(c.get("codigo") or c.get("code") or c.get("id"))
-                nombre = c.get("nombre") or c.get("name")
-                grupos = c.get("grupos") or c.get("grupos") or {}
-                # grupos can be dict or list
-                if isinstance(grupos, dict):
-                    for gid, gobj in grupos.items():
-                        clases = gobj.get("clases") or gobj.get("horario") or gobj.get("schedule") or []
-                        for clase in clases:
-                            dia = clase.get("dia")
-                            hi = clase.get("horaInicio") or clase.get("hora_inicio") or clase.get("start")
-                            hf = clase.get("horaFin") or clase.get("hora_fin") or clase.get("end")
-                            def to_hhmm(v):
-                                if v is None:
-                                    return None
-                                try:
-                                    vi = int(v)
-                                    return f"{vi:02d}:00"
-                                except:
-                                    return str(v)
-                            start = to_hhmm(hi)
-                            end = to_hhmm(hf)
-                            if start and end:
-                                dg = DraftGroup(boceto_id=d.id, course_code=codigo, course_name=nombre, group_name=str(gid), day=str(dia), start=start, end=end, meta=json.dumps({"raw_group": gobj}))
-                                db.add(dg)
-                elif isinstance(grupos, list):
-                    for gobj in grupos:
-                        clases = gobj.get("clases") or gobj.get("horario") or []
-                        for clase in clases:
-                            dia = clase.get("dia")
-                            hi = clase.get("horaInicio") or clase.get("start")
-                            hf = clase.get("horaFin") or clase.get("end")
-                            def to_hhmm(v):
-                                if v is None:
-                                    return None
-                                try:
-                                    vi = int(v)
-                                    return f"{vi:02d}:00"
-                                except:
-                                    return str(v)
-                            start = to_hhmm(hi)
-                            end = to_hhmm(hf)
-                            if start and end:
-                                dg = DraftGroup(boceto_id=d.id, course_code=codigo, course_name=nombre, group_name=gobj.get("nombre") or gobj.get("group_name"), day=str(dia), start=start, end=end, meta=json.dumps({"raw_group": gobj}))
-                                db.add(dg)
-            db.commit()
-        else:
-            # ignore non-ok
-            pass
-    except Exception:
-        # ignore fetch errors - service should still function
-        pass
+    return {
+        "id": d.id, 
+        "student_id": d.student_id, 
+        "semester": d.semester, 
+        "name": d.name, 
+        "description": d.description, 
+        "created_at": d.created_at, 
+        "courses": []
+    }
 
-    # Build response
-    rows = db.query(DraftGroup).filter(DraftGroup.boceto_id == d.id).all()
-    out = []
-    for r in rows:
-        out.append({"id": r.id, "course_code": r.course_code, "course_name": r.course_name, "group_name": r.group_name, "day": r.day, "start": r.start, "end": r.end, "meta": json.loads(r.meta) if r.meta else None})
-    return {"id": d.id, "student_id": d.student_id, "semester": d.semester, "name": d.name, "description": d.description, "created_at": d.created_at, "courses": out}
-
-# --- list drafts for student
 @router.get("/", response_model=List[DraftOut])
 def list_bocetos(student_id: Optional[int] = None, Authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
     _ = validate_token(Authorization)
@@ -143,7 +76,6 @@ def list_bocetos(student_id: Optional[int] = None, Authorization: Optional[str] 
         out.append({"id": d.id, "student_id": d.student_id, "semester": d.semester, "name": d.name, "description": d.description, "created_at": d.created_at, "courses": courses})
     return out
 
-# --- get boceto
 @router.get("/{boceto_id}", response_model=DraftOut)
 def get_boceto(boceto_id: int, Authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
     _ = validate_token(Authorization)
@@ -159,7 +91,20 @@ def get_boceto(boceto_id: int, Authorization: Optional[str] = Header(None), db: 
         ))
     return {"id": d.id, "student_id": d.student_id, "semester": d.semester, "name": d.name, "description": d.description, "created_at": d.created_at, "courses": courses}
 
-# --- add a group to boceto (manual)
+@router.delete("/{boceto_id}", status_code=204)
+def delete_boceto(boceto_id: int, Authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
+    _ = validate_token(Authorization)
+    
+    d = db.query(DraftSchedule).filter(DraftSchedule.id == boceto_id).first()
+    if not d:
+        raise HTTPException(status_code=404, detail="boceto not found")
+
+    db.query(DraftGroup).filter(DraftGroup.boceto_id == boceto_id).delete()
+    
+    db.delete(d)
+    db.commit()
+    return
+
 @router.post("/{boceto_id}/groups", status_code=201)
 def add_group(boceto_id: int, payload: AddGroupIn, Authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
     _ = validate_token(Authorization)
@@ -167,7 +112,6 @@ def add_group(boceto_id: int, payload: AddGroupIn, Authorization: Optional[str] 
     if not boc:
         raise HTTPException(status_code=404, detail="boceto not found")
 
-    # collect existing schedules in this boceto to validate conflicts
     existing = db.query(DraftGroup).filter(DraftGroup.boceto_id == boceto_id).all()
     for ex in existing:
         if ex.day and payload.schedule:
@@ -176,7 +120,6 @@ def add_group(boceto_id: int, payload: AddGroupIn, Authorization: Optional[str] 
                     if ex.start and ex.end and overlaps(ex.start, ex.end, s.start, s.end):
                         raise HTTPException(status_code=409, detail=f"conflict with {ex.course_code} {ex.group_name} at {ex.day} {ex.start}-{ex.end}")
 
-    # credit limit check: sum credits in boceto + new
     current_credits = 0
     rows = db.query(DraftGroup).filter(DraftGroup.boceto_id == boceto_id).all()
     for r in rows:
@@ -189,8 +132,6 @@ def add_group(boceto_id: int, payload: AddGroupIn, Authorization: Optional[str] 
     if (current_credits + add_credits) > MAX_CREDITS:
         raise HTTPException(status_code=400, detail=f"credit limit exceeded (current={current_credits}, adding={add_credits}, max={MAX_CREDITS})")
 
-    # --- PRE-REQUISITOS ---
-    # Si el payload trae meta con prerequisitos, validar que NO falten
     prereqs = []
     if payload.meta:
         try:
@@ -198,13 +139,11 @@ def add_group(boceto_id: int, payload: AddGroupIn, Authorization: Optional[str] 
         except:
             prereqs = []
 
-    # prerequisitos tipo "Cre:150"
     missing_cre = None
     for r in prereqs:
         if r.lower().startswith("cre:"):
             try:
                 req_cre = int(r.split(":")[1])
-                # créditos acumulados del boceto
                 if current_credits < req_cre:
                     missing_cre = req_cre
             except:
@@ -216,19 +155,17 @@ def add_group(boceto_id: int, payload: AddGroupIn, Authorization: Optional[str] 
             detail=f"Requiere mínimo {missing_cre} créditos aprobados"
         )
 
-    # prerequisitos de materias normales
     missing_courses = []
     for r in prereqs:
         if r.lower().startswith("cre:"):
-            continue  # ya manejado arriba
-        # revisar si el estudiante tiene esa materia en su historial
+            continue 
         try:
             hist = requests.get(f"{COURSE_SERVICE}/students/{boc.student_id}/history").json()
             codes_hist = [str(h["codigo"]) for h in hist]
             if str(r) not in codes_hist:
                 missing_courses.append(r)
         except:
-            pass  # si no hay historial, asumir faltan
+            pass 
 
     if missing_courses:
         raise HTTPException(
@@ -236,7 +173,6 @@ def add_group(boceto_id: int, payload: AddGroupIn, Authorization: Optional[str] 
             detail=f"Faltan prerrequisitos: {', '.join(missing_courses)}"
         )
 
-    # add groups (if schedule list provided create one DraftGroup per class)
     if payload.schedule:
         created=[]
         for s in payload.schedule:
@@ -253,7 +189,6 @@ def add_group(boceto_id: int, payload: AddGroupIn, Authorization: Optional[str] 
         db.refresh(dg)
         return {"id": dg.id, "course_code": dg.course_code, "course_name": dg.course_name, "group_name": dg.group_name}
 
-# --- remove group
 @router.delete("/{boceto_id}/groups/{group_id}", status_code=204)
 def remove_group(boceto_id: int, group_id: int, Authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
     _ = validate_token(Authorization)
@@ -263,10 +198,8 @@ def remove_group(boceto_id: int, group_id: int, Authorization: Optional[str] = H
         raise HTTPException(status_code=404, detail="group not found")
     return
 
-# --- apply boceto -> create StudentSchedule
 @router.post("/{boceto_id}/apply")
 def aplicar_boceto(boceto_id: int, db=Depends(get_db)):
-
     boceto = db.query(DraftSchedule).filter_by(id=boceto_id).first()
     if not boceto:
         raise HTTPException(404, "Boceto no encontrado")

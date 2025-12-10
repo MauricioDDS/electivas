@@ -1,267 +1,265 @@
-// src/pages/Schedules.jsx
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect } from "react";
 import CalendarView from "@/components/CalendarView";
 import CourseSelectModal from "@/components/CourseSelectModal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ArrowUp, Plus, Trash2, ArrowLeft } from 'lucide-react'; // Eliminado CalendarCheck
+import { ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import Header from "@/components/Header";
+import { useBocetos } from "@/hooks/useBocetos";
 
-// Se asume que el COURSES_URL viene de las variables de entorno, como en Home.jsx
-const COURSES_URL = import.meta.env.VITE_COURSES_URL;
+// --- HELPERS (Traídos de la lógica ganadora) ---
 
-// --- Funciones de utilidad (SIN CAMBIOS) ---
+function parseTime(input) {
+  if (input === undefined || input === null) return null;
+  const timeStr = String(input).trim();
+  let h = 0, m = 0;
 
-function getDateFrom(dia, hora) {
-    // APLICAR CORRECCIÓN: Asegurar que 'hora' sea un string válido.
-    const horaStr = String(hora).trim(); 
-    if (!horaStr || horaStr === 'null' || !horaStr.includes(':')) {
-        // Si la hora no es válida, se podría retornar una hora por defecto o lanzar un error claro.
-        // Para evitar el fallo, usaremos una hora de inicio 00:00.
-        // **Nota:** Si tu backend devuelve horas inválidas constantemente, el problema es en la fuente de datos.
-        console.warn(`Hora inválida recibida: ${hora}. Usando 00:00.`);
-        hora = "00:00";
-    }
+  if (timeStr.includes(":")) {
+    const parts = timeStr.split(":");
+    h = parseInt(parts[0], 10);
+    m = parseInt(parts[1], 10);
+  } else {
+    h = parseInt(timeStr, 10);
+  }
 
-    const today = new Date();
-    const startOfWeek = new Date(today);
-    const currentDay = today.getDay();
-    const diff = today.getDate() - (currentDay === 0 ? 6 : currentDay - 1); 
-    startOfWeek.setDate(diff);
-    startOfWeek.setHours(0, 0, 0, 0);
+  if (isNaN(h)) h = 0;
+  if (isNaN(m)) m = 0;
 
-    const base = new Date(startOfWeek);
-    base.setDate(startOfWeek.getDate() + Number(dia)); 
-
-    const [h, m] = hora.split(":"); // Ahora 'hora' es una cadena segura
-    base.setHours(Number(h), Number(m), 0, 0);
-    return base.toISOString();
+  return { h, m };
 }
 
-// --- Componente Principal ---
-
 export default function Schedules() {
-  const { state } = useLocation();
   const navigate = useNavigate();
-  const cursosIniciales = state?.cursos || [];
+  const { bocetos, fetchBocetos, removeBoceto } = useBocetos();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const initialBocetos = useMemo(() => {
-    if (cursosIniciales.length > 0) {
-      return [{
-        id: 1,
-        name: "Boceto Inicial",
-        cursos: cursosIniciales,
-      }];
-    }
-    return [];
-  }, [cursosIniciales]);
-
-  const [bocetos, setBocetos] = useState(initialBocetos);
-  const [selectedBocetoId, setSelectedBocetoId] = useState(initialBocetos[0]?.id || null);
+  const [selectedBocetoId, setSelectedBocetoId] = useState(null);
   const [events, setEvents] = useState([]);
+
+  // Cargar bocetos al iniciar
+  useEffect(() => {
+    fetchBocetos();
+  }, [fetchBocetos]);
+
+  // Selección automática
+  useEffect(() => {
+    if (bocetos.length > 0) {
+      if (!selectedBocetoId || !bocetos.find(b => b.id === selectedBocetoId)) {
+        setSelectedBocetoId(bocetos[0].id);
+      }
+    }
+  }, [bocetos, selectedBocetoId]);
 
   const activeBoceto = useMemo(() => {
     return bocetos.find(b => b.id === selectedBocetoId);
   }, [bocetos, selectedBocetoId]);
 
-
-  const renderBoceto = useCallback((boceto) => {
-    setSelectedBocetoId(boceto.id);
-
-    const eventos = boceto.cursos.flatMap((materia) => {
-      const grupos = materia.grupos ?? {};
-      const groupList = Array.isArray(grupos) ? grupos : Object.values(grupos);
-
-      return groupList.flatMap((g) =>
-        (g.clases || []).map((c) => ({
-          id: `${materia.codigo}-${g.nombre || g.group_name || 'G'}-${c.dia}-${c.horaInicio}`,
-          title: materia.codigo,
-          start: getDateFrom(c.dia, c.horaInicio),
-          end: getDateFrom(c.dia, c.horaFin),
-          extendedProps: { materia, grupo: g, clase: c },
-        }))
-      );
-    });
-
-    setEvents(eventos);
-  }, []);
-
-
+  // --- LÓGICA DE TRANSFORMACIÓN (IGUAL QUE EL FETCHER) ---
   useEffect(() => {
-    if (!activeBoceto && bocetos.length > 0) {
-      renderBoceto(bocetos[0]);
-    } else if (activeBoceto) {
-      renderBoceto(activeBoceto);
+    if (!activeBoceto || !activeBoceto.courses) {
+      setEvents([]);
+      return;
     }
-  }, [bocetos, activeBoceto, renderBoceto]);
 
-  const handleConfirmSelection = useCallback((selectedCourses) => {
-    setIsModalOpen(false);
-    if (selectedCourses.length === 0) return;
+    console.log("📅 [SCHEDULES] Procesando:", activeBoceto.name);
 
-    const newId = Math.max(...bocetos.map(b => b.id), 0) + 1;
-    const newBoceto = {
-      id: newId,
-      name: `Boceto #${newId}`,
-      cursos: selectedCourses,
+    // 1. Configurar fecha base (Lunes de la semana actual)
+    const today = new Date();
+    const currentDay = today.getDay(); 
+    const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
+    
+    const monday = new Date(today);
+    monday.setDate(today.getDate() + distanceToMonday);
+    monday.setHours(0, 0, 0, 0);
+
+    console.log("📆 [SCHEDULES] Fecha Base (Lunes):", monday.toDateString());
+
+    const daysMap = {
+      "1": 1, "LUNES": 1, "Lunes": 1,
+      "2": 2, "MARTES": 2, "Martes": 2,
+      "3": 3, "MIERCOLES": 3, "Miércoles": 3, "Miercoles": 3,
+      "4": 4, "JUEVES": 4, "Jueves": 4,
+      "5": 5, "VIERNES": 5, "Viernes": 5,
+      "6": 6, "SABADO": 6, "Sábado": 6, "Sabado": 6,
+      "7": 0, "DOMINGO": 0, "Domingo": 0
     };
 
-    setBocetos(prev => [...prev, newBoceto]);
-    renderBoceto(newBoceto);
-  }, [bocetos, renderBoceto]);
+    const mappedEvents = [];
 
+    activeBoceto.courses.forEach((course, index) => {
+      // Intentar obtener datos base
+      let dayRaw = course.day;
+      let startRaw = course.start;
+      let endRaw = course.end;
 
-  function deleteBoceto(id) {
-    setBocetos((prev) => {
-      const newBocetos = prev.filter((b) => b.id !== id);
+      // Fallback: Si falta info, buscar en meta (igual que antes, pero más seguro)
+      if ((!startRaw || !endRaw) && course.meta?.grupo?.clases) {
+         // Intentamos buscar la clase que coincida con el día
+         const classDetails = course.meta.grupo.clases.find(c => {
+             // Normalización rápida para comparar dia "1" con "1" o "Lunes"
+             return String(c.dia) === String(dayRaw);
+         });
 
-      if (selectedBocetoId === id) {
-        const nextBoceto = newBocetos[0];
-        if (nextBoceto) {
-          setSelectedBocetoId(nextBoceto.id);
-          renderBoceto(nextBoceto);
-        } else {
-          setSelectedBocetoId(null);
-          setEvents([]);
-        }
+         if (classDetails) {
+            console.log(`⚠️ Recuperando horario desde meta para ${course.course_name}`);
+            if (!startRaw) startRaw = classDetails.horaInicio;
+            if (!endRaw) endRaw = classDetails.horaFin;
+         }
       }
-      return newBocetos;
+
+      // Normalizar día
+      const diaStr = String(dayRaw || "").toUpperCase().trim();
+      
+      // Buscar en el mapa (si es "1" devuelve 1, si es "LUNES" devuelve 1)
+      let weekdayTarget = daysMap[diaStr];
+
+      // Si no encontró el día directamente, intentamos búsqueda fuzzy
+      if (weekdayTarget === undefined) {
+          const foundKey = Object.keys(daysMap).find(key => 
+             key.toUpperCase().includes(diaStr)
+          );
+          if (foundKey) weekdayTarget = daysMap[foundKey];
+      }
+
+      if (weekdayTarget === undefined) {
+        console.warn(`🚫 [SCHEDULES] Día inválido: ${dayRaw} en curso ${course.course_name}`);
+        return;
+      }
+
+      // Calcular fecha del evento
+      const eventDate = new Date(monday);
+      // Ajuste: si weekdayTarget es 1 (Lunes), sumamos 0 días. (1 - 1 = 0)
+      // Si es Domingo (0), el cálculo depende de cómo manejes el domingo, pero generalmente es al final.
+      const offset = weekdayTarget === 0 ? 6 : weekdayTarget - 1; 
+      eventDate.setDate(monday.getDate() + offset);
+
+      // Parsear horas
+      const startTime = parseTime(startRaw);
+      const endTime = parseTime(endRaw);
+
+      if (!startTime || !endTime) {
+        console.warn("🚫 [SCHEDULES] Horas inválidas:", startRaw, endRaw);
+        return;
+      }
+
+      const start = new Date(eventDate);
+      start.setHours(startTime.h, startTime.m, 0, 0);
+
+      const end = new Date(eventDate);
+      end.setHours(endTime.h, endTime.m, 0, 0);
+
+      // Fix visual: Si empieza y termina a la misma hora, darle 1 hora
+      if (end <= start) {
+        end.setHours(start.getHours() + 1);
+      }
+
+      console.log(`   👉 Evento: ${course.course_name} | ${start.toLocaleTimeString()} - ${end.toLocaleTimeString()}`);
+
+      mappedEvents.push({
+        id: course.id || `${index}-${Date.now()}`,
+        title: `${course.course_name} (${course.group_name || 'Gr'})`,
+        start: start,
+        end: end,
+        resource: course
+      });
     });
-  }
+
+    console.log(`✅ [SCHEDULES] Total eventos listos: ${mappedEvents.length}`);
+    setEvents(mappedEvents);
+  }, [activeBoceto]);
+
+  const handleDeleteBoceto = async (id, e) => {
+    e.stopPropagation();
+    if (!window.confirm("¿Borrar este boceto?")) return;
+    await removeBoceto(id);
+    if (selectedBocetoId === id) setSelectedBocetoId(null);
+  };
+
+  const handleModalSuccess = async (newBocetoId) => {
+    setIsModalOpen(false);
+    await fetchBocetos();
+    if (newBocetoId) setSelectedBocetoId(newBocetoId);
+  };
 
   return (
-    < div className="p-4 md:p-8 bg-background min-h-screen" >
-      {/* Header / Botones de Acción: Título central eliminado */}
-      < div className="flex justify-between items-center mb-6" >
-        <Button
-          onClick={() => navigate("/", { state: { from: "schedules" } })}
-          variant="outline"
-          className="flex items-center text-foreground border-border hover:bg-muted rounded-lg shadow-sm"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Volver
-        </Button>
-        {/* Espacio del título central */}
-        <div className="w-full text-center">
-          {/* H1 Eliminado */}
+    <div className="bg-background min-h-screen flex flex-col">
+      <Header />
+      <div className="flex-1 p-4 md:p-8">
+
+        <div className="flex justify-between items-center mb-6">
+          <Button onClick={() => navigate("/")} variant="outline" className="gap-2">
+            <ArrowLeft size={16} /> Volver
+          </Button>
+          <Button onClick={() => setIsModalOpen(true)} className="gap-2 bg-primary text-primary-foreground">
+            <Plus size={16} /> Crear Nuevo Boceto
+          </Button>
         </div>
-        {/* Botón Crear Nuevo Boceto: Usando primary (naranja) */}
-        <Button
-          onClick={() => setIsModalOpen(true)}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg shadow-md transition-all"
-        >
-          <Plus className="w-5 h-5 mr-2" />
-          Crear Nuevo Boceto
-        </Button>
-      </div >
 
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-
-        {/* Columna Izquierda: Lista de Bocetos */}
-        <div className="lg:col-span-1">
-          {/* Tarjeta: Fondo de tarjeta oscuro, Borde de color eliminado (solo shadow) */}
-          <Card className="rounded-2xl shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-xl font-semibold text-foreground">Mis Bocetos</CardTitle>
-            </CardHeader>
-            <CardContent className="p-4 pt-0">
-              <ScrollArea className="h-[calc(100vh-250px)]">
-                <div className="space-y-3 pr-4">
-                  {bocetos.length === 0 ? (
-                    <p className="text-sm text-muted-foreground italic">No hay bocetos. Crea uno para empezar.</p>
-                  ) : (
-                    bocetos.map((b) => (
-                      <div
-                        key={b.id}
-                        className={`p-3 rounded-xl cursor-pointer transition-all flex justify-between items-start group relative border
-                                                    ${selectedBocetoId === b.id
-                            ? 'bg-primary/10 border-primary shadow-md'
-                            : 'bg-card hover:bg-secondary/50 border-border'
-                          }`}
-                        onClick={() => renderBoceto(b)}
-                      >
+          {/* LISTA IZQUIERDA */}
+          <div className="lg:col-span-1">
+            <Card className="h-full border-white/10 bg-card">
+              <CardHeader>
+                <CardTitle>Mis Bocetos</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <ScrollArea className="h-[60vh] px-4">
+                  <div className="space-y-3 pb-4">
+                    {bocetos.length === 0 && <p className="text-muted-foreground text-center py-4">No hay bocetos</p>}
+                    {bocetos.map((b) => (
+                      <div key={b.id} onClick={() => setSelectedBocetoId(b.id)}
+                        className={`p-4 rounded-xl cursor-pointer border transition-all flex justify-between items-start group
+                                ${selectedBocetoId === b.id ? 'bg-primary/20 border-primary' : 'bg-white/5 border-transparent hover:bg-white/10'}`}>
                         <div>
-                          <h3 className={`font-bold ${selectedBocetoId === b.id ? 'text-primary' : 'text-foreground'}`}>{b.name}</h3>
-                          <p className="text-xs text-muted-foreground mb-1">Materias: {b.cursos.length}</p>
-
-                          <div className="text-xs space-y-0.5 opacity-80 mt-1 text-muted-foreground">
-                            {b.cursos.slice(0, 3).map((c) => (
-                              <p key={c.codigo} className="truncate">• {c.codigo} — {c.nombre}</p>
-                            ))}
-                            {b.cursos.length > 3 && <p className="italic text-xs">... {b.cursos.length - 3} materias más</p>}
-                          </div>
+                          <h3 className="font-bold">{b.name}</h3>
+                          <p className="text-xs text-muted-foreground mt-1">{b.courses?.length || 0} materias</p>
+                          <p className="text-[10px] text-muted-foreground opacity-50">
+                            {b.created_at ? new Date(b.created_at).toLocaleDateString() : 'Sin fecha'}
+                          </p>
                         </div>
-
-                        {/* Botón Eliminar: Usando destructive (rojo) */}
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className={`absolute top-2 right-2 p-1 h-auto w-auto text-destructive hover:bg-destructive/10 transition-opacity 
-                                                                ${bocetos.length > 1 ? 'opacity-0 group-hover:opacity-100' : 'opacity-50 cursor-not-allowed'}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            deleteBoceto(b.id);
-                          }}
-                          disabled={bocetos.length === 1}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+                        <button onClick={(e) => handleDeleteBoceto(b.id, e)} className="text-red-400 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-500/20 rounded">
+                          <Trash2 size={16} />
+                        </button>
                       </div>
-                    ))
-                  )}
-                </div>
-              </ScrollArea>
-            </CardContent>
-          </Card>
-        </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </CardContent>
+            </Card>
+          </div>
 
-        {/* Columna Derecha: Calendario */}
-        <div className="lg:col-span-3">
-          {/* Tarjeta: Borde de color eliminado (solo shadow) */}
-          <Card className="rounded-2xl shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-xl font-semibold text-foreground">
-                Horario: {activeBoceto ? activeBoceto.name : 'Seleccione o Cree un Boceto'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="min-h-[70vh] max-h-[70vh] overflow-hidden">
+          {/* CALENDARIO DERECHA */}
+          <div className="lg:col-span-3">
+            <Card className="h-full border-white/10 bg-card overflow-hidden flex flex-col">
+              <CardHeader className="bg-white/5 border-b border-white/10 py-4">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  {activeBoceto ? `Horario: ${activeBoceto.name}` : 'Selecciona un boceto'}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1 p-0 min-h-[500px] relative">
                 {activeBoceto ? (
-                  <CalendarView events={events} small={true} />
+                  <CalendarView events={events} />
                 ) : (
-                  <div className="flex items-center justify-center h-64 bg-muted/50 rounded-xl border border-dashed border-border text-muted-foreground">
-                    Selecciona un boceto a la izquierda o crea uno nuevo para visualizar tu horario.
+                  <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
+                    Selecciona un boceto para ver el horario
                   </div>
                 )}
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
 
-      {/* Botón Volver arriba: Usando primary (naranja) */}
-      <Button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-primary-foreground p-3 rounded-full shadow-xl transition-transform transform hover:scale-105"
-        size="icon"
-      >
-        <ArrowUp className="w-5 h-5" />
-      </Button>
-
-      {/* Modal de Selección de Cursos */}
-      {
-        isModalOpen && (
-          <CourseSelectModal
-            onClose={() => setIsModalOpen(false)}
-            onConfirm={handleConfirmSelection}
-            COURSES_URL={COURSES_URL}
-          />
-        )
-      }
-    </div >
+      {isModalOpen && (
+        <CourseSelectModal
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={handleModalSuccess}
+          COURSES_URL={import.meta.env.VITE_COURSES_URL}
+        />
+      )}
+    </div>
   );
 }

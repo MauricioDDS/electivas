@@ -1,18 +1,17 @@
-// src/pages/Home.jsx
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Pensum from "../components/Pensum";
-import CourseSelectModal from "../components/CourseSelectModal";
+// Eliminamos CourseSelectModal de los imports
 import CourseCard from "../components/CourseCard";
 import Header from "@/components/Header";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Home() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [cursadas, setCursadas] = useState([]); // materias que el usuario ya cursó (si las tienes)
+  // Eliminamos el estado modalOpen
+  const [cursadas, setCursadas] = useState([]); 
   const [courses, setCourses] = useState([]);
 
-  const { token, user, logout } = useAuth();
+  const { token, user } = useAuth(); // Asumo que logout no se usa aquí, lo quité para limpiar
   const navigate = useNavigate();
   const COURSES_URL = import.meta.env.VITE_COURSES_URL;
 
@@ -106,17 +105,10 @@ export default function Home() {
         Todas las Materias
       </h2>
 
-      <Pensum onVerMas={() => setModalOpen(true)} COURSES_URL={COURSES_URL} />
-
-      {modalOpen && (
-        <CourseSelectModal
-          onClose={() => setModalOpen(false)}
-          onConfirm={(seleccionadas) => {
-            navigate("/horarios", { state: { cursos: seleccionadas, userId: user?.id } });
-          }}
-          COURSES_URL={COURSES_URL}
-        />
-      )}
+      <Pensum 
+        onVerMas={() => navigate("/horarios")} 
+        COURSES_URL={COURSES_URL} 
+      />
     </div>
   );
 }

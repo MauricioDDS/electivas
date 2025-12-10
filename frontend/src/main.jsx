@@ -11,9 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CoursesList from "@/pages/CoursesList";
 import CourseDetail from "@/pages/CourseDetail";
 import Schedules from "./pages/Schedules";
-import CrearBoceto from "./pages/CrearBoceto";
-import VerBoceto from "./pages/VerBoceto";
-
+import { Toaster } from 'sonner';
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations()
@@ -42,8 +40,6 @@ createRoot(document.getElementById("root")).render(
         <Route path="/courses" element={<CoursesList />} />
         <Route path="/course/:code" element={<CourseDetail />} />
         <Route path="/horarios" element={<Schedules />} />
-        <Route path="/bocetos/crear" element={<CrearBoceto />} />
-        <Route path="/bocetos/:id" element={<VerBoceto />} />
         <Route
           path="/"
           element={
@@ -54,5 +50,6 @@ createRoot(document.getElementById("root")).render(
         />
       </Routes>
     </BrowserRouter>
+    <Toaster richColors position="top-center" />
   </StrictMode>
 );

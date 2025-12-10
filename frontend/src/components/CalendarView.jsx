@@ -20,32 +20,27 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-// Función Hash para alternar colores (debe estar fuera del componente o dentro de una función)
 const hash = (s) => s.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0);
 
-
-// Componente personalizado para el evento
 const EventComponent = ({ event }) => {
   const d = event.resource; 
-  
-  // Aseguramos que el código sea el Grupo/Salón
-  const codeValue = d.grupo || d.salon || "Gpo";
-
-  // Índice pseudo-aleatorio para alternancia de color
-  const colorIndex = Math.abs(hash(event.id || event.title)) % 10; 
+  const codeValue = d.group_name || d.grupo || d.salon || "Gpo";
+  const nameValue = d.course_name || d.materia || event.title;
+  const creditsValue = d.credits || d.meta?.creditos || 0;
+  const colorIndex = Math.abs(hash(String(d.id || nameValue))) % 10; 
 
   return ( 
     <CalendarCard
       code={codeValue} 
-      name={d.materia}
-      credits={d.creditos}
-      type={d.tipo || (d.materia?.toLowerCase?.().includes("electiv") ? "electiva" : "")}
+      name={nameValue}
+      credits={creditsValue}
+      type={d.tipo || (nameValue?.toLowerCase?.().includes("electiv") ? "electiva" : "")}
       index={colorIndex}
       faded={false}
       className="w-full h-full" 
     />
   );
-}; // <--- El EventComponent termina aquí. No debe haber otro 'return' después.
+};
 
 export default function CalendarView({ events }) {
   const formats = {
@@ -62,16 +57,19 @@ export default function CalendarView({ events }) {
         events={events}
         startAccessor="start"
         endAccessor="end"
-        defaultView="work_week"
-        views={['work_week', 'day']}
-        min={new Date(0, 0, 0, 6, 0, 0)}
-        max={new Date(0, 0, 0, 22, 0, 0)}
+        
+        defaultView="week"
+        views={['week', 'day']} 
+
+        min={new Date(2024, 0, 1, 0, 0, 0)} 
+        max={new Date(2024, 0, 1, 23, 59, 0)}
+        
         culture='es'
         components={{
             event: EventComponent
         }}
         formats={formats}
-        toolbar={false}
+        toolbar={true}
       />
     </div>
   );

@@ -103,7 +103,19 @@
       "nombre": "Calculo diferencial",
       "requisitos": [],
       "semestre": 1,
-      "grupos": {},
+      "grupos": {
+        "cf9c8d39-8431-4d85-bc02-605e2827dd76": {
+          "id": "cf9c8d39-8431-4d85-bc02-605e2827dd76",
+          "group_name": "xd",
+          "nombre": "xd",
+          "schedule": "Lunes 8-10",
+          "horario": "Lunes 8-10",
+          "available_slots": 3,
+          "disponible": 3,
+          "professor": "xd",
+          "profesor": "xd"
+        }
+      },
       "estado": 2
     },
     "1155102": {
@@ -115,7 +127,19 @@
       "nombre": "Matematicas discretas",
       "requisitos": [],
       "semestre": 1,
-      "grupos": {},
+      "grupos": {
+        "9a464856-6cc3-4cfe-abce-9986ff925b43": {
+          "id": "9a464856-6cc3-4cfe-abce-9986ff925b43",
+          "group_name": "Z",
+          "nombre": "Z",
+          "schedule": "",
+          "horario": "",
+          "available_slots": 3,
+          "disponible": 3,
+          "professor": "Mauricio",
+          "profesor": "Mauricio"
+        }
+      },
       "estado": 2
     },
     "1155104": {

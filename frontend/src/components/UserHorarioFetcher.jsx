@@ -3,7 +3,7 @@ import CalendarView from "./CalendarView";
 
 const CALENDAR_API = import.meta.env.VITE_CALENDAR_URL || "http://localhost:8022";
 
-// --- Helpers de Parsing (Iguales, solo ajustamos el retorno de fechas) ---
+// --- Helpers de Parsing ---
 
 function timeStrToMinutes(t) {
   if (!t) return null;
@@ -21,6 +21,8 @@ function parseRange(horaRaw) {
 }
 
 function mergeConsecutiveClases(clases) {
+  console.log(`🔄 [MERGE] Iniciando fusión de ${clases.length} bloques de clase raw.`);
+  
   const groups = {};
   clases.forEach((c) => {
     const key = `${c.dia}||${c.materia || ""}||${c.grupo || ""}||${c.salon || ""}`;
@@ -57,54 +59,66 @@ function mergeConsecutiveClases(clases) {
     merged.push(cur);
   });
 
-  return merged.map((m) => {
+  const finalResult = merged.map((m) => {
     const out = { ...m.raw };
     out.hora = `${m.startStr || ""}-${m.endStr || ""}`;
     out._startMin = m.startMin;
     out._endMin = m.endMin;
     return out;
   });
+
+  console.log(`✅ [MERGE] Resultado: ${finalResult.length} clases consolidadas.`);
+  return finalResult;
 }
 
 function clasesToEvents(clases) {
+  console.log("📅 [TO_EVENTS] Iniciando conversión a formato Calendario...");
+  
   const daysMap = {
     Lunes: 1, Martes: 2, Miércoles: 3, Miercoles: 3,
     Jueves: 4, Viernes: 5, Sábado: 6, Sabado: 6, Domingo: 0,
   };
 
-  // Encontrar el lunes de la semana actual para usarlo como base
+  // Base temporal: Lunes de la semana actual
   const today = new Date();
-  const currentDay = today.getDay(); // 0 (Domingo) - 6 (Sábado)
+  const currentDay = today.getDay(); 
   const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
 
   const monday = new Date(today);
   monday.setDate(today.getDate() + distanceToMonday);
   monday.setHours(0, 0, 0, 0);
 
+  console.log("📆 [TO_EVENTS] Fecha Base (Lunes):", monday.toDateString());
+
   const evs = [];
 
-  clases.forEach((clase) => {
+  clases.forEach((clase, index) => {
     // Normalizar día
     const diaStr = (clase.dia || "").trim();
-    // Mapeo insensible a mayúsculas/tildes básico
     const normalizedDay = Object.keys(daysMap).find(key =>
       key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") ===
       diaStr.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     );
 
-    if (!normalizedDay) return;
+    if (!normalizedDay) {
+      console.warn(`⚠️ [TO_EVENTS] Día desconocido o vacío en índice ${index}:`, clase);
+      return;
+    }
+    
     const weekdayTarget = daysMap[normalizedDay];
 
-    // Calcular la fecha del evento en esta semana
+    // Calcular fecha
     const eventDate = new Date(monday);
-    // (weekdayTarget - 1) porque monday es 1. Ej: Martes(2) -> 2-1 = +1 día
     eventDate.setDate(monday.getDate() + (weekdayTarget - 1));
 
-    // Parsear horas "HH:MM-HH:MM"
+    // Parsear horas
     const hr = (clase.hora || "").replace(/\s+/g, "");
     const [startStr, endStr] = hr.split("-");
 
-    if (!startStr || !endStr) return;
+    if (!startStr || !endStr) {
+      console.warn(`⚠️ [TO_EVENTS] Hora inválida en índice ${index}:`, clase.hora);
+      return;
+    }
 
     const setTime = (base, timeStr) => {
       const d = new Date(base);
@@ -115,6 +129,9 @@ function clasesToEvents(clases) {
 
     const start = setTime(eventDate, startStr);
     const end = setTime(eventDate, endStr);
+
+    // LOG DE CADA EVENTO GENERADO
+    console.log(`   👉 Evento: ${clase.materia} (${diaStr}) | Start: ${start.toLocaleTimeString()} | End: ${end.toLocaleTimeString()}`);
 
     const id = `${clase.materia}-${clase.grupo}-${diaStr}-${startStr}`.replace(/\s+/g, "_");
 
@@ -127,6 +144,7 @@ function clasesToEvents(clases) {
     });
   });
 
+  console.log(`🏁 [TO_EVENTS] Total eventos generados: ${evs.length}`);
   return evs;
 }
 
@@ -143,8 +161,10 @@ export default function UserHorarioFetcher({ userEmail }) {
     }
     setMessage(null);
     setLoading(true);
+    
+    console.log("🚀 [FETCHER] Iniciando petición a:", `${CALENDAR_API}/fetch-horario`);
+
     try {
-      // 1. Fetch al endpoint (sin barra final)
       const res = await fetch(`${CALENDAR_API}/fetch-horario`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -152,56 +172,61 @@ export default function UserHorarioFetcher({ userEmail }) {
       });
 
       const bodyText = await res.text();
+      console.log("📥 [FETCHER] Respuesta CRUDA del backend:", bodyText);
+
       let body;
       try {
         body = bodyText ? JSON.parse(bodyText) : {};
       } catch (err) {
+        console.error("❌ [FETCHER] Falló el parseo JSON", err);
         throw new Error(`Error parsing JSON: ${bodyText.slice(0, 100)}`);
       }
 
       if (!res.ok) throw new Error(body.detail || `Error ${res.status}`);
 
       const clasesRaw = body.horario ?? body ?? [];
+      console.log("📦 [FETCHER] Clases extraídas (Array inicial):", clasesRaw);
 
-      // 2. Procesar datos
+      // Procesar datos
       const merged = mergeConsecutiveClases(clasesRaw);
       const evs = clasesToEvents(merged);
 
+      console.log("✨ [FETCHER] Eventos finales para el calendario:", evs);
       setEvents(evs);
 
-      // Guardar en local
       const key = userEmail ? `horario_${userEmail}` : "horario_anon";
       localStorage.setItem(key, JSON.stringify(clasesRaw));
 
       setMessage(`Horario cargado: ${evs.length} clases.`);
     } catch (err) {
-      console.error(err);
+      console.error("🔥 [FETCHER] Error fatal:", err);
       setMessage(`Error: ${err.message}`);
     } finally {
       setLoading(false);
     }
   }
 
-  // Cargar del localstorage al montar
   useEffect(() => {
     const key = userEmail ? `horario_${userEmail}` : "horario_anon";
     const raw = localStorage.getItem(key);
     if (raw) {
       try {
+        console.log("💾 [CACHE] Cargando horario desde localStorage...");
         const parsed = JSON.parse(raw);
         const merged = mergeConsecutiveClases(parsed);
         setEvents(clasesToEvents(merged));
-      } catch (e) { }
+      } catch (e) { 
+        console.error("Error leyendo cache", e);
+      }
     }
   }, [userEmail]);
 
   return (
     <div className="bg-card rounded-2xl p-6 shadow-xl border border-white/5 h-full flex flex-col">
-      {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div>
           <h3 className="text-xl font-bold text-white flex items-center gap-2">
-            📅 Traer horario (Divisist)
+            Traer horario (Divisist)
           </h3>
           <p className="text-sm text-gray-400">Pega tu cookie (ci_session) para sincronizar.</p>
         </div>
