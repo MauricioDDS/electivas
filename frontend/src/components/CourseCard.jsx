@@ -1,45 +1,32 @@
-export default function CourseCard({ code, name, hours, credits, type, faded, className = ""}) {
-  const electiveStyle =
-    type === "electiva"
-      ? "bg-black-600/30 border-orange-400"
-      : "bg-orange-800/40 border-white/10"
-
-  return (
-    <div
-      className={`w-40 h-20 p-2 rounded-lg shadow-md backdrop-blur-sm text-white text-xs 
-      flex flex-col border justify-between ${faded ? "opacity-50" : "opacity-100"} ${electiveStyle} ${className}`}
-    >
-      <h3 className="font-bold truncate">{code}</h3>
-      <p className="truncate">{name}</p>
-      <p className="text-[10px] text-gray-300">
-        Horas: {hours} | Créditos: {credits}
-      </p>
-    </div>
-  )
-}
-
-/*
 import React from "react";
 
 export default function CourseCard({ code, name, hours, credits, type, faded, className = "" }) {
-  const electiveStyle =
-    (type || "").toLowerCase() === "electiva"
-      ? "bg-black/30 border-orange-400"
-      : "bg-orange-800/40 border-white/10";
+  
+  const isElective = (type || "").toString().toLowerCase().includes("electiv");
+
+  let baseStyle = "";
+  
+  if (isElective) {
+    baseStyle = "bg-black/40 border-orange-500/70 text-orange-200 hover:border-orange-400";
+  } else {
+    baseStyle = "bg-orange-950/40 border-orange-800/60 text-white hover:border-orange-700";
+  }
+  const opacityClass = faded ? "opacity-50" : "opacity-100";
 
   return (
     <div
-      className={`p-2 rounded-lg shadow-md backdrop-blur-sm text-white text-xs 
-        flex flex-col border justify-between ${faded ? "opacity-50" : "opacity-100"} ${electiveStyle} ${className}`}
+      className={`
+        p-3 rounded-lg shadow-md backdrop-blur-sm text-xs 
+        flex flex-col border justify-between 
+        transition-all duration-200 cursor-pointer hover:shadow-lg
+        ${baseStyle} ${opacityClass} ${className}
+      `}
     >
-      <h3 className="font-bold truncate">{code}</h3>
-      <p className="truncate">{name}</p>
-      <p className="text-[10px] text-gray-300">
+      <h3 className="font-bold truncate text-sm">{code}</h3>
+      <p className="truncate mt-1 text-sm">{name}</p>
+      <p className="text-[10px] text-gray-400 mt-2">
         Horas: {hours} {credits ? `| Créditos: ${credits}` : ""}
       </p>
     </div>
   );
 }
-
-
-*/

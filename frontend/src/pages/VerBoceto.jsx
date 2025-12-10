@@ -17,7 +17,6 @@ export default function VerBoceto() {
         if (!data.horario) throw new Error("Boceto vacío");
         setHorario(data.horario);
 
-        // convertimos de clases → events
         const merged = mergeConsecutiveClases(data.horario);
         const evs = clasesToEvents(merged);
         setEvents(evs);

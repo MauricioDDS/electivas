@@ -215,6 +215,14 @@
   overflow: visible !important;
 }
 
+.custom-select-dark {
+  color-scheme: dark; 
+}
+
+.custom-select-dark option {
+  background-color: #1a1a1a;
+  color: #fff;
+}
 
 @layer base {
   * {

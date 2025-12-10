@@ -112,7 +112,6 @@ export default function Home() {
         <CourseSelectModal
           onClose={() => setModalOpen(false)}
           onConfirm={(seleccionadas) => {
-            // redirige a /horarios y envía las materias elegidas
             navigate("/horarios", { state: { cursos: seleccionadas, userId: user?.id } });
           }}
           COURSES_URL={COURSES_URL}
