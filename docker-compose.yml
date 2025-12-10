@@ -11,7 +11,7 @@ services:
     volumes:
       - auth_db_data:/var/lib/postgresql/data
     restart: unless-stopped
-  # ============== MICROSERVICES ===============
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:
@@ -49,6 +49,7 @@ services:
       - ./course-service:/app
       - ./course-service/horarios:/app/horarios
     restart: unless-stopped
+
   email-worker:
     build: ./email-worker
     depends_on:
@@ -88,7 +89,7 @@ services:
     volumes:
       - ./auth-service:/app
     restart: unless-stopped
-  
+
   frontend:
     build:
       context: ./frontend
@@ -125,6 +126,23 @@ services:
       - ./calendar-service/data:/app/data
     depends_on:
       - courses-ms
+    restart: unless-stopped
+
+  recommendations-ms:
+    build:
+      context: .
+      dockerfile: ./recommendations-service/Dockerfile
+    container_name: recommendations-ms
+    depends_on:
+      - auth-ms
+      - courses-ms
+    environment:
+      - AUTH_ME_URL=http://auth-ms:8000/api/auth/me/
+      - COURSES_HOST=http://courses-ms:8000
+      - COURSES_PATH=/courses
+      - MAX_CREDITS_DEFAULT=20
+    ports:
+      - "8023:8000"
     restart: unless-stopped
 
 volumes:

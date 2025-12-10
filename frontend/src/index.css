@@ -224,3 +224,92 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  /* Contenedor principal de la página */
+  .recommendations-page {
+    @apply min-h-screen bg-background text-foreground px-10 py-8;
+  }
+
+  .recommendations-header {
+    @apply text-center mb-8;
+  }
+
+  .page-title {
+    @apply text-2xl font-bold mb-2;
+  }
+
+  .page-subtitle {
+    @apply text-sm opacity-80;
+  }
+
+  .credits-summary {
+    @apply mt-3 text-sm;
+  }
+
+  .error-message {
+    @apply mt-4 text-sm text-red-400;
+  }
+
+  /* Secciones */
+  .section {
+    @apply mt-8;
+  }
+
+  .section-title {
+    @apply text-lg font-bold mb-4;
+  }
+
+  .section-header {
+    @apply flex items-center justify-between gap-4;
+  }
+
+  /* Botón "Ver más / Ocultar" */
+  .toggle-button {
+    @apply px-4 py-2 rounded-full border-none font-semibold cursor-pointer
+      transition-transform duration-150 ease-out text-white bg-[#ff6600]
+      shadow-md;
+  }
+
+  .toggle-button:hover {
+    @apply bg-[#ff7a1a] -translate-y-[1px] shadow-lg;
+  }
+
+  /* Grid de cards */
+  .course-grid {
+    @apply mt-4 grid gap-5;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  /* === CARD PRINCIPAL (igual estilo que tus materias) === */
+  .course-card {
+    @apply bg-[#3b1407] rounded-[14px] px-4 py-3 flex flex-col justify-between
+      shadow-lg cursor-default transition-transform duration-150 ease-out;
+  }
+
+  .course-card:hover {
+    @apply -translate-y-[2px] shadow-xl bg-[#4a1909];
+  }
+
+  /* Variante para "otras materias" (un pelín más oscura) */
+  .course-card-secondary {
+    @apply bg-[#2f1007];
+  }
+
+  .course-card-secondary:hover {
+    @apply bg-[#3b1407];
+  }
+
+  .course-code {
+    @apply font-bold text-sm mb-1 text-white;
+  }
+
+  .course-name {
+    @apply text-[0.9rem] font-medium mb-2 text-[#f7f3f0] whitespace-nowrap
+      overflow-hidden text-ellipsis;
+  }
+
+  .course-footer {
+    @apply text-[0.8rem] text-[#f5c49b] flex justify-between gap-1;
+  }
+}

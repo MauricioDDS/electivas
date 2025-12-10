@@ -23,14 +23,14 @@ export default function Signup() {
   });
   const [loading, setLoading] = useState(false);
 
-  const AUTH_URL = import.meta.env.VITE_AUTH_URL;
+  const API_URL = "http://localhost:8018/api/auth";
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await fetch(`${AUTH_URL}/register/`, {
+      const res = await fetch(`${API_URL}/register/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

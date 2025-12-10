@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CoursesList from "@/pages/CoursesList";
 import CourseDetail from "@/pages/CourseDetail";
+import ScheduleRecommendations from "./pages/ScheduleRecommendations";
 
 
 if ('serviceWorker' in navigator) {
@@ -38,6 +39,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/profile" element={<Profile />} />
         <Route path="/courses" element={<CoursesList />} />
         <Route path="/course/:code" element={<CourseDetail />} />
+        <Route path="/recommendations" element={<ScheduleRecommendations />} />
         <Route
           path="/"
           element={
