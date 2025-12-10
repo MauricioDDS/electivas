@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
-from routers import bocetos, schedules
+from routers import bocetos, schedules, scraper
 
 Base.metadata.create_all(bind=engine)
 
@@ -21,6 +21,7 @@ app.add_middleware(
 
 app.include_router(bocetos.router, prefix="/bocetos")
 app.include_router(schedules.router, prefix="/horarios")
+app.include_router(scraper.router)
 
 @app.get("/")
 def root():

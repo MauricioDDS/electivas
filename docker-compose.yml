@@ -118,6 +118,8 @@ services:
       SQLALCHEMY_DATABASE_URL: "sqlite:///./data/calendar.db"
       COURSES_HOST: "http://courses-ms:8000"
       CORS_ORIGINS: "http://localhost:3000,http://localhost:5173"
+      SCRAPER_HOST: "http://scraper-ms:4004" 
+      SCRAPER_HORARIO_PATH: "/divisist/horario"
     ports:
       - "8022:8000"
     volumes:
@@ -125,6 +127,7 @@ services:
       - ./calendar-service/data:/app/data
     depends_on:
       - courses-ms
+      - scraper-ms
     restart: unless-stopped
 
 volumes:

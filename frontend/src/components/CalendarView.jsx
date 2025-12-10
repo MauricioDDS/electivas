@@ -1,4 +1,3 @@
-// src/components/CalendarView.jsx
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -6,8 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import ReactDOM from "react-dom/client";
 import CalendarCard from "./CalendarCard";
 
-export default function CalendarView({ events }) {
-  function eventContent(arg) {
+function eventContent(arg) {
     const rootEl = document.createElement("div");
     rootEl.setAttribute("data-rroot", "1");
     rootEl.style.width = "100%";
@@ -38,19 +36,20 @@ export default function CalendarView({ events }) {
     );
 
     return { domNodes: [rootEl] };
-  }
+}
 
-  function handleEventWillUnmount(arg) {
+function handleEventWillUnmount(arg) {
     const ourNode = arg.el.querySelector("[data-rroot]");
     if (ourNode && ourNode.__rroot) {
       try {
         ourNode.__rroot.unmount();
       } catch (err) {}
     }
-  }
+}
 
+export default function CalendarView({ events }) {
   return (
-    <div className="mb-4 border rounded-md overflow-hidden bg-[#0b0b0d]">
+    <div className="custom-calendar-dark-theme">
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="timeGridWeek"
@@ -70,6 +69,8 @@ export default function CalendarView({ events }) {
         height="auto"
         contentHeight="auto"
         expandRows={true}
+        // Clases para FullCalendar para aplicar estilos oscuros
+        viewClassNames={"text-white"} 
       />
     </div>
   );

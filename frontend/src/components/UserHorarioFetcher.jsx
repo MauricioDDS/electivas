@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import CalendarCard from "./CalendarCard";
 import CalendarView from "./CalendarView";
 
-const CALENDAR_API = import.meta.env.VITE_CALENDAR_URL || "http://localhost:8022";
+const CALENDAR_API = import.meta.env.VITE_CALENDAR_URL || "http://localhost:4004";
 
 function timeStrToMinutes(t) {
   if (!t) return null;
@@ -141,7 +141,7 @@ export default function UserHorarioFetcher({ userEmail }) {
     setMessage(null);
     setLoading(true);
     try {
-      const res = await fetch(`${CALENDAR_API}/fetch-horario/`, {
+      const res = await fetch(`${CALENDAR_API}/fetch-horario`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ci_session: cookie, user: userEmail || "anon" }),
@@ -171,7 +171,7 @@ export default function UserHorarioFetcher({ userEmail }) {
       setMessage(`Horario cargado (${merged.length} eventos, ${clasesRaw.length} filas).`);
     } catch (err) {
       console.error("traerHorario error", err);
-      setMessage(`Error: ${err.message || err}`);
+      setMessage(`Error: ${err.message || err}. Revisa tu API en ${CALENDAR_API}/fetch-horario.`);
     } finally {
       setLoading(false);
     }
@@ -193,61 +193,16 @@ export default function UserHorarioFetcher({ userEmail }) {
     }
   }, [userEmail]);
 
-  function eventContent(arg) {
-  const rootEl = document.createElement("div");
-  rootEl.setAttribute("data-rroot", "1");
-  rootEl.style.width = "100%";
-  rootEl.style.height = "100%";
-  rootEl.style.display = "flex";
-  rootEl.style.alignItems = "stretch";
-  rootEl.style.justifyContent = "center";
-  rootEl.style.boxSizing = "border-box";
-  rootEl.style.padding = "4px";
-  
-
-  const root = ReactDOM.createRoot(rootEl);
-  rootEl.__rroot = root;
-
-  const d = arg.event.extendedProps.horario_raw || {};
-
-  root.render(
-    <div className="w-full h-full flex items-stretch">
-      <CalendarCard
-        code={d.materia || d.codigo}
-        name={d.nombre || d.grupo || d.salon}
-        hours={d.hora}
-        credits={d.creditos}
-        type={d.tipo || (d.materia?.toLowerCase?.().includes("electiv") ? "electiva" : "")}
-        faded={false}
-        className="w-full h-full"
-      />
-    </div>
-  );
-
-  return { domNodes: [rootEl] };
-}
-
-
-  function handleEventWillUnmount(arg) {
-    const ourNode = arg.el.querySelector("[data-rroot]");
-    if (ourNode && ourNode.__rroot) {
-      try {
-        ourNode.__rroot.unmount();
-      } catch (err) {
-      }
-    }
-  }
-
   return (
-    <div className="bg-card rounded-2xl p-4 shadow-lg border">
-      <h3 className="text-lg font-bold mb-2">Traer horario (Divisist)</h3>
+    <div className="bg-card rounded-2xl p-4 shadow-lg border border-white/10">
+      <h3 className="text-lg font-bold mb-2 text-white">Traer horario (Divisist)</h3>
 
-      <p className="text-sm text-muted-foreground mb-2">Pega tu cookie (ci_session) del Divisist y pulsa "Traer horario".</p>
+      <p className="text-sm text-gray-400 mb-2">Pega tu cookie (ci_session) del Divisist y pulsa "Traer horario".</p>
 
       <div className="mb-3">
         <textarea
           rows={2}
-          className="w-full rounded border px-3 py-2 bg-transparent text-foreground"
+          className="w-full rounded border px-3 py-2 bg-transparent text-white border-white/20"
           value={cookie}
           onChange={(e) => setCookie(e.target.value)}
           placeholder="pega aquí ci_session"
@@ -257,7 +212,7 @@ export default function UserHorarioFetcher({ userEmail }) {
       <div className="flex gap-2 items-center mb-3">
         <button
           onClick={traerHorario}
-          className="px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700"
+          className="px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 disabled:opacity-50"
           disabled={loading}
         >
           {loading ? "Trayendo..." : "Traer horario"}
@@ -271,15 +226,15 @@ export default function UserHorarioFetcher({ userEmail }) {
             setEvents([]);
             setMessage("Horario borrado del cliente (server mantiene copia si se guardó).");
           }}
-          className="px-3 py-1 rounded border"
+          className="px-3 py-1 rounded border border-white/20 text-white hover:bg-white/10"
         >
           Borrar cliente
         </button>
       </div>
 
-      {message && <div className="text-sm text-muted-foreground mb-3">{message}</div>}
+      {message && <div className="text-sm text-gray-400 mb-3">{message}</div>}
 
-      <div className="mb-4 border rounded-md overflow-hidden bg-[#0b0b0d]">
+      <div className="mb-4 rounded-md overflow-hidden border border-white/10 bg-[#0b0b0d]">
         <CalendarView events={events} />
       </div>
     </div>
