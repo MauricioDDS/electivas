@@ -9,20 +9,12 @@ import { ArrowLeft, Plus, Trash2, CalendarCheck } from 'lucide-react';
 import Header from "@/components/Header";
 import { useBocetos } from "@/hooks/useBocetos";
 
-// --- HELPERS ---
-
 function countUniqueSubjects(courses) {
   if (!courses || courses.length === 0) return 0;
   const unique = new Set(courses.map(c => c.course_code || c.course_name || c.materia));
   return unique.size;
 }
 
-/**
- * PARSEO INTELIGENTE: LA SOLUCIÓN DEFINITIVA
- * Convierte strings "HH:MM" o números a objeto { h, m }.
- * REGLA DE ORO: Si la hora es < 6 (ej: 0, 2, 4), asumimos que es un índice y sumamos 6.
- * Ej: "00:00" -> 06:00 AM | "04:00" -> 10:00 AM
- */
 function smartParseTime(input) {
   if (input === undefined || input === null) return null;
 
@@ -59,12 +51,10 @@ export default function Schedules() {
   const [events, setEvents] = useState([]);
   const [officialSchedule, setOfficialSchedule] = useState(null);
 
-  // 1. Cargar bocetos de DB
   useEffect(() => {
     fetchBocetos();
   }, [fetchBocetos]);
 
-  // 2. Cargar Horario Oficial del LocalStorage
   useEffect(() => {
     const keys = Object.keys(localStorage);
     const horarioKey = keys.find(k => k.startsWith('horario_'));
@@ -75,25 +65,19 @@ export default function Schedules() {
         if (Array.isArray(raw) && raw.length > 0) {
 
           const formattedCourses = raw.map((c, idx) => {
-            // Intentamos obtener start/end lo más crudos posible
             let start = c.start;
             let end = c.end;
 
-            // Si viene en formato "0-2" o "HH-HH" en el campo 'hora'
             if (c.hora && typeof c.hora === 'string' && c.hora.includes('-')) {
               const parts = c.hora.replace(/\s/g, '').split('-');
               if (!start) start = parts[0];
               if (!end) end = parts[1];
             }
 
-            // Fallback a propiedades directas (muy común que vengan aquí como "00:00")
             if (!start && (c.horaInicio || c.start)) {
               start = c.horaInicio || c.start;
               end = c.horaFin || c.end;
             }
-
-            // NOTA: No convertimos aquí, dejamos que smartParseTime lo haga en el useEffect principal
-            // para ser consistentes con todos los datos.
 
             return {
               id: `off-${idx}`,
@@ -121,12 +105,10 @@ export default function Schedules() {
     }
   }, []);
 
-  // 3. Combinar Listas
   const allBocetos = useMemo(() => {
     return officialSchedule ? [officialSchedule, ...bocetos] : bocetos;
   }, [officialSchedule, bocetos]);
 
-  // 4. Selección automática
   useEffect(() => {
     if (allBocetos.length > 0) {
       const currentExists = allBocetos.find(b => b.id === selectedBocetoId);
@@ -140,7 +122,6 @@ export default function Schedules() {
     return allBocetos.find(b => b.id === selectedBocetoId);
   }, [allBocetos, selectedBocetoId]);
 
-  // --- LÓGICA MAESTRA DE TRANSFORMACIÓN ---
   useEffect(() => {
     if (!activeBoceto || !activeBoceto.courses) {
       setEvents([]);
@@ -149,7 +130,6 @@ export default function Schedules() {
 
     console.log("📅 [SCHEDULES] Procesando:", activeBoceto.name);
 
-    // Fecha base: Lunes de la semana actual
     const today = new Date();
     const currentDay = today.getDay();
     const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
@@ -168,7 +148,6 @@ export default function Schedules() {
       "7": 0, "DOMINGO": 0, "Domingo": 0
     };
 
-    // 1. ORDENAR CURSOS (Usando smartParseTime)
     const sortedCourses = [...activeBoceto.courses].sort((a, b) => {
       const dayA = daysMap[String(a.day || "").toUpperCase().trim()] || 0;
       const dayB = daysMap[String(b.day || "").toUpperCase().trim()] || 0;
@@ -188,8 +167,6 @@ export default function Schedules() {
     while (i < sortedCourses.length) {
       let currentCourse = sortedCourses[i];
 
-      // --- SANEAMIENTO DE DATOS ---
-      // Si el curso es inválido, saltamos
       if (!currentCourse || typeof currentCourse !== 'object') {
         i++; continue;
       }
@@ -198,7 +175,6 @@ export default function Schedules() {
       let startRaw = currentCourse.start;
       let endRaw = currentCourse.end;
 
-      // Recuperación de datos desde 'meta' si faltan
       if (currentCourse.meta?.grupo?.clases) {
         const classDetails = currentCourse.meta.grupo.clases.find(c => String(c.dia) === String(dayRaw));
         if (classDetails) {
@@ -222,7 +198,6 @@ export default function Schedules() {
         i++; continue;
       }
 
-      // --- AQUÍ OCURRE LA MAGIA ---
       let startTime = smartParseTime(startRaw);
       let endTime = smartParseTime(endRaw);
 
@@ -232,12 +207,10 @@ export default function Schedules() {
 
       let finalEndTimeMin = endTime.h * 60 + endTime.m;
 
-      // 2. LÓGICA DE AGRUPACIÓN
       let j = i + 1;
       while (j < sortedCourses.length) {
         const nextCourse = sortedCourses[j];
 
-        // Saneamiento del siguiente curso
         if (!nextCourse || typeof nextCourse !== 'object') {
           break;
         }
@@ -269,11 +242,9 @@ export default function Schedules() {
         const sameSubject = subjectId && nextSubjectId && subjectId === nextSubjectId;
 
         const nextStartMin = nextStartTime.h * 60 + nextStartTime.m;
-        // Tolerancia de contigüidad
         const isContiguous = Math.abs(finalEndTimeMin - nextStartMin) <= 1;
 
         if (sameDay && sameSubject && isContiguous) {
-          // Extendemos el bloque
           finalEndTimeMin = nextEndTime.h * 60 + nextEndTime.m;
           j++;
         } else {
@@ -281,7 +252,6 @@ export default function Schedules() {
         }
       }
 
-      // 3. Crear fechas finales
       const eventDate = new Date(monday);
       const offset = weekdayTarget === 0 ? 6 : weekdayTarget - 1;
       eventDate.setDate(monday.getDate() + offset);
@@ -296,9 +266,8 @@ export default function Schedules() {
 
       if (end <= start) end.setHours(start.getHours() + 1);
 
-      // 4. FILTRO DE SEGURIDAD (6 AM - 10 PM)
       const MIN_HOUR = 6;
-      const MAX_HOUR = 22; // 10 PM
+      const MAX_HOUR = 22;
 
       if (start.getHours() >= MAX_HOUR || end.getHours() < MIN_HOUR) {
         console.warn(`❌ Filtrando hora ilógica: ${currentCourse.course_name} (${start.toLocaleTimeString()})`);
@@ -346,7 +315,6 @@ export default function Schedules() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* LISTA IZQUIERDA */}
           <div className="lg:col-span-1">
             <Card className="h-full border-white/10 bg-card">
               <CardHeader>
@@ -389,7 +357,6 @@ export default function Schedules() {
             </Card>
           </div>
 
-          {/* CALENDARIO DERECHA */}
           <div className="lg:col-span-3">
             <Card className="h-full border-white/10 bg-card overflow-hidden flex flex-col">
               <CardHeader className="bg-white/5 border-b border-white/10 py-4">

@@ -49,8 +49,6 @@ export default function CalendarView({ events }) {
       localizer.format(date, 'h:mm a', culture),
   };
 
-  // Definimos las fechas base para min/max (el año/mes/día no importa, solo la hora)
-  // RANGO: 6:00 AM a 10:00 PM
   const minTime = new Date();
   minTime.setHours(6, 0, 0);
 
@@ -118,7 +116,6 @@ export default function CalendarView({ events }) {
         defaultView="week"
         views={['week', 'day']} 
 
-        // RANGO AJUSTADO: 6 AM - 10 PM
         min={minTime}
         max={maxTime}
         

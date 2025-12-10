@@ -11,7 +11,6 @@ export default function Header() {
       return;
     }
 
-    // Always navigate to profile page regardless of role
     navigate("/profile");
   }
 

@@ -187,7 +187,6 @@ export default function UserHorarioFetcher({ userEmail }) {
       const clasesRaw = body.horario ?? body ?? [];
       console.log("📦 [FETCHER] Clases extraídas (Array inicial):", clasesRaw);
 
-      // Procesar datos
       const merged = mergeConsecutiveClases(clasesRaw);
       const evs = clasesToEvents(merged);
 
