@@ -1,15 +1,15 @@
+// src/pages/Home.jsx
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Pensum from "../components/Pensum";
 import CourseSelectModal from "../components/CourseSelectModal";
 import CourseCard from "../components/CourseCard";
 import Header from "@/components/Header";
-
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [cursadas, setCursadas] = useState([]);
+  const [cursadas, setCursadas] = useState([]); // materias que el usuario ya cursó (si las tienes)
   const [courses, setCourses] = useState([]);
 
   const { token, user, logout } = useAuth();
@@ -26,7 +26,7 @@ export default function Home() {
         if (!res.ok) throw new Error("Unauthorized");
         return res.json();
       })
-      .then((data) => setCourses(data))
+      .then((data) => setCourses(Array.isArray(data) ? data : (data.materias ? Object.values(data.materias) : [])))
       .catch((err) => console.error("Error fetching courses:", err));
   }, [token, COURSES_URL]);
 
@@ -61,8 +61,8 @@ export default function Home() {
                   key={course.codigo}
                   code={course.codigo}
                   name={course.nombre}
-                  hours={course.hours}
-                  credits={course.creditos}
+                  hours={course.horas || course.hours}
+                  credits={course.creditos || course.credits}
                   type={course.tipo}
                 />
               ))}
@@ -79,23 +79,24 @@ export default function Home() {
             </h2>
             <div className="flex flex-wrap justify-center gap-4">
               {courses
-                .filter(course =>
-                  !cursadas.some(c => c.codigo === course.codigo) &&
-                  (course.requisitos || []).some(pre =>
-                    cursadas.some(c => c.codigo === pre)
-                  )
-                )
-                .map(course => (
+                .filter((course) => {
+                  const requisitos = course.requisitos ?? course.prerequisitos ?? course.requisitos ?? [];
+                  return (
+                    !cursadas.some((c) => c.codigo === course.codigo) &&
+                    requisitos.length > 0 &&
+                    requisitos.some((pre) => cursadas.some((c) => c.codigo === pre))
+                  );
+                })
+                .map((course) => (
                   <CourseCard
                     key={course.codigo}
                     code={course.codigo}
                     name={course.nombre}
-                    hours={course.hours}
-                    credits={course.creditos}
+                    hours={course.horas || course.hours}
+                    credits={course.creditos || course.credits}
                     type={course.tipo}
                   />
                 ))}
-
             </div>
           </div>
         </section>
@@ -104,15 +105,15 @@ export default function Home() {
       <h2 className="text-center text-3xl font-extrabold text-balance mb-5">
         Todas las Materias
       </h2>
+
       <Pensum onVerMas={() => setModalOpen(true)} COURSES_URL={COURSES_URL} />
 
       {modalOpen && (
         <CourseSelectModal
           onClose={() => setModalOpen(false)}
           onConfirm={(seleccionadas) => {
-            navigate("/horarios", {
-              state: { cursos: seleccionadas }
-            });
+            // redirige a /horarios y envía las materias elegidas
+            navigate("/horarios", { state: { cursos: seleccionadas, userId: user?.id } });
           }}
           COURSES_URL={COURSES_URL}
         />

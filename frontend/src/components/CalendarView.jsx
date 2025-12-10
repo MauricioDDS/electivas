@@ -1,4 +1,4 @@
-// CalendarView.jsx
+// src/components/CalendarView.jsx
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -30,10 +30,7 @@ export default function CalendarView({ events }) {
           name={d.nombre || d.grupo || d.salon}
           hours={d.hora}
           credits={d.creditos}
-          type={
-            d.tipo ||
-            (d.materia?.toLowerCase?.().includes("electiv") ? "electiva" : "")
-          }
+          type={d.tipo || (d.materia?.toLowerCase?.().includes("electiv") ? "electiva" : "")}
           faded={false}
           className="w-full h-full"
         />
@@ -60,7 +57,7 @@ export default function CalendarView({ events }) {
         headerToolbar={{
           left: "prev,next today",
           center: "title",
-          right: "timeGridWeek,timeGridDay",
+          right: "timeGridWeek,timeGridDay"
         }}
         firstDay={1}
         hiddenDays={[0]}
