@@ -39,6 +39,9 @@ export interface Materia {
     isElectiva: boolean;
     grupos: Dictionary<Grupo>;
     estado?: MateriaState;
+    isApproved?: boolean;
+    grade?: string;
+    completedIn?: string;
 }
 
 export interface PensumInfo {

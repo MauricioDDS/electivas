@@ -1,87 +1,76 @@
-import { useState, useEffect } from "react";
-import CourseCard from "./CourseCard";
+"use client"
 
-export default function Pensum({ onVerMas }) {
-  const rows = 4;
-  const colsDefault = 6;
-  const [columns, setColumns] = useState(colsDefault);
-  const [courses, setCourses] = useState([]);
+import { useState } from "react"
 
-  const COURSES_URL = import.meta.env.VITE_COURSES_URL;
-  console.log("Pensum COURSES_URL =", COURSES_URL);
+export default function Pensum({ onVerMas, COURSES_URL, pensum }) {
+  const [expanded, setExpanded] = useState(null)
 
-  useEffect(() => {
-    fetch(`${COURSES_URL}/courses`)
-      .then((res) => res.json())
-      .then((data) => setCourses(data))
-      .catch((err) => console.error("Error fetching courses:", err));
-  }, [COURSES_URL]);
+  if (!pensum || !pensum.materias) {
+    return <p className="text-center text-gray-500">Cargando pensum...</p>
+  }
 
-  useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth < 640) setColumns(2);
-      else if (window.innerWidth < 768) setColumns(3);
-      else if (window.innerWidth < 1024) setColumns(4);
-      else setColumns(6);
-    }
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const visible = columns * rows;
-  const topCount = columns * 2;
-  const topHalf = courses.slice(0, Math.min(topCount, courses.length));
-  const bottomHalf = courses.slice(
-    Math.min(topCount, courses.length),
-    Math.min(visible, courses.length)
-  );
+  // Group materias by semestre
+  const grouped = {}
+  Object.values(pensum.materias).forEach((materia) => {
+    const sem = materia.semestre || 0
+    if (!grouped[sem]) grouped[sem] = []
+    grouped[sem].push(materia)
+  })
 
   return (
-    <div className="min-h-screen flex flex-col items-center">
-      <div className="relative w-full max-w-7xl px-6">
-        <div
-          className="grid gap-3"
-          style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
-        >
-          {topHalf.map((c) => (
-            <CourseCard
-              key={c.codigo}
-              code={c.codigo}
-              name={c.nombre}
-              hours={c.horas}
-              credits={c.creditos}
-              type={c.tipo}
-            />
-          ))}
+    <div className="w-full max-w-6xl px-6 py-8">
+      {Object.keys(grouped)
+        .sort((a, b) => Number.parseInt(a) - Number.parseInt(b))
+        .map((semestre) => (
+          <div key={semestre} className="mb-8">
+            <h3 className="text-2xl font-bold mb-4 text-gray-800">Semestre {semestre}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {grouped[semestre].map((materia) => (
+                <div
+                  key={materia.codigo}
+                  className={`
+                    p-4 rounded-lg border-2 transition-all cursor-pointer
+                    ${
+                      materia.isApproved
+                        ? "bg-green-50 border-green-400 shadow-md hover:shadow-lg"
+                        : "bg-gray-50 border-gray-300 hover:border-gray-400 hover:shadow"
+                    }
+                  `}
+                  onClick={() => setExpanded(expanded === materia.codigo ? null : materia.codigo)}
+                >
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h4 className={`font-bold ${materia.isApproved ? "text-green-700" : "text-gray-900"}`}>
+                        {materia.codigo}
+                      </h4>
+                      <p className={`text-sm ${materia.isApproved ? "text-green-600" : "text-gray-600"}`}>
+                        {materia.nombre}
+                      </p>
+                    </div>
+                    {materia.isApproved && (
+                      <span className="bg-green-200 text-green-800 px-2 py-1 rounded text-xs font-semibold">
+                        {materia.grade}
+                      </span>
+                    )}
+                  </div>
 
-          {bottomHalf.map((c, idx) => {
-            const filaIndex = Math.floor(idx / columns);
-            const opacity =
-              filaIndex === 0 ? 0.65 : filaIndex === 1 ? 0.35 : 0.18;
-            return (
-              <div key={c.codigo} style={{ opacity }}>
-                <CourseCard
-                  code={c.codigo}
-                  name={c.nombre}
-                  hours={c.horas}
-                  credits={c.creditos}
-                  type={c.tipo}
-                />
-              </div>
-            );
-          })}
-        </div>
+                  <div className={`text-xs mt-2 ${materia.isApproved ? "text-green-600" : "text-gray-500"}`}>
+                    <p>
+                      {materia.isElectiva ? "Electiva" : "Obligatoria"} • {materia.horas}h • {materia.creditos} créditos
+                    </p>
+                    {materia.isApproved && (
+                      <p className="mt-1 text-green-700 font-semibold">✓ Aprobado en {materia.completedIn}</p>
+                    )}
+                  </div>
 
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-8 z-30">
-          <button
-            onClick={onVerMas}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-orange-600 text-white text-sm font-medium shadow-lg hover:bg-orange-700 transition"
-          >
-            <span className="text-base leading-none">+</span> Ver más
-          </button>
-        </div>
-      </div>
+                  {materia.requisitos && materia.requisitos.length > 0 && (
+                    <div className="mt-2 text-xs text-gray-500">Requisitos: {materia.requisitos.join(", ")}</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
     </div>
-  );
+  )
 }
