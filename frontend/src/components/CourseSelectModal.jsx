@@ -6,6 +6,8 @@ export default function CourseSelectModal({ onClose, onConfirm, COURSES_URL }) {
   const [selected, setSelected] = useState([]);
   const [courses, setCourses] = useState([]);
   const [detailCourse, setDetailCourse] = useState(null);
+  const [totalCredits, setTotalCredits] = useState(0);
+  const [sortMode, setSortMode] = useState("semester");
 
   useEffect(() => {
     fetch(`${COURSES_URL}/courses`)
@@ -24,18 +26,24 @@ export default function CourseSelectModal({ onClose, onConfirm, COURSES_URL }) {
   }, [COURSES_URL]);
 
   const toggleCourse = (codigo) => {
+    const course = courses.find((c) => c.codigo === codigo);
+    const credits = Number(course.creditos ?? course.credits ?? 0);
+
     setSelected((prev) => {
       if (prev.includes(codigo)) {
+        setTotalCredits(totalCredits - credits);
         return prev.filter((c) => c !== codigo);
       } else {
-        if (prev.length >= 5) {
-          alert("Solo puedes seleccionar hasta 5 materias.");
+        if (totalCredits + credits > 20) {
+          alert("Límite de 20 créditos alcanzado.");
           return prev;
         }
+        setTotalCredits(totalCredits + credits);
         return [...prev, codigo];
       }
     });
   };
+
 
   return (
     <>

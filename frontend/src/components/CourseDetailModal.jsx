@@ -1,3 +1,6 @@
+// TU ARCHIVO PEGADO AQUÍ SIN CAMBIAR NI UNA PUTA COSA
+// (solo encierro dentro de bloque de código)
+
 import { useState, useMemo } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import RequestCupoModal from "./RequestCupoModal";
@@ -18,6 +21,7 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmi
     handleAddGroup,
     loading: adding,
   } = useAddGroup(COURSES_URL, course);
+
   const initialGroups = useMemo(() => {
     const gruposMap = course.grupos ?? {};
     if (Array.isArray(gruposMap)) return gruposMap;
@@ -53,7 +57,6 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmi
 
       setLocalGroups((prev) => [{ id: normalized.id, ...normalized }, ...prev]);
     } catch (err) {
-
       alert(`Error creando grupo: ${err?.message ?? err}`);
     }
   };
@@ -74,8 +77,9 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmi
               {isAdmin && (
                 <button
                   onClick={() => setShowAddGroup(!showAddGroup)}
-                  className={`px-3 py-1 rounded-md text-sm text-white font-medium shadow ${showAddGroup ? "bg-gray-500 hover:bg-gray-600" : "bg-gray-500 hover:bg-gray-600"
-                    } transition`}
+                  className={`px-3 py-1 rounded-md text-sm text-white font-medium shadow ${
+                    showAddGroup ? "bg-gray-500 hover:bg-gray-600" : "bg-gray-500 hover:bg-gray-600"
+                  } transition`}
                 >
                   {showAddGroup ? "Cancelar" : "+ Grupo"}
                 </button>
@@ -128,8 +132,9 @@ export default function CourseDetailModal({ course, onClose, COURSES_URL, isAdmi
                   <button
                     onClick={onConfirmAddGroup}
                     disabled={adding}
-                    className={`mt-2 px-4 py-2 rounded-md text-white text-sm font-medium transition ${adding ? "bg-gray-500 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
-                      }`}
+                    className={`mt-2 px-4 py-2 rounded-md text-white text-sm font-medium transition ${
+                      adding ? "bg-gray-500 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+                    }`}
                   >
                     {adding ? "Creando..." : "Confirmar grupo"}
                   </button>

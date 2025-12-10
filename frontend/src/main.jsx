@@ -10,6 +10,9 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CoursesList from "@/pages/CoursesList";
 import CourseDetail from "@/pages/CourseDetail";
+import Schedules from "./pages/Schedules";
+import CrearBoceto from "./pages/CrearBoceto";
+import VerBoceto from "./pages/VerBoceto";
 
 
 if ('serviceWorker' in navigator) {
@@ -38,6 +41,9 @@ createRoot(document.getElementById("root")).render(
         <Route path="/profile" element={<Profile />} />
         <Route path="/courses" element={<CoursesList />} />
         <Route path="/course/:code" element={<CourseDetail />} />
+        <Route path="/horarios" element={<Schedules />} />
+        <Route path="/bocetos/crear" element={<CrearBoceto />} />
+        <Route path="/bocetos/:id" element={<VerBoceto />} />
         <Route
           path="/"
           element={

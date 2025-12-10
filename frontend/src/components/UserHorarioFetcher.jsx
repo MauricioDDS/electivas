@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
 import CalendarCard from "./CalendarCard";
+import CalendarView from "./CalendarView";
 
 const CALENDAR_API = import.meta.env.VITE_CALENDAR_URL || "http://localhost:8022";
 
@@ -283,26 +280,7 @@ export default function UserHorarioFetcher({ userEmail }) {
       {message && <div className="text-sm text-muted-foreground mb-3">{message}</div>}
 
       <div className="mb-4 border rounded-md overflow-hidden bg-[#0b0b0d]">
-        <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView="timeGridWeek"
-          headerToolbar={{
-            left: "prev,next today",
-            center: "title",
-            right: "timeGridWeek,timeGridDay"
-          }}
-          firstDay={1}         
-          hiddenDays={[0]}           
-          slotMinTime="06:00:00"
-          slotMaxTime="20:00:00"
-          allDaySlot={false}
-          events={events}
-          eventContent={eventContent}
-          eventWillUnmount={handleEventWillUnmount}
-          height="auto"
-          contentHeight="auto"
-          expandRows={true}
-        />
+        <CalendarView events={events} />
       </div>
     </div>
   );

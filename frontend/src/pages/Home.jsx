@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Pensum from "../components/Pensum";
 import CourseSelectModal from "../components/CourseSelectModal";
 import CourseCard from "../components/CourseCard";
@@ -12,6 +13,7 @@ export default function Home() {
   const [courses, setCourses] = useState([]);
 
   const { token, user, logout } = useAuth();
+  const navigate = useNavigate();
   const COURSES_URL = import.meta.env.VITE_COURSES_URL;
 
   useEffect(() => {
@@ -77,14 +79,13 @@ export default function Home() {
             </h2>
             <div className="flex flex-wrap justify-center gap-4">
               {courses
-                .filter(
-                  (course) =>
-                    !cursadas.some((c) => c.codigo === course.codigo) &&
-                    course.prerequisitos.some((pre) =>
-                      cursadas.some((c) => c.codigo === pre)
-                    )
+                .filter(course =>
+                  !cursadas.some(c => c.codigo === course.codigo) &&
+                  (course.requisitos || []).some(pre =>
+                    cursadas.some(c => c.codigo === pre)
+                  )
                 )
-                .map((course) => (
+                .map(course => (
                   <CourseCard
                     key={course.codigo}
                     code={course.codigo}
@@ -94,6 +95,7 @@ export default function Home() {
                     type={course.tipo}
                   />
                 ))}
+
             </div>
           </div>
         </section>
@@ -108,8 +110,9 @@ export default function Home() {
         <CourseSelectModal
           onClose={() => setModalOpen(false)}
           onConfirm={(seleccionadas) => {
-            setCursadas(seleccionadas);
-            setModalOpen(false);
+            navigate("/horarios", {
+              state: { cursos: seleccionadas }
+            });
           }}
           COURSES_URL={COURSES_URL}
         />

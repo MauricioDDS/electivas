@@ -1,6 +1,6 @@
 {
   "codigo": "115",
-  "fechaCaptura": "2025-11-12T13:43:40.048Z",
+  "fechaCaptura": "2025-12-09T18:48:14.967Z",
   "nombre": "Ingenieria de sistemas",
   "materias": {
     "1150615": {
@@ -20,7 +20,7 @@
       "codigo": "1151057",
       "creditos": 3,
       "horas": 3,
-      "isElectiva": false,
+      "isElectiva": true,
       "nombre": "Mineria de datos",
       "requisitos": [
         "1150924",
@@ -35,7 +35,7 @@
       "codigo": "1151058",
       "creditos": 15,
       "horas": 6,
-      "isElectiva": false,
+      "isElectiva": true,
       "nombre": "Proyecto academico",
       "requisitos": [
         "Cre:150"
@@ -344,7 +344,7 @@
         "1155306-A": {
           "nombre": "1155306-A",
           "maximo": 30,
-          "disponible": 23,
+          "disponible": 25,
           "profesor": "Gutierrez Buitrago Ana Gissel",
           "clases": [
             {
@@ -374,7 +374,7 @@
         "1155401-A": {
           "nombre": "1155401-A",
           "maximo": 35,
-          "disponible": 6,
+          "disponible": 8,
           "profesor": "Garcia Martinez Ruth Stella",
           "clases": [
             {
@@ -395,7 +395,7 @@
         "1155401-B": {
           "nombre": "1155401-B",
           "maximo": 35,
-          "disponible": 6,
+          "disponible": 9,
           "profesor": "Rincon Leal Olga Lucy",
           "clases": [
             {
@@ -416,7 +416,7 @@
         "1090411-A": {
           "nombre": "1090411-A",
           "maximo": 25,
-          "disponible": 8,
+          "disponible": 9,
           "profesor": "Saenz Contreras Daniel",
           "clases": [
             {
@@ -443,7 +443,7 @@
         "1090411-B": {
           "nombre": "1090411-B",
           "maximo": 25,
-          "disponible": 19,
+          "disponible": 21,
           "profesor": "Vergel Ortega Mawency",
           "clases": [
             {
@@ -470,7 +470,7 @@
         "1110401-A": {
           "nombre": "1110401-A",
           "maximo": 47,
-          "disponible": 2,
+          "disponible": 11,
           "profesor": "Saenz Contreras Daniel",
           "clases": [
             {
@@ -569,7 +569,7 @@
         "1155402-A": {
           "nombre": "1155402-A",
           "maximo": 35,
-          "disponible": 9,
+          "disponible": 14,
           "profesor": "Riveros Mojica Diego",
           "clases": [
             {
@@ -590,7 +590,7 @@
         "1110403-A": {
           "nombre": "1110403-A",
           "maximo": 48,
-          "disponible": 15,
+          "disponible": 16,
           "profesor": "Zambrano Contreras Arturo",
           "clases": [
             {
@@ -611,7 +611,7 @@
         "1110403-B": {
           "nombre": "1110403-B",
           "maximo": 45,
-          "disponible": 8,
+          "disponible": 21,
           "profesor": "Hernandez Rosa Virginia",
           "clases": [
             {
@@ -632,7 +632,7 @@
         "1160050-A": {
           "nombre": "1160050-A",
           "maximo": 43,
-          "disponible": 8,
+          "disponible": 13,
           "profesor": "Maduro Mendoza Ricardo Alfonso",
           "clases": [
             {
@@ -668,7 +668,7 @@
         "1191406-B": {
           "nombre": "1191406-B",
           "maximo": 40,
-          "disponible": 0,
+          "disponible": 2,
           "profesor": "Saenz Contreras Daniel",
           "clases": [
             {
@@ -698,7 +698,7 @@
         "1155403-A": {
           "nombre": "1155403-A",
           "maximo": 39,
-          "disponible": 0,
+          "disponible": 18,
           "profesor": "Solarte Mompotes Jhon Jairo",
           "clases": [
             {
@@ -719,7 +719,7 @@
         "1155403-B": {
           "nombre": "1155403-B",
           "maximo": 40,
-          "disponible": 1,
+          "disponible": 16,
           "profesor": "Espinel Omaña Jorge Willian",
           "clases": [
             {
@@ -740,7 +740,7 @@
         "1090410-A": {
           "nombre": "1090410-A",
           "maximo": 43,
-          "disponible": 16,
+          "disponible": 35,
           "profesor": "Castaño Carrillo Jesus David",
           "clases": [
             {
@@ -761,7 +761,7 @@
         "1090410-B": {
           "nombre": "1090410-B",
           "maximo": 35,
-          "disponible": 13,
+          "disponible": 23,
           "profesor": "Fabra Araque Jose Miguel",
           "clases": [
             {
@@ -782,7 +782,7 @@
         "1110402-A": {
           "nombre": "1110402-A",
           "maximo": 50,
-          "disponible": 10,
+          "disponible": 33,
           "profesor": "Romero Becerra Ana Ludia",
           "clases": [
             {
@@ -803,7 +803,7 @@
         "1110402-B": {
           "nombre": "1110402-B",
           "maximo": 46,
-          "disponible": 17,
+          "disponible": 29,
           "profesor": "Cely Cely Marco Fernando",
           "clases": [
             {
@@ -845,7 +845,7 @@
         "1191402-A": {
           "nombre": "1191402-A",
           "maximo": 42,
-          "disponible": 20,
+          "disponible": 24,
           "profesor": "Peña Rodriguez Gabriel",
           "clases": [
             {
@@ -866,7 +866,7 @@
         "1191402-B": {
           "nombre": "1191402-B",
           "maximo": 36,
-          "disponible": 11,
+          "disponible": 22,
           "profesor": "Peña Rodriguez Gabriel",
           "clases": [
             {
@@ -902,7 +902,7 @@
         "1155404-A": {
           "nombre": "1155404-A",
           "maximo": 48,
-          "disponible": 0,
+          "disponible": 31,
           "profesor": "Adarme Jaimes Marco Antonio",
           "clases": [
             {
@@ -923,7 +923,7 @@
         "1155404-B": {
           "nombre": "1155404-B",
           "maximo": 48,
-          "disponible": 5,
+          "disponible": 24,
           "profesor": "Fuentes Camargo Jairo Alberto",
           "clases": [
             {
@@ -959,7 +959,7 @@
         "1155405-A": {
           "nombre": "1155405-A",
           "maximo": 37,
-          "disponible": 0,
+          "disponible": 3,
           "profesor": "Parada Carmen Janeth",
           "clases": [
             {
@@ -980,7 +980,7 @@
         "1155405-B": {
           "nombre": "1155405-B",
           "maximo": 35,
-          "disponible": 11,
+          "disponible": 18,
           "profesor": "Puerto Cuadros Eduard Gilberto",
           "clases": [
             {
@@ -1001,7 +1001,7 @@
         "1155405-C": {
           "nombre": "1155405-C",
           "maximo": 36,
-          "disponible": 8,
+          "disponible": 19,
           "profesor": "Fuentes Camargo Jairo Alberto",
           "clases": [
             {
@@ -1051,7 +1051,7 @@
         "1155501-A": {
           "nombre": "1155501-A",
           "maximo": 30,
-          "disponible": 2,
+          "disponible": 10,
           "profesor": "Mariño Luis Fernando",
           "clases": [
             {
@@ -1072,7 +1072,7 @@
         "1155501-B": {
           "nombre": "1155501-B",
           "maximo": 32,
-          "disponible": 9,
+          "disponible": 17,
           "profesor": "Mariño Luis Fernando",
           "clases": [
             {
@@ -1093,7 +1093,7 @@
         "1110501-A": {
           "nombre": "1110501-A",
           "maximo": 41,
-          "disponible": 24,
+          "disponible": 26,
           "profesor": "Ortega Sierra Alvaro",
           "clases": [
             {
@@ -1114,7 +1114,7 @@
         "1110501-B": {
           "nombre": "1110501-B",
           "maximo": 50,
-          "disponible": 0,
+          "disponible": 4,
           "profesor": "Gonzalez Sepulveda Ruth Mery",
           "clases": [
             {
@@ -1156,7 +1156,7 @@
         "1160060-B": {
           "nombre": "1160060-B",
           "maximo": 16,
-          "disponible": 3,
+          "disponible": 7,
           "profesor": "Gonzalez Sepulveda Ruth Mery",
           "clases": [
             {
@@ -1177,7 +1177,7 @@
         "1160060-C": {
           "nombre": "1160060-C",
           "maximo": 15,
-          "disponible": 3,
+          "disponible": 7,
           "profesor": "Gonzalez Sepulveda Ruth Mery",
           "clases": [
             {
@@ -1213,7 +1213,7 @@
         "1155502-A": {
           "nombre": "1155502-A",
           "maximo": 40,
-          "disponible": 4,
+          "disponible": 5,
           "profesor": "Gallardo Perez Henry De Jesus",
           "clases": [
             {
@@ -1228,7 +1228,7 @@
         "1191605-A": {
           "nombre": "1191605-A",
           "maximo": 42,
-          "disponible": 3,
+          "disponible": 5,
           "profesor": "Palacios Alvarado Wlamyr",
           "clases": [
             {
@@ -1327,7 +1327,7 @@
         "1155503-C": {
           "nombre": "1155503-C",
           "maximo": 12,
-          "disponible": 2,
+          "disponible": 5,
           "profesor": "Guzman Romo Ingrid Clariethe",
           "clases": [
             {
@@ -1348,7 +1348,7 @@
         "1155503-D": {
           "nombre": "1155503-D",
           "maximo": 12,
-          "disponible": 1,
+          "disponible": 2,
           "profesor": "Duque Suarez Maria Carolina",
           "clases": [
             {
@@ -1369,7 +1369,7 @@
         "1155503-E": {
           "nombre": "1155503-E",
           "maximo": 12,
-          "disponible": 1,
+          "disponible": 2,
           "profesor": "Guzman Romo Ingrid Clariethe",
           "clases": [
             {
@@ -1405,7 +1405,7 @@
         "1155504-A": {
           "nombre": "1155504-A",
           "maximo": 35,
-          "disponible": 6,
+          "disponible": 20,
           "profesor": "Robles Angarita Miguel Fabian",
           "clases": [
             {
@@ -1426,7 +1426,7 @@
         "1155504-B": {
           "nombre": "1155504-B",
           "maximo": 35,
-          "disponible": 12,
+          "disponible": 25,
           "profesor": "Robles Angarita Miguel Fabian",
           "clases": [
             {
@@ -1447,7 +1447,7 @@
         "1155504-C": {
           "nombre": "1155504-C",
           "maximo": 35,
-          "disponible": 0,
+          "disponible": 5,
           "profesor": "Rey Castillo Jonathan Rolando",
           "clases": [
             {
@@ -1483,8 +1483,8 @@
         "1155506-A": {
           "nombre": "1155506-A",
           "maximo": 30,
-          "disponible": 11,
-          "profesor": "Gomez Llanez Claudia Yamile",
+          "disponible": 12,
+          "profesor": "Diaz Leal Nelly Rosana",
           "clases": [
             {
               "dia": 1,
@@ -1602,7 +1602,7 @@
         "1155516-A": {
           "nombre": "1155516-A",
           "maximo": 40,
-          "disponible": 18,
+          "disponible": 19,
           "profesor": "Cristancho Villamizar Bernardo Xavier",
           "clases": [
             {
@@ -1661,7 +1661,7 @@
         "1110905-A": {
           "nombre": "1110905-A",
           "maximo": 43,
-          "disponible": 7,
+          "disponible": 8,
           "profesor": "Rojas Mendoza Yenni Carolina",
           "clases": [
             {
@@ -1676,7 +1676,7 @@
         "1110905-B": {
           "nombre": "1110905-B",
           "maximo": 42,
-          "disponible": 5,
+          "disponible": 6,
           "profesor": "Caceres Cogollo Edith",
           "clases": [
             {
@@ -1735,7 +1735,7 @@
         "1155604-A": {
           "nombre": "1155604-A",
           "maximo": 35,
-          "disponible": 6,
+          "disponible": 17,
           "profesor": "Adarme Jaimes Marco Antonio",
           "clases": [
             {
@@ -1756,7 +1756,7 @@
         "1155604-B": {
           "nombre": "1155604-B",
           "maximo": 35,
-          "disponible": 1,
+          "disponible": 11,
           "profesor": "Robles Angarita Miguel Fabian",
           "clases": [
             {
@@ -1793,7 +1793,7 @@
         "1155605-A": {
           "nombre": "1155605-A",
           "maximo": 30,
-          "disponible": 11,
+          "disponible": 20,
           "profesor": "Parada Carmen Janeth",
           "clases": [
             {
@@ -1814,7 +1814,7 @@
         "1155605-B": {
           "nombre": "1155605-B",
           "maximo": 30,
-          "disponible": 0,
+          "disponible": 4,
           "profesor": "Angarita Sanguino Carlos Rene",
           "clases": [
             {
@@ -1835,7 +1835,7 @@
         "1155605-C": {
           "nombre": "1155605-C",
           "maximo": 30,
-          "disponible": 1,
+          "disponible": 7,
           "profesor": "Gomez Llanez Claudia Yamile",
           "clases": [
             {
@@ -1872,7 +1872,7 @@
         "1155606-A": {
           "nombre": "1155606-A",
           "maximo": 25,
-          "disponible": 8,
+          "disponible": 10,
           "profesor": "Rey Castillo Jonathan Rolando",
           "clases": [
             {
@@ -1893,7 +1893,7 @@
         "1155606-B": {
           "nombre": "1155606-B",
           "maximo": 26,
-          "disponible": 4,
+          "disponible": 11,
           "profesor": "Angarita Sanguino Carlos Rene",
           "clases": [
             {
@@ -1914,7 +1914,7 @@
         "1155606-C": {
           "nombre": "1155606-C",
           "maximo": 25,
-          "disponible": 4,
+          "disponible": 5,
           "profesor": "Esteban Carrillo Daniel Andres",
           "clases": [
             {
@@ -1950,7 +1950,7 @@
         "1155607-A": {
           "nombre": "1155607-A",
           "maximo": 40,
-          "disponible": 9,
+          "disponible": 10,
           "profesor": "Gandolfo Quintero Genni Leonor",
           "clases": [
             {
@@ -1965,7 +1965,7 @@
         "1110305-A": {
           "nombre": "1110305-A",
           "maximo": 40,
-          "disponible": 7,
+          "disponible": 8,
           "profesor": "Vahos Arias Yollmar Gildardo",
           "clases": [
             {
@@ -2025,7 +2025,7 @@
         "1155608-A": {
           "nombre": "1155608-A",
           "maximo": 30,
-          "disponible": 5,
+          "disponible": 6,
           "profesor": "Diaz Leal Nelly Rosana",
           "clases": [
             {
@@ -2046,7 +2046,7 @@
         "1155608-B": {
           "nombre": "1155608-B",
           "maximo": 30,
-          "disponible": 21,
+          "disponible": 23,
           "profesor": "Diaz Leal Nelly Rosana",
           "clases": [
             {
@@ -2215,7 +2215,7 @@
         "1155616-A": {
           "nombre": "1155616-A",
           "maximo": 20,
-          "disponible": 8,
+          "disponible": 9,
           "profesor": "Fuentes Camargo Jairo Alberto",
           "clases": [
             {
@@ -2245,7 +2245,7 @@
         "1155704-A": {
           "nombre": "1155704-A",
           "maximo": 30,
-          "disponible": 7,
+          "disponible": 9,
           "profesor": "Pardo Garcia Carlos Eduardo",
           "clases": [
             {
@@ -2266,7 +2266,7 @@
         "1155704-B": {
           "nombre": "1155704-B",
           "maximo": 30,
-          "disponible": 3,
+          "disponible": 9,
           "profesor": "Pardo Garcia Carlos Eduardo",
           "clases": [
             {
@@ -2302,7 +2302,7 @@
         "1155705-A": {
           "nombre": "1155705-A",
           "maximo": 31,
-          "disponible": 3,
+          "disponible": 16,
           "profesor": "Rodriguez Tenjo Judith Del Pilar",
           "clases": [
             {
@@ -2323,7 +2323,7 @@
         "1155705-B": {
           "nombre": "1155705-B",
           "maximo": 32,
-          "disponible": 0,
+          "disponible": 4,
           "profesor": "Beltran Galvis Nelson",
           "clases": [
             {
@@ -2359,7 +2359,7 @@
         "1155706-A": {
           "nombre": "1155706-A",
           "maximo": 20,
-          "disponible": 8,
+          "disponible": 9,
           "profesor": "Perez Gutierrez Boris Rainiero",
           "clases": [
             {
@@ -2374,7 +2374,7 @@
         "1155706-B": {
           "nombre": "1155706-B",
           "maximo": 16,
-          "disponible": 1,
+          "disponible": 2,
           "profesor": "Pardo Garcia Carlos Eduardo",
           "clases": [
             {
@@ -2419,7 +2419,7 @@
         "1155707-A": {
           "nombre": "1155707-A",
           "maximo": 35,
-          "disponible": 2,
+          "disponible": 3,
           "profesor": "Fossi Gonzalez Julio Enrique",
           "clases": [
             {
@@ -2449,7 +2449,7 @@
         "1110805-B": {
           "nombre": "1110805-B",
           "maximo": 50,
-          "disponible": 7,
+          "disponible": 9,
           "profesor": "Angarita Sanchez Ana Helena",
           "clases": [
             {
@@ -2479,7 +2479,7 @@
         "1160034-A": {
           "nombre": "1160034-A",
           "maximo": 40,
-          "disponible": 3,
+          "disponible": 5,
           "profesor": "Cristancho Villamizar Bernardo Xavier",
           "clases": [
             {
@@ -2494,7 +2494,7 @@
         "1191904-A": {
           "nombre": "1191904-A",
           "maximo": 45,
-          "disponible": 9,
+          "disponible": 10,
           "profesor": "Angarita Sanchez Ana Helena",
           "clases": [
             {
@@ -2524,7 +2524,7 @@
         "1155708-A": {
           "nombre": "1155708-A",
           "maximo": 30,
-          "disponible": 8,
+          "disponible": 24,
           "profesor": "Rojas Puentes Maria Del Pilar",
           "clases": [
             {
@@ -2583,7 +2583,7 @@
         "1155712-A": {
           "nombre": "1155712-A",
           "maximo": 35,
-          "disponible": 2,
+          "disponible": 6,
           "profesor": "Velasco Fernandez Oscar Dario",
           "clases": [
             {
@@ -2598,7 +2598,7 @@
         "1110706-A": {
           "nombre": "1110706-A",
           "maximo": 40,
-          "disponible": 16,
+          "disponible": 19,
           "profesor": "Peña Caceres Omar Enrique",
           "clases": [
             {
@@ -2619,7 +2619,7 @@
         "1110706-B": {
           "nombre": "1110706-B",
           "maximo": 50,
-          "disponible": 5,
+          "disponible": 21,
           "profesor": "Peña Caceres Omar Enrique",
           "clases": [
             {
@@ -2661,7 +2661,7 @@
         "1160063-A": {
           "nombre": "1160063-A",
           "maximo": 35,
-          "disponible": 5,
+          "disponible": 9,
           "profesor": "Velasco Fernandez Oscar Dario",
           "clases": [
             {
@@ -2791,7 +2791,7 @@
         "1155717-A": {
           "nombre": "1155717-A",
           "maximo": 20,
-          "disponible": 5,
+          "disponible": 9,
           "profesor": "Robles Angarita Miguel Fabian",
           "clases": [
             {
@@ -2827,7 +2827,7 @@
         "1155804-A": {
           "nombre": "1155804-A",
           "maximo": 21,
-          "disponible": 4,
+          "disponible": 8,
           "profesor": "Calixto Cely Jose Martin",
           "clases": [
             {
@@ -2848,7 +2848,7 @@
         "1155804-B": {
           "nombre": "1155804-B",
           "maximo": 28,
-          "disponible": 0,
+          "disponible": 1,
           "profesor": "Pardo Garcia Carlos Eduardo",
           "clases": [
             {
@@ -2884,7 +2884,7 @@
         "1155805-A": {
           "nombre": "1155805-A",
           "maximo": 48,
-          "disponible": 1,
+          "disponible": 3,
           "profesor": "Rodriguez Tenjo Judith Del Pilar",
           "clases": [
             {
@@ -2920,7 +2920,7 @@
         "1155808-A": {
           "nombre": "1155808-A",
           "maximo": 35,
-          "disponible": 1,
+          "disponible": 2,
           "profesor": "Parada Carmen Janeth",
           "clases": [
             {
@@ -2941,7 +2941,7 @@
         "1155808-B": {
           "nombre": "1155808-B",
           "maximo": 30,
-          "disponible": 8,
+          "disponible": 17,
           "profesor": "Rojas Puentes Maria Del Pilar",
           "clases": [
             {
@@ -2973,7 +2973,7 @@
         "1155809-A": {
           "nombre": "1155809-A",
           "maximo": 25,
-          "disponible": 0,
+          "disponible": 1,
           "profesor": "Parada Carmen Janeth",
           "clases": [
             {
@@ -2988,7 +2988,7 @@
         "1155809-B": {
           "nombre": "1155809-B",
           "maximo": 22,
-          "disponible": 4,
+          "disponible": 7,
           "profesor": "Rojas Puentes Maria Del Pilar",
           "clases": [
             {
@@ -3047,7 +3047,7 @@
         "1155905-A": {
           "nombre": "1155905-A",
           "maximo": 45,
-          "disponible": 5,
+          "disponible": 6,
           "profesor": "Perez Gutierrez Boris Rainiero",
           "clases": [
             {
@@ -3113,7 +3113,7 @@
         "1155908-A": {
           "nombre": "1155908-A",
           "maximo": 40,
-          "disponible": 10,
+          "disponible": 11,
           "profesor": "Diaz Leal Nelly Rosana",
           "clases": [
             {
@@ -3158,7 +3158,7 @@
         "1155909-B": {
           "nombre": "1155909-B",
           "maximo": 15,
-          "disponible": 1,
+          "disponible": 2,
           "profesor": "Calixto Cely Jose Martin",
           "clases": [
             {
@@ -3254,7 +3254,7 @@
         "1156701-A": {
           "nombre": "1156701-A",
           "maximo": 22,
-          "disponible": 6,
+          "disponible": 8,
           "profesor": "Rey Castillo Jonathan Rolando",
           "clases": [
             {
@@ -3390,7 +3390,7 @@
         "1156804-A": {
           "nombre": "1156804-A",
           "maximo": 20,
-          "disponible": 2,
+          "disponible": 8,
           "profesor": "Cequeda Olago Jean Polo",
           "clases": [
             {
@@ -3420,7 +3420,7 @@
         "1156805-A": {
           "nombre": "1156805-A",
           "maximo": 20,
-          "disponible": 0,
+          "disponible": 1,
           "profesor": "Parada Carmen Janeth",
           "clases": [
             {
@@ -3481,7 +3481,7 @@
         "1156901-A": {
           "nombre": "1156901-A",
           "maximo": 25,
-          "disponible": 7,
+          "disponible": 8,
           "profesor": "Herrera Caceres Matias",
           "clases": [
             {
