@@ -1,76 +1,77 @@
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import ReactDOM from "react-dom/client";
+// src/components/CalendarView.jsx
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
+import format from 'date-fns/format';
+import parse from 'date-fns/parse';
+import startOfWeek from 'date-fns/startOfWeek';
+import getDay from 'date-fns/getDay';
+import es from 'date-fns/locale/es';
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import CalendarCard from "./CalendarCard";
 
-function eventContent(arg) {
-    const rootEl = document.createElement("div");
-    rootEl.setAttribute("data-rroot", "1");
-    rootEl.style.width = "100%";
-    rootEl.style.height = "100%";
-    rootEl.style.display = "flex";
-    rootEl.style.alignItems = "stretch";
-    rootEl.style.justifyContent = "center";
-    rootEl.style.boxSizing = "border-box";
-    rootEl.style.padding = "4px";
+const locales = {
+  'es': es,
+};
 
-    const root = ReactDOM.createRoot(rootEl);
-    rootEl.__rroot = root;
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+});
 
-    const d = arg.event.extendedProps.horario_raw || {};
+// Función Hash para alternar colores (debe estar fuera del componente o dentro de una función)
+const hash = (s) => s.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0);
 
-    root.render(
-      <div className="w-full h-full flex items-stretch">
-        <CalendarCard
-          code={d.materia || d.codigo}
-          name={d.nombre || d.grupo || d.salon}
-          hours={d.hora}
-          credits={d.creditos}
-          type={d.tipo || (d.materia?.toLowerCase?.().includes("electiv") ? "electiva" : "")}
-          faded={false}
-          className="w-full h-full"
-        />
-      </div>
-    );
 
-    return { domNodes: [rootEl] };
-}
+// Componente personalizado para el evento
+const EventComponent = ({ event }) => {
+  const d = event.resource; 
+  
+  // Aseguramos que el código sea el Grupo/Salón
+  const codeValue = d.grupo || d.salon || "Gpo";
 
-function handleEventWillUnmount(arg) {
-    const ourNode = arg.el.querySelector("[data-rroot]");
-    if (ourNode && ourNode.__rroot) {
-      try {
-        ourNode.__rroot.unmount();
-      } catch (err) {}
-    }
-}
+  // Índice pseudo-aleatorio para alternancia de color
+  const colorIndex = Math.abs(hash(event.id || event.title)) % 10; 
+
+  return ( 
+    <CalendarCard
+      code={codeValue} 
+      name={d.materia}
+      credits={d.creditos}
+      type={d.tipo || (d.materia?.toLowerCase?.().includes("electiv") ? "electiva" : "")}
+      index={colorIndex}
+      faded={false}
+      className="w-full h-full" 
+    />
+  );
+}; // <--- El EventComponent termina aquí. No debe haber otro 'return' después.
 
 export default function CalendarView({ events }) {
+  const formats = {
+    dayFormat: (date, culture, localizer) => 
+      localizer.format(date, 'EEEE', culture),
+    timeGutterFormat: (date, culture, localizer) => 
+      localizer.format(date, 'h:mm a', culture),
+  };
+
   return (
-    <div className="custom-calendar-dark-theme">
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="timeGridWeek"
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "timeGridWeek,timeGridDay"
-        }}
-        firstDay={1}
-        hiddenDays={[0]}
-        slotMinTime="06:00:00"
-        slotMaxTime="20:00:00"
-        allDaySlot={false}
+    <div className="h-full w-full custom-rbc-theme">
+      <Calendar
+        localizer={localizer}
         events={events}
-        eventContent={eventContent}
-        eventWillUnmount={handleEventWillUnmount}
-        height="auto"
-        contentHeight="auto"
-        expandRows={true}
-        // Clases para FullCalendar para aplicar estilos oscuros
-        viewClassNames={"text-white"} 
+        startAccessor="start"
+        endAccessor="end"
+        defaultView="work_week"
+        views={['work_week', 'day']}
+        min={new Date(0, 0, 0, 6, 0, 0)}
+        max={new Date(0, 0, 0, 22, 0, 0)}
+        culture='es'
+        components={{
+            event: EventComponent
+        }}
+        formats={formats}
+        toolbar={false}
       />
     </div>
   );

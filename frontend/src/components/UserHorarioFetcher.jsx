@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import ReactDOM from "react-dom/client";
-import CalendarCard from "./CalendarCard";
 import CalendarView from "./CalendarView";
 
-const CALENDAR_API = import.meta.env.VITE_CALENDAR_URL || "http://localhost:4004";
+const CALENDAR_API = import.meta.env.VITE_CALENDAR_URL || "http://localhost:8022";
+
+// --- Helpers de Parsing (Iguales, solo ajustamos el retorno de fechas) ---
 
 function timeStrToMinutes(t) {
   if (!t) return null;
@@ -68,58 +68,62 @@ function mergeConsecutiveClases(clases) {
 
 function clasesToEvents(clases) {
   const daysMap = {
-    Lunes: 1,
-    Martes: 2,
-    Miércoles: 3,
-    Miercoles: 3,
-    Jueves: 4,
-    Viernes: 5,
-    Sábado: 6,
-    Sabado: 6,
-    Domingo: 0,
+    Lunes: 1, Martes: 2, Miércoles: 3, Miercoles: 3,
+    Jueves: 4, Viernes: 5, Sábado: 6, Sabado: 6, Domingo: 0,
   };
 
+  // Encontrar el lunes de la semana actual para usarlo como base
   const today = new Date();
-  const startOfWeek = new Date(today);
-  startOfWeek.setHours(0, 0, 0, 0);
-  startOfWeek.setDate(today.getDate() - today.getDay());
+  const currentDay = today.getDay(); // 0 (Domingo) - 6 (Sábado)
+  const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
+
+  const monday = new Date(today);
+  monday.setDate(today.getDate() + distanceToMonday);
+  monday.setHours(0, 0, 0, 0);
 
   const evs = [];
 
   clases.forEach((clase) => {
-    const weekday = daysMap[clase.dia] ?? null;
-    if (weekday === null) return;
+    // Normalizar día
+    const diaStr = (clase.dia || "").trim();
+    // Mapeo insensible a mayúsculas/tildes básico
+    const normalizedDay = Object.keys(daysMap).find(key =>
+      key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") ===
+      diaStr.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    );
 
-    if (weekday === 0) return;
+    if (!normalizedDay) return;
+    const weekdayTarget = daysMap[normalizedDay];
 
-    const baseDate = new Date(startOfWeek);
-    baseDate.setDate(startOfWeek.getDate() + weekday);
+    // Calcular la fecha del evento en esta semana
+    const eventDate = new Date(monday);
+    // (weekdayTarget - 1) porque monday es 1. Ej: Martes(2) -> 2-1 = +1 día
+    eventDate.setDate(monday.getDate() + (weekdayTarget - 1));
 
+    // Parsear horas "HH:MM-HH:MM"
     const hr = (clase.hora || "").replace(/\s+/g, "");
-    const parts = hr.split("-");
-    const startStr = parts[0] ?? null;
-    const endStr = parts[1] ?? null;
+    const [startStr, endStr] = hr.split("-");
+
     if (!startStr || !endStr) return;
 
-    function timeToISO(dateBase, timeStr) {
-      if (!timeStr) return null;
-      const [h, m = "0"] = timeStr.split(":");
-      const d = new Date(dateBase);
-      d.setHours(parseInt(h || "0", 10), parseInt(m || "0", 10), 0, 0);
-      return d.toISOString();
-    }
+    const setTime = (base, timeStr) => {
+      const d = new Date(base);
+      const [h, m] = timeStr.split(":").map(Number);
+      d.setHours(h, m, 0, 0);
+      return d;
+    };
 
-    const start = timeToISO(baseDate, startStr);
-    const end = timeToISO(baseDate, endStr);
+    const start = setTime(eventDate, startStr);
+    const end = setTime(eventDate, endStr);
 
-    const id = `${clase.materia || "mat"}-${clase.grupo || "g"}-${clase.dia || "d"}-${startStr}-${endStr}`.replace(/\s+/g, "_");
+    const id = `${clase.materia}-${clase.grupo}-${diaStr}-${startStr}`.replace(/\s+/g, "_");
 
     evs.push({
       id,
-      title: clase.materia || clase.codigo || "Clase",
+      title: clase.materia || "Clase",
       start,
       end,
-      extendedProps: { horario_raw: clase },
+      resource: clase,
     });
   });
 
@@ -129,7 +133,6 @@ function clasesToEvents(clases) {
 export default function UserHorarioFetcher({ userEmail }) {
   const [cookie, setCookie] = useState("");
   const [loading, setLoading] = useState(false);
-  const [horario, setHorario] = useState([]);
   const [events, setEvents] = useState([]);
   const [message, setMessage] = useState(null);
 
@@ -141,6 +144,7 @@ export default function UserHorarioFetcher({ userEmail }) {
     setMessage(null);
     setLoading(true);
     try {
+      // 1. Fetch al endpoint (sin barra final)
       const res = await fetch(`${CALENDAR_API}/fetch-horario`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -152,89 +156,90 @@ export default function UserHorarioFetcher({ userEmail }) {
       try {
         body = bodyText ? JSON.parse(bodyText) : {};
       } catch (err) {
-        if (!res.ok) throw new Error(`scraper returned ${res.status}: ${bodyText.slice(0, 500)}`);
-        throw new Error(`scraper returned non-JSON: ${bodyText.slice(0, 500)}`);
+        throw new Error(`Error parsing JSON: ${bodyText.slice(0, 100)}`);
       }
 
-      if (!res.ok) throw new Error(body.detail || JSON.stringify(body) || `HTTP ${res.status}`);
+      if (!res.ok) throw new Error(body.detail || `Error ${res.status}`);
 
       const clasesRaw = body.horario ?? body ?? [];
-      setHorario(clasesRaw);
 
+      // 2. Procesar datos
       const merged = mergeConsecutiveClases(clasesRaw);
       const evs = clasesToEvents(merged);
+
       setEvents(evs);
 
+      // Guardar en local
       const key = userEmail ? `horario_${userEmail}` : "horario_anon";
       localStorage.setItem(key, JSON.stringify(clasesRaw));
 
-      setMessage(`Horario cargado (${merged.length} eventos, ${clasesRaw.length} filas).`);
+      setMessage(`Horario cargado: ${evs.length} clases.`);
     } catch (err) {
-      console.error("traerHorario error", err);
-      setMessage(`Error: ${err.message || err}. Revisa tu API en ${CALENDAR_API}/fetch-horario.`);
+      console.error(err);
+      setMessage(`Error: ${err.message}`);
     } finally {
       setLoading(false);
     }
   }
 
+  // Cargar del localstorage al montar
   useEffect(() => {
     const key = userEmail ? `horario_${userEmail}` : "horario_anon";
-    try {
-      const raw = localStorage.getItem(key);
-      if (raw) {
-        const clasesRaw = JSON.parse(raw);
-        setHorario(clasesRaw);
-        const merged = mergeConsecutiveClases(clasesRaw);
-        const evs = clasesToEvents(merged);
-        setEvents(evs);
-      }
-    } catch (err) {
-      console.warn("could not load saved horario", err);
+    const raw = localStorage.getItem(key);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        const merged = mergeConsecutiveClases(parsed);
+        setEvents(clasesToEvents(merged));
+      } catch (e) { }
     }
   }, [userEmail]);
 
   return (
-    <div className="bg-card rounded-2xl p-4 shadow-lg border border-white/10">
-      <h3 className="text-lg font-bold mb-2 text-white">Traer horario (Divisist)</h3>
+    <div className="bg-card rounded-2xl p-6 shadow-xl border border-white/5 h-full flex flex-col">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <div>
+          <h3 className="text-xl font-bold text-white flex items-center gap-2">
+            📅 Traer horario (Divisist)
+          </h3>
+          <p className="text-sm text-gray-400">Pega tu cookie (ci_session) para sincronizar.</p>
+        </div>
 
-      <p className="text-sm text-gray-400 mb-2">Pega tu cookie (ci_session) del Divisist y pulsa "Traer horario".</p>
-
-      <div className="mb-3">
-        <textarea
-          rows={2}
-          className="w-full rounded border px-3 py-2 bg-transparent text-white border-white/20"
-          value={cookie}
-          onChange={(e) => setCookie(e.target.value)}
-          placeholder="pega aquí ci_session"
-        />
+        <div className="flex gap-2 w-full md:w-auto">
+          <input
+            type="text"
+            className="flex-1 md:w-64 rounded-lg border border-white/10 bg-[#09090b] px-3 py-2 text-sm text-white placeholder:text-gray-600 focus:border-orange-500 focus:outline-none transition-colors"
+            value={cookie}
+            onChange={(e) => setCookie(e.target.value)}
+            placeholder="ci_session..."
+          />
+          <button
+            onClick={traerHorario}
+            disabled={loading}
+            className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium transition-colors disabled:opacity-50"
+          >
+            {loading ? "..." : "Traer"}
+          </button>
+          {events.length > 0 && (
+            <button
+              onClick={() => {
+                setEvents([]);
+                localStorage.removeItem(userEmail ? `horario_${userEmail}` : "horario_anon");
+                setMessage("Horario borrado.");
+              }}
+              className="px-3 py-2 rounded-lg border border-white/10 hover:bg-white/5 text-gray-400 text-sm transition-colors"
+              title="Borrar horario"
+            >
+              🗑️
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className="flex gap-2 items-center mb-3">
-        <button
-          onClick={traerHorario}
-          className="px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 disabled:opacity-50"
-          disabled={loading}
-        >
-          {loading ? "Trayendo..." : "Traer horario"}
-        </button>
+      {message && <div className="text-sm text-orange-400/80 mb-4 px-1">{message}</div>}
 
-        <button
-          onClick={() => {
-            const key = userEmail ? `horario_${userEmail}` : "horario_anon";
-            localStorage.removeItem(key);
-            setHorario([]);
-            setEvents([]);
-            setMessage("Horario borrado del cliente (server mantiene copia si se guardó).");
-          }}
-          className="px-3 py-1 rounded border border-white/20 text-white hover:bg-white/10"
-        >
-          Borrar cliente
-        </button>
-      </div>
-
-      {message && <div className="text-sm text-gray-400 mb-3">{message}</div>}
-
-      <div className="mb-4 rounded-md overflow-hidden border border-white/10 bg-[#0b0b0d]">
+      <div className="flex-1 min-h-[600px] bg-[#0b0b0d] rounded-xl overflow-hidden relative">
         <CalendarView events={events} />
       </div>
     </div>

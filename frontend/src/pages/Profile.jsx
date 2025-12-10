@@ -6,8 +6,7 @@ import AdminUsersModal from "@/components/AdminUsersModal";
 import AdminPensumSync from "@/components/AdminPensumSync";
 import UserHorarioFetcher from "@/components/UserHorarioFetcher";
 
-const AUTH_URL =
-  import.meta.env.VITE_AUTH_URL
+const AUTH_URL = import.meta.env.VITE_AUTH_URL;
 
 export default function Profile() {
   const { token, user, logout, login } = useAuth();
@@ -208,8 +207,7 @@ export default function Profile() {
 
             {me.role === "ADMIN" && (
               <section className="bg-card rounded-2xl p-6 shadow-lg border h-64 flex flex-col">
-                <h3 className="text-lg font-bold mb-4">Últimos Usuarios Registrados</h3>
-
+                <h3 className="text-lg font-bold mb-4">Últimos Usuarios</h3>
                 <div className="mt-2 flex-1 overflow-y-auto">
                   {loadingUsers ? (
                     <div className="text-center py-4 text-muted-foreground">
@@ -234,11 +232,10 @@ export default function Profile() {
                     </div>
                   ) : (
                     <div className="text-center py-4 text-muted-foreground">
-                      No hay usuarios registrados
+                      No hay usuarios
                     </div>
                   )}
                 </div>
-
                 <div className="mt-4 pt-2 border-t flex-shrink-0">
                   <button
                     onClick={() => setShowAdminModal(true)}
@@ -253,30 +250,24 @@ export default function Profile() {
             {me.role === "ADMIN" && (
               <AdminPensumSync />
             )}
-
           </div>
 
-          <section className="col-span-3 lg:col-span-3">
-            <div className="bg-card rounded-2xl p-6 shadow-lg border h-full min-h-[480px]">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold">Horario</h3>
-              </div>
+          <section className="col-span-3 lg:col-span-3 space-y-6">
+            {/* 🛑 AQUÍ ESTABA EL ERROR: Eliminé los divs "wrapper" sobrantes */}
+            <UserHorarioFetcher userEmail={me.email} />
 
-              <div className="rounded-md border p-2 bg-card">
-                <UserHorarioFetcher userEmail={me.email} />
-              </div>
-
-
-              <div className="mt-6 grid grid-cols-2 gap-3">
-                <div className="p-3 rounded-md border">
-                  <p className="text-xs text-muted-foreground">Usuario</p>
-                  <p className="font-medium">{me.username}</p>
+            <div className="bg-card rounded-2xl p-6 shadow-lg border">
+                <h3 className="text-lg font-bold mb-4">Información de la Cuenta</h3>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-lg border bg-background/50">
+                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Usuario</p>
+                        <p className="font-mono text-sm">{me.username}</p>
+                    </div>
+                    <div className="p-4 rounded-lg border bg-background/50">
+                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Email</p>
+                        <p className="font-mono text-sm">{me.email}</p>
+                    </div>
                 </div>
-                <div className="p-3 rounded-md border">
-                  <p className="text-xs text-muted-foreground">Email</p>
-                  <p className="font-medium">{me.email}</p>
-                </div>
-              </div>
             </div>
           </section>
         </div>

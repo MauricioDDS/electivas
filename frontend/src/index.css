@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+/* Import default RBC styles so we can override them */
+@import "react-big-calendar/lib/css/react-big-calendar.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -110,124 +112,144 @@
   --sidebar-ring: oklch(0.646 0.222 41.116);
 }
 
-.fc-scrollgrid,
-.fc-scrollgrid * {
-  border: none !important;
+/* =========================================================
+   REACT BIG CALENDAR (RBC) - DARK MODE FIXES
+   ========================================================= */
+
+/* 1. Reset Global Text & Background */
+.custom-rbc-theme .rbc-calendar {
+  font-family: inherit;
+  color: #a1a1aa;
+  /* text-zinc-400 */
 }
 
-.fc-timegrid-slot,
-.fc-timegrid-slot * {
-  border: none !important;
+.custom-rbc-theme .rbc-time-view {
+  background-color: #09090b;
+  /* bg-zinc-950 (Almost black) */
+  border: none;
+  /* Remove outer border */
+  border-radius: 0.75rem;
 }
 
-.fc-col-header-cell,
-.fc-col-header-cell * {
-  border: none !important;
+/* 2. THE GRID LINES (The "Ugly White Lines" Fix) */
+/* We use #27272a (zinc-800) for a dark, subtle border */
+
+/* Vertical lines between columns (days) */
+.custom-rbc-theme .rbc-day-bg+.rbc-day-bg {
+  border-left: 1px solid #27272a !important;
 }
 
-.fc-timegrid-divider {
-  display: none !important;
+/* Horizontal lines between hours */
+.custom-rbc-theme .rbc-day-slot .rbc-time-slot {
+  border-top: 1px solid #27272a !important;
 }
 
-.fc {
-  --fc-bg: #08080a;
-  color: #e8e6e3;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+/* The Time Gutter (Left side numbers) */
+.custom-rbc-theme .rbc-time-gutter .rbc-timeslot-group {
+  border-bottom: 1px solid #27272a !important;
+  background-color: #09090b;
 }
 
-.fc .fc-view-harness {
-  border-radius: 14px !important;
-  overflow: hidden !important;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+/* Remove the "Major" hour divider default border */
+.custom-rbc-theme .rbc-timeslot-group {
+  border-bottom: 1px solid #27272a !important;
 }
 
-.fc .fc-toolbar {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-bottom: 0 !important;
-  color: #fff;
-}
-.fc .fc-toolbar .fc-button {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.03);
-  color: #fff;
-  box-shadow: none;
-}
-.fc .fc-toolbar .fc-button:hover {
-  background: rgba(255,255,255,0.02);
+/* 3. THE HEADER (Days of the week) */
+.custom-rbc-theme .rbc-header {
+  border-bottom: 1px solid #27272a !important;
+  /* Optional: Add vertical dividers in header to match grid */
+  border-left: 1px solid #27272a !important;
+  padding: 12px 0;
+  font-weight: 600;
+  color: #e4e4e7;
+  /* text-zinc-200 */
+  text-transform: capitalize;
+  background-color: #09090b;
 }
 
-.fc .fc-scrollgrid,
-.fc .fc-scrollgrid-section > * {
-  border: none !important;
-  background: transparent !important;
-}
-.fc .fc-timegrid-slot {
-  border-bottom: none !important;
-}
-
-.fc .fc-col-header-cell {
+/* Fix top-left corner weirdness */
+.custom-rbc-theme .rbc-time-header.rbc-overflowing {
   border-right: none !important;
 }
 
-.fc .fc-timegrid-axis .fc-timegrid-col-frame {
-  color: #bdbdbd;
-  font-size: 12px;
-  padding-right: 8px;
+.custom-rbc-theme .rbc-time-header-content {
+  border-right: none !important;
+  border-left: 1px solid #27272a !important;
 }
 
-.fc .fc-event-card {
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  padding: 6px;
+.custom-rbc-theme .rbc-allday-cell {
+  display: none !important;
+  /* Hide "All Day" row if you don't use it */
 }
 
-.fc .fc-event {
-  background: transparent !important;
+/* 4. TODAY HIGHLIGHT */
+/* Make it barely visible or transparent */
+.custom-rbc-theme .rbc-today {
+  background-color: rgba(39, 39, 42, 0.4) !important;
+  /* Very subtle zinc tint */
+}
+
+/* 5. EVENTS (Make container invisible so your Card shines) */
+.custom-rbc-theme .rbc-event {
+  background-color: transparent !important;
   border: none !important;
+  padding: 0 4px 2px 0 !important;
+  /* 2px abajo para el espacio visual */
+  border-radius: 0 !important;
+  outline: none !important;
   box-shadow: none !important;
-}
+  width: 100% !important;
 
-.fc .fc-event .w-40 {
-  border-radius: 10px;
-}
-
-.fc .fc-col-header-cell-cushion {
-  color: #f3f2f1;
-  font-weight: 600;
-}
-
-.fc .fc-timegrid .fc-timegrid-bg {
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02)) !important;
-}
-
-.fc-event-title,
-.fc-event-main-frame,
-.fc-event-main {
-  white-space: normal !important;
+  /* IMPORTANTE: Permitir que el contenido fluya */
   overflow: visible !important;
-  height: auto !important;
 }
 
-.fc .fc-timegrid-event-harness,
-.fc .fc-timegrid-event {
+/* El contenido interno debe llenar el espacio */
+.custom-rbc-theme .rbc-event-content {
   height: 100% !important;
-  overflow: visible !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+  /* Para que line-clamp funcione */
 }
 
-.custom-select-dark {
-  color-scheme: dark; 
+/* Hide default text label from RBC */
+.custom-rbc-theme .rbc-event-label {
+  display: none !important;
 }
 
-.custom-select-dark option {
-  background-color: #1a1a1a;
-  color: #fff;
+
+/* Current Time Indicator (Red Line) */
+.custom-rbc-theme .rbc-current-time-indicator {
+  background-color: #ea580c !important;
+  /* Orange-600 */
+  height: 2px !important;
+}
+
+/* 6. SCROLLBARS */
+.custom-rbc-theme ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-rbc-theme ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-rbc-theme ::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+
+.custom-rbc-theme ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
