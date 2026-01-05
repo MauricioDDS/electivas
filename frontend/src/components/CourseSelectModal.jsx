@@ -156,7 +156,7 @@ export default function CourseSelectModal({
     const toastId = toast.loading("Creando boceto...");
     try {
         const nextNum = (bocetos?.length || 0) + 1;
-        const newBoceto = await createBoceto(`Boceto #${nextNum}`);
+        const newBoceto = await createBoceto(`Boceto`);
         const selectedCourses = courses.filter(c => selected.includes(String(c.codigo)));
         let successCount = 0;
         let failCount = 0;

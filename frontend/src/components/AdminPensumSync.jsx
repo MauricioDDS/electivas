@@ -17,7 +17,6 @@ export default function AdminPensumSync() {
 
     try {
       setLoading(true);
-      // Start async job
       const res = await fetch(`${COURSES_URL}/sync-pensum-async/`, {
         method: "POST",
         headers: {
@@ -40,8 +39,7 @@ export default function AdminPensumSync() {
   const pollStatus = async (id) => {
     setStatus("polling");
     try {
-      // poll until success or error
-      for (let i = 0; i < 120; i++) { // safety: max ~120 polls
+      for (let i = 0; i < 120; i++) {
         const res = await fetch(`${COURSES_URL}/sync-status/${id}`, {
           headers: { "X-ADMIN-KEY": ADMIN_KEY },
         });
@@ -51,7 +49,6 @@ export default function AdminPensumSync() {
         if (body.status === "success") {
           setMsg("Sync completo ✅");
           setLoading(false);
-          // optionally reload courses in app — dispatch event or use global state
           return;
         }
         if (body.status === "error") {
@@ -59,8 +56,7 @@ export default function AdminPensumSync() {
           setLoading(false);
           return;
         }
-        // still running
-        await new Promise((r) => setTimeout(r, 1500)); // poll every 1.5s
+        await new Promise((r) => setTimeout(r, 1500));
       }
       setMsg("Timed out polling status — check logs.");
     } catch (err) {

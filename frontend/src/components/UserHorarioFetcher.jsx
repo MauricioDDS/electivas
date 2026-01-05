@@ -3,8 +3,6 @@ import CalendarView from "./CalendarView";
 
 const CALENDAR_API = import.meta.env.VITE_CALENDAR_URL || "http://localhost:8022";
 
-// --- Helpers de Parsing ---
-
 function timeStrToMinutes(t) {
   if (!t) return null;
   const [h, m = "0"] = t.split(":");
@@ -79,7 +77,6 @@ function clasesToEvents(clases) {
     Jueves: 4, Viernes: 5, Sábado: 6, Sabado: 6, Domingo: 0,
   };
 
-  // Base temporal: Lunes de la semana actual
   const today = new Date();
   const currentDay = today.getDay(); 
   const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
@@ -93,7 +90,6 @@ function clasesToEvents(clases) {
   const evs = [];
 
   clases.forEach((clase, index) => {
-    // Normalizar día
     const diaStr = (clase.dia || "").trim();
     const normalizedDay = Object.keys(daysMap).find(key =>
       key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") ===
@@ -111,7 +107,6 @@ function clasesToEvents(clases) {
     const eventDate = new Date(monday);
     eventDate.setDate(monday.getDate() + (weekdayTarget - 1));
 
-    // Parsear horas
     const hr = (clase.hora || "").replace(/\s+/g, "");
     const [startStr, endStr] = hr.split("-");
 
